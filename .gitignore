@@ -1,0 +1,11 @@
+# Compiled binaries
+/bin/Debug
+/bin/Release
+/SuperPutty/obj
+
+# Unit test binaries
+SuperPuttyUnitTests/bin/
+SuperPuttyUnitTests/obj
+
+# Solution user files
+*.suo
