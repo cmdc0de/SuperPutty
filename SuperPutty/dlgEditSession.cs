@@ -252,6 +252,19 @@ namespace SuperPutty
         }
 
 
+        private void radioButtonAuto_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButtonAuto.Checked && this.isInitialized)
+            {
+                if (!string.IsNullOrEmpty(OldHostname))
+                {
+                    this.textBoxHostname.Text = OldHostname;
+                    OldHostname = null;
+                }
+                this.textBoxPort.Text = "";
+            }
+        }
+
 
         public static int GetDefaultPort(ConnectionProtocol protocol)
         {

@@ -36,6 +36,14 @@ namespace SuperPutty
             this.textBoxPort = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButtonAuto = new System.Windows.Forms.RadioButton();
+            this.radioButtonMintty = new System.Windows.Forms.RadioButton();
+            this.radioButtonCygterm = new System.Windows.Forms.RadioButton();
+            this.radioButtonSerial = new System.Windows.Forms.RadioButton();
+            this.radioButtonSSH = new System.Windows.Forms.RadioButton();
+            this.radioButtonRlogin = new System.Windows.Forms.RadioButton();
+            this.radioButtonTelnet = new System.Windows.Forms.RadioButton();
+            this.radioButtonRaw = new System.Windows.Forms.RadioButton();
             this.textBoxExtraArgs = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -48,14 +56,6 @@ namespace SuperPutty
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.buttonImageSelect = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.radioButtonAuto = new System.Windows.Forms.RadioButton();
-            this.radioButtonMintty = new System.Windows.Forms.RadioButton();
-            this.radioButtonCygterm = new System.Windows.Forms.RadioButton();
-            this.radioButtonSerial = new System.Windows.Forms.RadioButton();
-            this.radioButtonSSH = new System.Windows.Forms.RadioButton();
-            this.radioButtonRlogin = new System.Windows.Forms.RadioButton();
-            this.radioButtonTelnet = new System.Windows.Forms.RadioButton();
-            this.radioButtonRaw = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -142,6 +142,111 @@ namespace SuperPutty
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection type:";
+            // 
+            // radioButtonAuto
+            // 
+            this.radioButtonAuto.AutoSize = true;
+            this.radioButtonAuto.Checked = true;
+            this.radioButtonAuto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonAuto.Location = new System.Drawing.Point(9, 22);
+            this.radioButtonAuto.Name = "radioButtonAuto";
+            this.radioButtonAuto.Size = new System.Drawing.Size(51, 19);
+            this.radioButtonAuto.TabIndex = 10;
+            this.radioButtonAuto.TabStop = true;
+            this.radioButtonAuto.Tag = SuperPutty.Data.ConnectionProtocol.Auto;
+            this.radioButtonAuto.Text = "Auto";
+            this.radioButtonAuto.UseVisualStyleBackColor = true;
+            this.radioButtonAuto.CheckedChanged += new System.EventHandler(this.radioButtonAuto_CheckedChanged);
+            // 
+            // radioButtonMintty
+            // 
+            this.radioButtonMintty.AutoSize = true;
+            this.radioButtonMintty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonMintty.Location = new System.Drawing.Point(432, 22);
+            this.radioButtonMintty.Name = "radioButtonMintty";
+            this.radioButtonMintty.Size = new System.Drawing.Size(60, 19);
+            this.radioButtonMintty.TabIndex = 9;
+            this.radioButtonMintty.Tag = SuperPutty.Data.ConnectionProtocol.Mintty;
+            this.radioButtonMintty.Text = "Mintty";
+            this.radioButtonMintty.UseVisualStyleBackColor = true;
+            this.radioButtonMintty.CheckedChanged += new System.EventHandler(this.radioButtonCygterm_CheckedChanged);
+            // 
+            // radioButtonCygterm
+            // 
+            this.radioButtonCygterm.AutoSize = true;
+            this.radioButtonCygterm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonCygterm.Location = new System.Drawing.Point(356, 22);
+            this.radioButtonCygterm.Name = "radioButtonCygterm";
+            this.radioButtonCygterm.Size = new System.Drawing.Size(71, 19);
+            this.radioButtonCygterm.TabIndex = 8;
+            this.radioButtonCygterm.Tag = SuperPutty.Data.ConnectionProtocol.Cygterm;
+            this.radioButtonCygterm.Text = "Cygterm";
+            this.radioButtonCygterm.UseVisualStyleBackColor = true;
+            this.radioButtonCygterm.CheckedChanged += new System.EventHandler(this.radioButtonCygterm_CheckedChanged);
+            // 
+            // radioButtonSerial
+            // 
+            this.radioButtonSerial.AutoSize = true;
+            this.radioButtonSerial.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSerial.Location = new System.Drawing.Point(298, 22);
+            this.radioButtonSerial.Name = "radioButtonSerial";
+            this.radioButtonSerial.Size = new System.Drawing.Size(53, 19);
+            this.radioButtonSerial.TabIndex = 7;
+            this.radioButtonSerial.Tag = SuperPutty.Data.ConnectionProtocol.Serial;
+            this.radioButtonSerial.Text = "Serial";
+            this.radioButtonSerial.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSSH
+            // 
+            this.radioButtonSSH.AutoSize = true;
+            this.radioButtonSSH.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSSH.Location = new System.Drawing.Point(247, 22);
+            this.radioButtonSSH.Name = "radioButtonSSH";
+            this.radioButtonSSH.Size = new System.Drawing.Size(46, 19);
+            this.radioButtonSSH.TabIndex = 6;
+            this.radioButtonSSH.Tag = SuperPutty.Data.ConnectionProtocol.SSH;
+            this.radioButtonSSH.Text = "SSH";
+            this.radioButtonSSH.UseVisualStyleBackColor = true;
+            this.radioButtonSSH.CheckedChanged += new System.EventHandler(this.radioButtonSSH_CheckedChanged);
+            // 
+            // radioButtonRlogin
+            // 
+            this.radioButtonRlogin.AutoSize = true;
+            this.radioButtonRlogin.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonRlogin.Location = new System.Drawing.Point(180, 22);
+            this.radioButtonRlogin.Name = "radioButtonRlogin";
+            this.radioButtonRlogin.Size = new System.Drawing.Size(62, 19);
+            this.radioButtonRlogin.TabIndex = 5;
+            this.radioButtonRlogin.Tag = SuperPutty.Data.ConnectionProtocol.Rlogin;
+            this.radioButtonRlogin.Text = "RLogin";
+            this.radioButtonRlogin.UseVisualStyleBackColor = true;
+            this.radioButtonRlogin.CheckedChanged += new System.EventHandler(this.radioButtonRlogin_CheckedChanged);
+            // 
+            // radioButtonTelnet
+            // 
+            this.radioButtonTelnet.AutoSize = true;
+            this.radioButtonTelnet.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonTelnet.Location = new System.Drawing.Point(117, 22);
+            this.radioButtonTelnet.Name = "radioButtonTelnet";
+            this.radioButtonTelnet.Size = new System.Drawing.Size(58, 19);
+            this.radioButtonTelnet.TabIndex = 4;
+            this.radioButtonTelnet.Tag = SuperPutty.Data.ConnectionProtocol.Telnet;
+            this.radioButtonTelnet.Text = "Telnet";
+            this.radioButtonTelnet.UseVisualStyleBackColor = true;
+            this.radioButtonTelnet.CheckedChanged += new System.EventHandler(this.radioButtonTelnet_CheckedChanged);
+            // 
+            // radioButtonRaw
+            // 
+            this.radioButtonRaw.AutoSize = true;
+            this.radioButtonRaw.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonRaw.Location = new System.Drawing.Point(65, 22);
+            this.radioButtonRaw.Name = "radioButtonRaw";
+            this.radioButtonRaw.Size = new System.Drawing.Size(47, 19);
+            this.radioButtonRaw.TabIndex = 3;
+            this.radioButtonRaw.Tag = SuperPutty.Data.ConnectionProtocol.Raw;
+            this.radioButtonRaw.Text = "Raw";
+            this.radioButtonRaw.UseVisualStyleBackColor = true;
+            this.radioButtonRaw.CheckedChanged += new System.EventHandler(this.radioButtonRaw_CheckedChanged);
             // 
             // textBoxExtraArgs
             // 
@@ -256,110 +361,6 @@ namespace SuperPutty
             this.buttonImageSelect.TabIndex = 7;
             this.buttonImageSelect.UseVisualStyleBackColor = true;
             this.buttonImageSelect.Click += new System.EventHandler(this.buttonImageSelect_Click);
-            // 
-            // radioButtonAuto
-            // 
-            this.radioButtonAuto.AutoSize = true;
-            this.radioButtonAuto.Checked = true;
-            this.radioButtonAuto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonAuto.Location = new System.Drawing.Point(9, 22);
-            this.radioButtonAuto.Name = "radioButtonAuto";
-            this.radioButtonAuto.Size = new System.Drawing.Size(51, 19);
-            this.radioButtonAuto.TabIndex = 10;
-            this.radioButtonAuto.TabStop = true;
-            this.radioButtonAuto.Tag = SuperPutty.Data.ConnectionProtocol.Auto;
-            this.radioButtonAuto.Text = "Auto";
-            this.radioButtonAuto.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonMintty
-            // 
-            this.radioButtonMintty.AutoSize = true;
-            this.radioButtonMintty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonMintty.Location = new System.Drawing.Point(432, 22);
-            this.radioButtonMintty.Name = "radioButtonMintty";
-            this.radioButtonMintty.Size = new System.Drawing.Size(60, 19);
-            this.radioButtonMintty.TabIndex = 9;
-            this.radioButtonMintty.Tag = SuperPutty.Data.ConnectionProtocol.Mintty;
-            this.radioButtonMintty.Text = "Mintty";
-            this.radioButtonMintty.UseVisualStyleBackColor = true;
-            this.radioButtonMintty.CheckedChanged += new System.EventHandler(this.radioButtonCygterm_CheckedChanged);
-            // 
-            // radioButtonCygterm
-            // 
-            this.radioButtonCygterm.AutoSize = true;
-            this.radioButtonCygterm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonCygterm.Location = new System.Drawing.Point(356, 22);
-            this.radioButtonCygterm.Name = "radioButtonCygterm";
-            this.radioButtonCygterm.Size = new System.Drawing.Size(71, 19);
-            this.radioButtonCygterm.TabIndex = 8;
-            this.radioButtonCygterm.Tag = SuperPutty.Data.ConnectionProtocol.Cygterm;
-            this.radioButtonCygterm.Text = "Cygterm";
-            this.radioButtonCygterm.UseVisualStyleBackColor = true;
-            this.radioButtonCygterm.CheckedChanged += new System.EventHandler(this.radioButtonCygterm_CheckedChanged);
-            // 
-            // radioButtonSerial
-            // 
-            this.radioButtonSerial.AutoSize = true;
-            this.radioButtonSerial.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSerial.Location = new System.Drawing.Point(298, 22);
-            this.radioButtonSerial.Name = "radioButtonSerial";
-            this.radioButtonSerial.Size = new System.Drawing.Size(53, 19);
-            this.radioButtonSerial.TabIndex = 7;
-            this.radioButtonSerial.Tag = SuperPutty.Data.ConnectionProtocol.Serial;
-            this.radioButtonSerial.Text = "Serial";
-            this.radioButtonSerial.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonSSH
-            // 
-            this.radioButtonSSH.AutoSize = true;
-            this.radioButtonSSH.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSSH.Location = new System.Drawing.Point(247, 22);
-            this.radioButtonSSH.Name = "radioButtonSSH";
-            this.radioButtonSSH.Size = new System.Drawing.Size(46, 19);
-            this.radioButtonSSH.TabIndex = 6;
-            this.radioButtonSSH.Tag = SuperPutty.Data.ConnectionProtocol.SSH;
-            this.radioButtonSSH.Text = "SSH";
-            this.radioButtonSSH.UseVisualStyleBackColor = true;
-            this.radioButtonSSH.CheckedChanged += new System.EventHandler(this.radioButtonSSH_CheckedChanged);
-            // 
-            // radioButtonRlogin
-            // 
-            this.radioButtonRlogin.AutoSize = true;
-            this.radioButtonRlogin.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonRlogin.Location = new System.Drawing.Point(180, 22);
-            this.radioButtonRlogin.Name = "radioButtonRlogin";
-            this.radioButtonRlogin.Size = new System.Drawing.Size(62, 19);
-            this.radioButtonRlogin.TabIndex = 5;
-            this.radioButtonRlogin.Tag = SuperPutty.Data.ConnectionProtocol.Rlogin;
-            this.radioButtonRlogin.Text = "RLogin";
-            this.radioButtonRlogin.UseVisualStyleBackColor = true;
-            this.radioButtonRlogin.CheckedChanged += new System.EventHandler(this.radioButtonRlogin_CheckedChanged);
-            // 
-            // radioButtonTelnet
-            // 
-            this.radioButtonTelnet.AutoSize = true;
-            this.radioButtonTelnet.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonTelnet.Location = new System.Drawing.Point(117, 22);
-            this.radioButtonTelnet.Name = "radioButtonTelnet";
-            this.radioButtonTelnet.Size = new System.Drawing.Size(58, 19);
-            this.radioButtonTelnet.TabIndex = 4;
-            this.radioButtonTelnet.Tag = SuperPutty.Data.ConnectionProtocol.Telnet;
-            this.radioButtonTelnet.Text = "Telnet";
-            this.radioButtonTelnet.UseVisualStyleBackColor = true;
-            this.radioButtonTelnet.CheckedChanged += new System.EventHandler(this.radioButtonTelnet_CheckedChanged);
-            // 
-            // radioButtonRaw
-            // 
-            this.radioButtonRaw.AutoSize = true;
-            this.radioButtonRaw.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonRaw.Location = new System.Drawing.Point(65, 22);
-            this.radioButtonRaw.Name = "radioButtonRaw";
-            this.radioButtonRaw.Size = new System.Drawing.Size(47, 19);
-            this.radioButtonRaw.TabIndex = 3;
-            this.radioButtonRaw.Tag = SuperPutty.Data.ConnectionProtocol.Raw;
-            this.radioButtonRaw.Text = "Raw";
-            this.radioButtonRaw.UseVisualStyleBackColor = true;
-            this.radioButtonRaw.CheckedChanged += new System.EventHandler(this.radioButtonRaw_CheckedChanged);
             // 
             // dlgEditSession
             // 
