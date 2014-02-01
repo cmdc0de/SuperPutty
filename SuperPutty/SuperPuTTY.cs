@@ -52,6 +52,9 @@ namespace SuperPutty
             }
              */
 
+            // load the imagelist regardless whether is the first run or not
+            Images = LoadImageList("default");
+
             if (!SuperPuTTY.IsFirstRun)
             {
                 // parse command line args
@@ -69,7 +72,6 @@ namespace SuperPutty
                 // load data
                 LoadLayouts();
                 LoadSessions();
-                Images = LoadImageList("default");
 
                 // determine starting layout, if any.  CLI has priority
                 if (CommandLine.IsValid)
