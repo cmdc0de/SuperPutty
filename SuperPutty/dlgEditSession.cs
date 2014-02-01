@@ -60,7 +60,14 @@ namespace SuperPutty
                 this.Text = "Edit session: " + session.SessionName;
                 this.textBoxSessionName.Text = Session.SessionName;
                 this.textBoxHostname.Text = Session.Host;
-                this.textBoxPort.Text = Session.Port.ToString();
+                if (Session.Port > 0)
+                {
+                    this.textBoxPort.Text = Session.Port.ToString();
+                }
+                else
+                {
+                    this.textBoxPort.Text = "";
+                }
                 this.textBoxExtraArgs.Text = Session.ExtraArgs;
                 this.textBoxUsername.Text = Session.Username;
 
@@ -147,7 +154,12 @@ namespace SuperPutty
             Session.PuttySession = comboBoxPuttyProfile.Text.Trim();
             Session.Host = textBoxHostname.Text.Trim();
             Session.ExtraArgs = textBoxExtraArgs.Text.Trim();
-            Session.Port = int.Parse(textBoxPort.Text.Trim());
+            
+            // if no port is specified save if as port 0
+            int port;
+            int.TryParse(textBoxPort.Text.Trim(), out port);
+            Session.Port = port;
+
             Session.Username = textBoxUsername.Text.Trim();
             Session.SessionId = SessionData.CombineSessionIds(SessionData.GetSessionParentId(Session.SessionId), Session.SessionName);
             Session.ImageKey = buttonImageSelect.ImageKey;
@@ -317,7 +329,7 @@ namespace SuperPutty
         private void textBoxPort_Validating(object sender, CancelEventArgs e)
         {
             int val;
-            if (!Int32.TryParse(this.textBoxPort.Text, out val))
+            if (!IsValidPuttyProfileSelected() && !Int32.TryParse(this.textBoxPort.Text, out val))
             {
                 e.Cancel = true;
                 this.SetError(this.textBoxPort, "Invalid Port");
@@ -331,7 +343,7 @@ namespace SuperPutty
 
         private void textBoxHostname_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty((string)this.comboBoxPuttyProfile.SelectedItem) &&
+            if (!IsValidPuttyProfileSelected() &&
                 string.IsNullOrEmpty(this.textBoxHostname.Text.Trim()))
             {
                 if (sender == this.textBoxHostname)
@@ -373,6 +385,11 @@ namespace SuperPutty
                 this.errorProvider.GetError(this.textBoxHostname) == String.Empty &&
                 this.errorProvider.GetError(this.textBoxPort) == String.Empty &&
                 this.errorProvider.GetError(this.comboBoxPuttyProfile) == String.Empty);
+        }
+
+        private bool IsValidPuttyProfileSelected()
+        {
+            return !string.IsNullOrEmpty((string) comboBoxPuttyProfile.SelectedItem);
         }
 
         #endregion

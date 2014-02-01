@@ -53,7 +53,13 @@ namespace SuperPutty.Utils
             args += (!String.IsNullOrEmpty(session.Password) && session.Password.Length > 0) 
                 ? "-pw " + (includePassword ? session.Password : "XXXXX") + " " 
                 : "";
-            args += "-P " + session.Port + " ";
+
+            // if no port is specified just keep the default
+            if (session.Port != 0)
+            {
+                args += "-P " + session.Port + " ";
+            }
+
             args += (!String.IsNullOrEmpty(session.PuttySession)) ? "-load \"" + session.PuttySession + "\" " : "";
             args += (!String.IsNullOrEmpty(session.ExtraArgs) ? session.ExtraArgs + " " : "");
             args += (!String.IsNullOrEmpty(session.Username) && session.Username.Length > 0) ? " -l " + session.Username + " " : "";

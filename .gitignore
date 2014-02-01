@@ -9,3 +9,6 @@ SuperPuttyUnitTests/obj
 
 # Solution user files
 *.suo
+
+# Resharper user settings
+*.DotSettings.user
