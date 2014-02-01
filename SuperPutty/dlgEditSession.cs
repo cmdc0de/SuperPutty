@@ -95,7 +95,7 @@ namespace SuperPutty
                         radioButtonMintty.Checked = true;
                         break;
                     default:
-                        radioButtonSSH.Checked = true;
+                        radioButtonAuto.Checked = true;
                         break;
                 }
 
@@ -112,7 +112,7 @@ namespace SuperPutty
             else
             {
                 this.Text = "Create new session";
-                radioButtonSSH.Checked = true;
+                radioButtonAuto.Checked = true;
                 this.buttonSave.Enabled = false;
             }
 

@@ -49,7 +49,14 @@ namespace SuperPutty.Utils
 
         static string MakeArgs(SessionData session, bool includePassword)
         {
-            string args = "-" + session.Proto.ToString().ToLower() + " ";
+            var args = "";
+
+            // if the protocol is "auto", just let PuTTY figure it out
+            if (session.Proto != ConnectionProtocol.Auto)
+            {
+                args += "-" + session.Proto.ToString().ToLower() + " ";
+            }
+
             args += (!String.IsNullOrEmpty(session.Password) && session.Password.Length > 0) 
                 ? "-pw " + (includePassword ? session.Password : "XXXXX") + " " 
                 : "";

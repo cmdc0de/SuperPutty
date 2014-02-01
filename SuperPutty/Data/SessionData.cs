@@ -42,7 +42,8 @@ namespace SuperPutty.Data
         Raw,
         Serial,
         Cygterm,
-        Mintty
+        Mintty,
+        Auto
     }
 
     public class SessionData : IComparable, ICloneable
@@ -187,7 +188,7 @@ namespace SuperPutty.Data
         
         public SessionData()
         {
-
+            Proto = ConnectionProtocol.Auto;
         }
 
         internal void SaveToRegistry()
