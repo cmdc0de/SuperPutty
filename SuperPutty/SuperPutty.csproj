@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Scp\PscpClient.cs" />
     <Compile Include="Scp\RemoteBrowserModel.cs" />
+    <Compile Include="Scp\ScpUtils.cs" />
     <Compile Include="ToolWindowEx.cs">
       <SubType>Form</SubType>
     </Compile>
