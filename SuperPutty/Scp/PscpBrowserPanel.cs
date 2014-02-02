@@ -60,7 +60,7 @@ namespace SuperPutty.Scp
                 "Remote", new RemoteBrowserModel(options), fileTransferSession, fileTransferPresenter);
 
             this.browserViewLocal.Initialize(this.localBrowserPresenter, new BrowserFileInfo(new DirectoryInfo(localStartingDir)));
-            this.browserViewRemote.Initialize(this.remoteBrowserPresenter, RemoteBrowserModel.NewDirectory(ScpUtils.GetHomeDirectoryForUsername(fileTransferSession.Username)));
+            this.browserViewRemote.Initialize(this.remoteBrowserPresenter, RemoteBrowserModel.NewDirectory(ScpUtils.GetHomeDirectory(fileTransferSession)));
             this.fileTransferView.Initialize(this.fileTransferPresenter);
         }
     }

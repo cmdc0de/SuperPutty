@@ -38,7 +38,7 @@ namespace SuperPutty.Scp
                 string targetPath = path.Path;
                 if (targetPath == null || targetPath == ".")
                 {
-                    targetPath = ScpUtils.GetHomeDirectoryForUsername(session.Username);
+                    targetPath = ScpUtils.GetHomeDirectory(session);
                     Log.InfoFormat("Defaulting path: {0}->{1}", path.Path, targetPath);
                     path.Path = targetPath;
                 }

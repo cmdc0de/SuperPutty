@@ -64,6 +64,7 @@ namespace SuperPutty
 
             string puttyExe = SuperPuTTY.Settings.PuttyExe;
             string pscpExe = SuperPuTTY.Settings.PscpExe;
+            var plinkExe = SuperPuTTY.Settings.PlinkExe;
 
             // check for location of putty/pscp
             if (!String.IsNullOrEmpty(puttyExe) && File.Exists(puttyExe))
@@ -72,6 +73,10 @@ namespace SuperPutty
                 if (!String.IsNullOrEmpty(pscpExe) && File.Exists(pscpExe))
                 {
                     textBoxPscpLocation.Text = pscpExe;
+                }
+                if (!String.IsNullOrEmpty(plinkExe) && File.Exists(plinkExe))
+                {
+                    textBoxPlinkLocation.Text = plinkExe;
                 }
             }
             else if(!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("ProgramFiles(x86)")))
@@ -84,8 +89,12 @@ namespace SuperPutty
 
                 if (File.Exists(Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\PuTTY\pscp.exe"))
                 {
-
                     textBoxPscpLocation.Text = Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\PuTTY\pscp.exe";
+                }
+
+                if (File.Exists(Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\PuTTY\plink.exe"))
+                {
+                    textBoxPlinkLocation.Text = Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\PuTTY\plink.exe";
                 }
             }
             else if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("ProgramFiles")))
@@ -99,6 +108,11 @@ namespace SuperPutty
                 if (File.Exists(Environment.GetEnvironmentVariable("ProgramFiles") + @"\PuTTY\pscp.exe"))
                 {
                     textBoxPscpLocation.Text = Environment.GetEnvironmentVariable("ProgramFiles") + @"\PuTTY\pscp.exe";
+                }
+
+                if (File.Exists(Environment.GetEnvironmentVariable("ProgramFiles") + @"\PuTTY\plink.exe"))
+                {
+                    textBoxPlinkLocation.Text = Environment.GetEnvironmentVariable("ProgramFiles") + @"\PuTTY\plink.exe";
                 }
             }            
             else
@@ -275,6 +289,12 @@ namespace SuperPutty
                 errors.Insert(0, "PuTTY is required to properly use this application.");
             }
 
+            string plink = this.textBoxPlinkLocation.Text;
+            if (!string.IsNullOrEmpty(plink) && File.Exists(plink))
+            {
+                SuperPuTTY.Settings.PlinkExe = plink;
+            }
+
             string mintty = this.textBoxMinttyLocation.Text;
             if (!string.IsNullOrEmpty(mintty) && File.Exists(mintty))
             {
@@ -370,6 +390,19 @@ namespace SuperPutty
                 textBoxPscpLocation.Text = openFileDialog1.FileName;
         }
 
+        private void buttonBrowsePlink_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "PLink|plink.exe";
+            openFileDialog1.FileName = "plink.exe";
+
+            if (File.Exists(textBoxPlinkLocation.Text))
+            {
+                openFileDialog1.InitialDirectory = Path.GetDirectoryName(textBoxPlinkLocation.Text);
+            }
+            openFileDialog1.ShowDialog(this);
+            if (!String.IsNullOrEmpty(openFileDialog1.FileName))
+                textBoxPlinkLocation.Text = openFileDialog1.FileName;
+        }
 
         private void btnBrowseMintty_Click(object sender, EventArgs e)
         {
