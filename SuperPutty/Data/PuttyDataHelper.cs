@@ -62,14 +62,7 @@ namespace SuperPutty.Data
                     RegistryKey sessionKey = key.OpenSubKey(keyName);
                     if (sessionKey != null)
                     {
-                        SessionData session = new SessionData();
-                        session.Host = (string)sessionKey.GetValue("HostName", "");
-                        session.Port = (int)sessionKey.GetValue("PortNumber", 22);
-                        session.Proto = (ConnectionProtocol)Enum.Parse(typeof(ConnectionProtocol), (string)sessionKey.GetValue("Protocol", "SSH"), true);
-                        session.PuttySession = (string)sessionKey.GetValue("PuttySession", HttpUtility.UrlDecode(keyName));
-                        session.SessionName = HttpUtility.UrlDecode(keyName);
-                        session.Username = (string)sessionKey.GetValue("UserName", "");
-                        sessions.Add(session);
+                        sessions.Add(GetSessionData(keyName));
                     }
                 }
             }
@@ -125,5 +118,32 @@ namespace SuperPutty.Data
 
             return sessions;
         }
+
+        public static SessionData GetSessionData(string sessionName)
+        {
+            var session = new SessionData();
+
+            var key = RootAppKey;
+            if (key != null)
+            {
+                var keyName = HttpUtility.UrlEncode(sessionName);
+                var sessionKey = key.OpenSubKey(keyName);
+                if (sessionKey != null)
+                {
+                    session.Host = (string) sessionKey.GetValue("HostName", "");
+                    session.Port = (int) sessionKey.GetValue("PortNumber", 22);
+                    session.Proto =
+                        (ConnectionProtocol)
+                            Enum.Parse(typeof (ConnectionProtocol), (string) sessionKey.GetValue("Protocol", "SSH"),
+                                true);
+                    session.PuttySession = (string)sessionKey.GetValue("PuttySession", HttpUtility.UrlDecode(keyName));
+                    session.SessionName = HttpUtility.UrlDecode(keyName);
+                    session.Username = (string) sessionKey.GetValue("UserName", "");
+                }
+            }
+
+            return session;
+        }
+
     }
 }

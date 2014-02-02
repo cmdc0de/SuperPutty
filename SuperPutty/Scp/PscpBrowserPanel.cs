@@ -28,17 +28,39 @@ namespace SuperPutty.Scp
 
         public PscpBrowserPanel(SessionData session, PscpOptions options, string localStartingDir) : this()
         {
-            this.Name = session.SessionName;
-            this.TabText = session.SessionName;
+            var fileTransferSession = (SessionData) session.Clone();
+
+            // if the session doesn't contain a host, a port, or an username
+            // try to get them from the putty profile
+            if ((string.IsNullOrEmpty(fileTransferSession.Username) || string.IsNullOrEmpty(fileTransferSession.Host) || fileTransferSession.Port == 0)
+                && !string.IsNullOrEmpty(fileTransferSession.PuttySession))
+            {
+                var puttyProfile = PuttyDataHelper.GetSessionData(fileTransferSession.PuttySession);
+
+                fileTransferSession.Username = string.IsNullOrEmpty(fileTransferSession.Username)
+                    ? puttyProfile.Username
+                    : fileTransferSession.Username;
+
+                fileTransferSession.Host = string.IsNullOrEmpty(fileTransferSession.Host)
+                    ? puttyProfile.Host
+                    : fileTransferSession.Host;
+
+                fileTransferSession.Port = (fileTransferSession.Port == 0)
+                    ? puttyProfile.Port
+                    : fileTransferSession.Port;
+            }
+
+            this.Name = fileTransferSession.SessionName;
+            this.TabText = fileTransferSession.SessionName;
 
             this.fileTransferPresenter = new FileTransferPresenter(options);
             this.localBrowserPresenter = new BrowserPresenter(
-                "Local", new LocalBrowserModel(), session, fileTransferPresenter);
+                "Local", new LocalBrowserModel(), fileTransferSession, fileTransferPresenter);
             this.remoteBrowserPresenter = new BrowserPresenter(
-                "Remote", new RemoteBrowserModel(options), session, fileTransferPresenter);
+                "Remote", new RemoteBrowserModel(options), fileTransferSession, fileTransferPresenter);
 
             this.browserViewLocal.Initialize(this.localBrowserPresenter, new BrowserFileInfo(new DirectoryInfo(localStartingDir)));
-            this.browserViewRemote.Initialize(this.remoteBrowserPresenter, RemoteBrowserModel.NewDirectory(ScpUtils.GetHomeDirectoryForUsername(session.Username)));
+            this.browserViewRemote.Initialize(this.remoteBrowserPresenter, RemoteBrowserModel.NewDirectory(ScpUtils.GetHomeDirectoryForUsername(fileTransferSession.Username)));
             this.fileTransferView.Initialize(this.fileTransferPresenter);
         }
     }
