@@ -544,7 +544,7 @@ namespace SuperPutty
                 addedNode = parentNode.Nodes.Add(session.SessionName, session.SessionName, ImageKeySession, ImageKeySession);
                 addedNode.Tag = session;
                 addedNode.ContextMenuStrip = this.contextMenuStripAddTreeItem;
-                addedNode.ToolTipText = session.ToString();
+                addedNode.ToolTipText = GetSessionToolTip(session);
 
                 // Override with custom icon if valid
                 if (IsValidImage(session.ImageKey))
@@ -714,6 +714,35 @@ namespace SuperPutty
                     }
                 }
             }
+        }
+
+        private static string GetSessionToolTip(SessionData session)
+        {
+            if (string.IsNullOrEmpty(session.PuttySession))
+            {
+                return session.ToString();
+            }
+
+            if (session.Proto != ConnectionProtocol.Auto && !string.IsNullOrEmpty(session.Host) && session.Port > 0)
+            {
+                return session.ToString();
+            }
+
+            var puttyProfile = PuttyDataHelper.GetSessionData(session.SessionName);
+
+            var protocol = (session.Proto == ConnectionProtocol.Auto)
+                ? puttyProfile.Proto
+                : session.Proto;
+
+            var host = string.IsNullOrEmpty(session.Host)
+                ? puttyProfile.Host
+                : session.Host;
+
+            var port = (session.Port == 0)
+                ? puttyProfile.Port
+                : session.Port;
+
+            return string.Format("{0}://{1}:{2}", protocol.ToString().ToLower(), host, port);
         }
         #endregion
 
