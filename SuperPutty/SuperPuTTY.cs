@@ -30,8 +30,7 @@ namespace SuperPutty
         public static event Action<String> StatusEvent;
 
         static BindingList<LayoutData> layouts = new BindingList<LayoutData>();
-        static SortedList<string, SessionData> sessionsMap = new SortedList<string, SessionData>();
-        static BindingList<SessionData> sessionsList = new BindingList<SessionData>();
+        static FolderData rootFolder = new FolderData("root");
         static bool? isFirstRun;
 
         public static void Initialize(string[] args)
@@ -115,6 +114,10 @@ namespace SuperPutty
         }
 
 
+        public static FolderData GetRootFolderData()
+        {
+            return rootFolder;
+        }
 
         public static void Shutdown()
         {
@@ -124,7 +127,7 @@ namespace SuperPutty
 
         public static void ReportStatus(String status, params Object[] args)
         {
-            String msg = (args.Length > 0) ? String.Format(status, args) : status;
+            String msg = (args != null && args.Length > 0) ? String.Format(status, args) : status;
             Log.DebugFormat("STATUS: {0}", msg);
 
             if (StatusEvent != null)
@@ -316,15 +319,7 @@ namespace SuperPutty
             {
                 if (File.Exists(fileName))
                 {
-                    List<SessionData> sessions = SessionData.LoadSessionsFromFile(fileName);
-                    // remove old
-                    sessionsMap.Clear();
-                    sessionsList.Clear();
-
-                    foreach (SessionData session in sessions)
-                    {
-                        AddSession(session);
-                    }
+                    rootFolder.LoadSessionsFromFile(fileName);
                 }
                 else
                 {
@@ -341,7 +336,7 @@ namespace SuperPutty
         public static void SaveSessions()
         {
             Log.InfoFormat("Saving all sessions");
-            SessionData.SaveSessionsToFile(GetAllSessions(), SessionsFileName);
+            rootFolder.SaveToFile(SessionsFileName);
         }
 
         public static SessionData RemoveSession(string sessionId)
@@ -349,12 +344,25 @@ namespace SuperPutty
             SessionData session = GetSessionById(sessionId);
             if (session != null)
             {
-                sessionsMap.Remove(sessionId);
-                sessionsList.Remove(session);
+                //sessionsMap.Remove(sessionId);
+                //sessionsList.Remove(session);
             }
             Log.InfoFormat("Removed Session, id={0}, success={1}", sessionId, session != null);
 
             return session;
+        
+        }
+
+        public static void MoveUpSession(string sessionId)
+        {
+            ReportStatus("sessionId = {0}", sessionId);
+             SessionData session = GetSessionById(sessionId);
+             if (session != null)
+             {
+                // int index = sessionsList.IndexOf(session);
+                 //sessionsList.RemoveAt(index);
+                 //sessionsList.Insert(index - 1, session);
+             }
         }
 
         public static SessionData GetSessionById(string sessionId)
@@ -362,7 +370,7 @@ namespace SuperPutty
             SessionData session = null;
             if (sessionId != null)
             {
-                if (!sessionsMap.TryGetValue(sessionId, out session))
+               /* if (!sessionsMap.TryGetValue(sessionId, out session))
                 {
                     // no hit by id...so try the list
                     // @TODO: Revisit...this is a work around the sessionId changing in tree
@@ -380,32 +388,33 @@ namespace SuperPutty
                             break;
                         }
                     }
-                }
+                }*/
             }
             return session;
         }
 
-        public static bool AddSession(SessionData session)
+        public static void AddSession(SessionData sessionData, FolderData folderData)
+        {
+            folderData.AddSession(sessionData);
+
+        }
+       /* public static bool AddSession(FolderData folderData)
         {
             bool success = false;
-            if (GetSessionById(session.SessionId) == null)
-            {
-                Log.InfoFormat("Added Session, id={0}", session.SessionId);
-                sessionsMap.Add(session.SessionId, session);
-                sessionsList.Add(session);
-                success = true;
-            }
-            else
-            {
-                Log.InfoFormat("Failed to Add Session, id={0}.  Session already exists", session.SessionId);
-            }
-            return success;
-        }
 
-        public static List<SessionData> GetAllSessions()
+                Log.InfoFormat("Added Session, id={0}", session.SessionId);
+                //sessionsMap.Add(session.SessionId, session);
+                //sessionsList.Add(session);
+                folderList.First().AddSession(session);
+                success = true;
+           
+            return success;
+        }*/
+
+        /*public static List<SessionData> GetAllSessions()
         {
             return sessionsMap.Values.ToList();
-        }
+        }*/
 
         public static void OpenPuttySession(string sessionId)
         {
@@ -542,44 +551,46 @@ namespace SuperPutty
             if (File.Exists(fileName))
             {
                 Log.InfoFormat("Importing sessions from file, path={0}", fileName);
-                List<SessionData> sessions = SessionData.LoadSessionsFromFile(fileName);
-                ImportSessions(sessions, "Imported");
+                rootFolder.LoadSessionsFromFile(fileName);
+                
+               // ImportSessions(sessions, "Imported");
             }
         }
 
         public static void ImportSessionsFromPuTTY()
         {
             Log.InfoFormat("Importing sessions from PuTTY/KiTTY");
-            List<SessionData> sessions = PuttyDataHelper.GetAllSessionsFromPuTTY();
+            FolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTY();
             ImportSessions(sessions, "ImportedFromPuTTY");
         }
 
         public static void ImportSessionsFromPuttyCM(string fileExport)
         {
             Log.InfoFormat("Importing sessions from PuttyCM");
-            List<SessionData> sessions = PuttyDataHelper.GetAllSessionsFromPuTTYCM(fileExport);
+            FolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTYCM(fileExport);
             ImportSessions(sessions, "ImportedFromPuTTYCM");
         }
 
-        public static void ImportSessions(List<SessionData> sessions, string folder)
+        public static void ImportSessions(FolderData sessions, string folder)
         {
-            foreach (SessionData session in sessions)
+           /* foreach (FolderData session in sessions)
             {
                 // pre-pend session id with the provided folder to put them
-                session.SessionId = MakeUniqueSessionId(SessionData.CombineSessionIds(folder, session.SessionId));
-                session.SessionName = SessionData.GetSessionNameFromId(session.SessionId);
+                //session.SessionId = MakeUniqueSessionId(SessionData.CombineSessionIds(folder, session.SessionId));
+                //session.SessionName = SessionData.GetSessionNameFromId(session.SessionId);
                 AddSession(session);
             }
             Log.InfoFormat("Imported {0} sessions into {1}", sessions.Count, folder);
-
+            */
             SaveSessions();
         }
 
         public static void ImportSessionsFromSuperPutty1030()
         {
-            try
+            // TODO
+            /*try
             {
-                List<SessionData> sessions = SessionData.LoadSessionsFromRegistry();
+                List<SessionData> sessions = FolderData.LoadSessionsFromRegistry();
                 if (sessions != null && sessions.Count > 0)
                 {
                     foreach (SessionData session in sessions)
@@ -594,7 +605,7 @@ namespace SuperPutty
             catch (Exception ex)
             {
                 Log.WarnFormat("Could not import old sessions, msg={0}", ex.Message);
-            }
+            }*/
         }
 
         public static string MakeUniqueSessionId(string sessionId)
@@ -733,7 +744,7 @@ namespace SuperPutty
 
         public static BindingList<LayoutData> Layouts { get { return layouts; } }
 
-        public static BindingList<SessionData> Sessions { get { return sessionsList; } }
+        //public static BindingList<SessionData> Sessions { get { return sessionsList; } }
 
         public static CommandLineOptions CommandLine { get; private set; }
 

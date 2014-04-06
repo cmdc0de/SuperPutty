@@ -49,8 +49,9 @@ namespace SuperPutty.Data
             return names;
         }
 
-        public static List<SessionData> GetAllSessionsFromPuTTY()
+        public static FolderData GetAllSessionsFromPuTTY()
         {
+            /*
             List<SessionData> sessions = new List<SessionData>();
 
             RegistryKey key = RootAppKey;
@@ -65,39 +66,41 @@ namespace SuperPutty.Data
                         sessions.Add(GetSessionData(keyName));
                     }
                 }
-            }
-
-            return sessions;
+            }*/
+            // TODO
+            return new FolderData("");
         }
 
-        public static List<SessionData> GetAllSessionsFromPuTTYCM(string fileExport)
+        public static FolderData GetAllSessionsFromPuTTYCM(string fileExport)
         {
-            List<SessionData> sessions = new List<SessionData>();
+            FolderData root = new FolderData("");
 
             if (fileExport == null || !File.Exists(fileExport))
             {
-                return sessions;
+                return root;
             }
 
             XmlDocument doc = new XmlDocument();
             doc.Load(fileExport);
 
-
             XmlNodeList connections = doc.DocumentElement.SelectNodes("//connection[@type='PuTTY']");
+            FolderData currentFolderData = root;
+
             foreach (XmlElement connection in connections)
             {
-                List<string> folders = new List<string>();
+                //List<string> folders = new List<string>();
                 XmlElement node = connection.ParentNode as XmlElement;
                 while (node != null && node.Name != "root")
                 {
                     if (node.Name == "container" && node.GetAttribute("type") == "folder")
                     {
-                        folders.Add(node.GetAttribute("name"));
+                        //folders.Add(node.GetAttribute("name"));
+                        currentFolderData = currentFolderData.AddChildFolderData(node.GetAttribute("name"));
                     }
                     node = node.ParentNode as XmlElement;
                 }
-                folders.Reverse();
-                string parentPath = string.Join("/", folders.ToArray());
+                //folders.Reverse();
+                //string parentPath = string.Join("/", folders.ToArray());
 
                 XmlElement info = (XmlElement)connection.SelectSingleNode("connection_info");
                 XmlElement login = (XmlElement)connection.SelectSingleNode("login");
@@ -108,15 +111,16 @@ namespace SuperPutty.Data
                 session.Port = Convert.ToInt32(info.SelectSingleNode("port").InnerText);
                 session.Proto = (ConnectionProtocol)Enum.Parse(typeof(ConnectionProtocol), info.SelectSingleNode("protocol").InnerText);
                 session.PuttySession = info.SelectSingleNode("session").InnerText;
-                session.SessionId = string.IsNullOrEmpty(parentPath) 
+               /* session.SessionId = string.IsNullOrEmpty(parentPath) 
                     ? session.SessionName 
-                    : SessionData.CombineSessionIds(parentPath, session.SessionName);
+                    : SessionData.CombineSessionIds(parentPath, session.SessionName);*/
                 session.Username = login.SelectSingleNode("login").InnerText;
 
-                sessions.Add(session);
+                currentFolderData.AddSession(session);
+                
             }
 
-            return sessions;
+            return root;
         }
 
         public static SessionData GetSessionData(string sessionName)

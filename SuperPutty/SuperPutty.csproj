@@ -88,6 +88,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\FolderData.cs" />
     <Compile Include="Data\KeyboardShortcut.cs" />
     <Compile Include="Gui\BaseViewModel.cs" />
     <Compile Include="Gui\DataGridViewProgressColumn.cs" />

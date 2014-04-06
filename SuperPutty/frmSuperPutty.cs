@@ -293,7 +293,7 @@ namespace SuperPutty
             saveDialog.InitialDirectory = Application.StartupPath;
             if (saveDialog.ShowDialog(this) == DialogResult.OK)
             {
-                SessionData.SaveSessionsToFile(SuperPuTTY.GetAllSessions(), saveDialog.FileName);
+                SuperPuTTY.GetRootFolderData().SaveToFile(saveDialog.FileName);
             }
         }
 
@@ -343,14 +343,15 @@ namespace SuperPutty
             QuickSelectorData data = new QuickSelectorData();
             data.CaseSensitive = SuperPuTTY.Settings.QuickSelectorCaseSensitiveSearch;
 
-            foreach (SessionData sd in SuperPuTTY.Sessions)
+            // TODO
+            /*foreach (SessionData sd in SuperPuTTY.Sessions)
             {
                 data.ItemData.AddItemDataRow(
                     sd.SessionName,
                     sd.SessionId,
                     sd.Proto == ConnectionProtocol.Cygterm || sd.Proto == ConnectionProtocol.Mintty ? Color.Blue : Color.Black, 
                     null);
-            }
+            }*/
 
             QuickSelectorOptions opt = new QuickSelectorOptions();
             opt.Sort = data.ItemData.DetailColumn.ColumnName;

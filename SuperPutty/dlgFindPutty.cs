@@ -442,7 +442,7 @@ namespace SuperPutty
                 System.Environment.Exit(1);
             }
 
-            if (SuperPuTTY.IsFirstRun && SuperPuTTY.Sessions.Count == 0)
+            if (SuperPuTTY.IsFirstRun)
             {
                 // first run, got nothing...try to import from registry
                 SuperPuTTY.ImportSessionsFromSuperPutty1030();
