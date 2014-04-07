@@ -616,10 +616,11 @@
             // 
             // tsSendCommandCombo
             // 
-            this.tsSendCommandCombo.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          //  this.tsSendCommandCombo.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tsSendCommandCombo.Name = "tsSendCommandCombo";
             this.tsSendCommandCombo.Size = new System.Drawing.Size(400, 25);
-            this.tsSendCommandCombo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsSendCommandCombo_KeyDown);
+            this.tsSendCommandCombo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tsSendCommandCombo_KeyUp);
+            this.tsSendCommandCombo.ForeColor = System.Drawing.ColorTranslator.FromHtml("#0F0F0F");
             // 
             // toolStripSeparatorSendCommands
             // 

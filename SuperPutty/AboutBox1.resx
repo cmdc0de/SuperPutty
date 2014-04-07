@@ -600,19 +600,6 @@
         cJWw3xX9u6JfoPW7on9X9Ku1flf074p+tdbviv5d0a/S+r//+/8BPTxUq6Ub7iwAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>PuTTY is a SSH Terminal application written by Simon Tatham 
-http://www.chiark.greenend.org.uk/~sgtatham/putty/
-
-Icons courtesy of FamFamFam  
-http://www.famfamfam.com/
-
-DockPanel Suite is the control we use for Visual Studio like docking of tabs and windows
-http://sourceforge.net/projects/dockpanelsuite/
-
-Inspired by PuTTY Connection Manager
-http://puttycm.free.fr/</value>
-  </data>
   <data name="textBox2.Text" xml:space="preserve">
     <value>Copyright (c) 2009 Jim Radford
 
@@ -633,5 +620,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.</value>
+  </data>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>PuTTY is a SSH Terminal application written by Simon Tatham 
+http://www.chiark.greenend.org.uk/~sgtatham/putty/
+
+Icons courtesy of FamFamFam  
+http://www.famfamfam.com/
+
+DockPanel Suite is the control we use for Visual Studio like docking of tabs and windows
+http://sourceforge.net/projects/dockpanelsuite/
+
+Inspired by PuTTY Connection Manager
+http://puttycm.free.fr/</value>
   </data>
 </root>
