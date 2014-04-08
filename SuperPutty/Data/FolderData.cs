@@ -34,6 +34,18 @@ namespace SuperPutty.Data
             sessionsList.Add(sessionData);
         }
 
+        public BindingList<SessionData> GetSessions(FolderData parent)
+        {
+            List<SessionData> result = new List<SessionData>();
+            foreach (FolderData child in parent.folderChildren)
+            {
+                result.AddRange(child.GetSessions());
+                result.AddRange(GetSessions(child));
+            }
+            result.AddRange(parent.GetSessions());
+            return new BindingList<SessionData>(result);
+        }
+
         public BindingList<SessionData> GetSessions()
         {
             return sessionsList;

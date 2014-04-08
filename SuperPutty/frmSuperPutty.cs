@@ -343,15 +343,16 @@ namespace SuperPutty
             QuickSelectorData data = new QuickSelectorData();
             data.CaseSensitive = SuperPuTTY.Settings.QuickSelectorCaseSensitiveSearch;
 
+            
             // TODO
-            /*foreach (SessionData sd in SuperPuTTY.Sessions)
+            foreach (SessionData sd in SuperPuTTY.GetRootFolderData().GetSessions(SuperPuTTY.GetRootFolderData()))
             {
                 data.ItemData.AddItemDataRow(
                     sd.SessionName,
                     sd.SessionId,
                     sd.Proto == ConnectionProtocol.Cygterm || sd.Proto == ConnectionProtocol.Mintty ? Color.Blue : Color.Black, 
                     null);
-            }*/
+            }
 
             QuickSelectorOptions opt = new QuickSelectorOptions();
             opt.Sort = data.ItemData.DetailColumn.ColumnName;
