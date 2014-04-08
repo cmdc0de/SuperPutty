@@ -128,7 +128,7 @@ namespace SuperPutty.Data
             var session = new SessionData();
 
             var key = RootAppKey;
-            if (key != null)
+            if (key != null && sessionName != null)
             {
                 var keyName = HttpUtility.UrlEncode(sessionName);
                 var sessionKey = key.OpenSubKey(keyName);

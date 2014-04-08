@@ -134,7 +134,7 @@ namespace SuperPutty
 
             this.nodeRoot.Tag = rootFolderData;
             CreateNodes(rootFolderData, this.nodeRoot);
-            CreateNodes(rootFolderData.GetSessions(), this.nodeRoot);
+            CreateNodesSession(rootFolderData.GetSessions(), this.nodeRoot);
 
             treeView1.SelectedNode = this.nodeRoot;
             nodeRoot.Expand();
@@ -145,12 +145,13 @@ namespace SuperPutty
         {
             foreach (FolderData child in folderData.GetChildren())
             {
-                AddFolderNode(currentNode, child);
-                CreateNodes(child.GetSessions(), currentNode);
+                TreeNode childNode = AddFolderNode(currentNode, child);
+                CreateNodes(child, childNode);
+                CreateNodesSession(child.GetSessions(), childNode);
             }
         }
 
-        private void CreateNodes(BindingList<SessionData> sessions, TreeNode currentNode)
+        private void CreateNodesSession(BindingList<SessionData> sessions, TreeNode currentNode)
         {
             foreach (SessionData session in sessions)
             {
@@ -348,9 +349,10 @@ namespace SuperPutty
             if (MessageBox.Show("Are you sure you want to delete " + session.SessionName + "?", "Delete Session?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 //session.RegistryRemove(session.SessionName);
-                treeView1.SelectedNode.Remove();
-                SuperPuTTY.RemoveSession(session.SessionId);
-                SuperPuTTY.SaveSessions();
+                //treeView1.SelectedNode.Remove();
+                SuperPuTTY.GetRootFolderData().RemoveSession(session);
+                LoadSessions();
+                treeView1.Refresh();
                 //m_SessionsById.Remove(session.SessionId);
             }
         }
@@ -876,44 +878,35 @@ namespace SuperPutty
                 Log.DebugFormat("Drag drop");
 
                 TreeNode nodePayload = (TreeNode)e.Data.GetData(typeof(TreeNode));
+                FolderData newParent = (FolderData)node.Tag;
                 if (IsFolderNode(nodePayload))
                 {
-                    SuperPuTTY.GetRootFolderData().moveTo((FolderData)node.Tag, (FolderData)nodePayload.Tag);
+                    FolderData nodeToMove = (FolderData)nodePayload.Tag;
+                    SuperPuTTY.GetRootFolderData().moveTo(newParent, nodeToMove);
                 }
-                else { 
-                    SuperPuTTY.GetRootFolderData().moveTo((FolderData)node.Tag, (SessionData)nodePayload.Tag); 
+                else {
+                    SessionData nodeToMove = (SessionData)nodePayload.Tag;
+                    SuperPuTTY.GetRootFolderData().moveTo(newParent, nodeToMove);
                 }
 
                 LoadSessions();
-                treeView1.Refresh();
-                
-                /*TreeNode nodeNew = (TreeNode)nodePayload.Clone();
 
-               // If node was expanded before, ensure new node is also expanded when moved
-                if (nodePayload.IsExpanded)
+                TreeNode selectedNodeParent = getTreeNode(nodeRoot, newParent);
+                if (selectedNodeParent != null)
                 {
-                   nodeNew.Expand();
+                    selectedNodeParent.Expand();
+                }
+                
+
+                TreeNode selectedNodeChild = null;
+                if (IsFolderNode(nodePayload))
+                {
+                    selectedNodeChild = getTreeNode(nodeRoot, (FolderData)nodePayload.Tag);    
+                } else{
+                    selectedNodeChild = getTreeNode(nodeRoot, (SessionData)nodePayload.Tag);
                 }
 
-               // remove old
-               nodePayload.Remove();
-
-               // add new
-               node.Nodes.Add(nodeNew);*/
-                //UpdateSessionId(nodeNew, (SessionData)nodeNew.Tag); //
-
-                // If this a folder, reset it's childrens sessionIds
-               /* if (IsFolderNode(nodeNew))
-                {
-                    resetFoldersChildrenPaths(nodeNew);
-                    
-                }*/
-
-                // remove old
-                //nodePayload.Remove();
-
-                // Show the newly added node if it is not already visible.
-                //node.Expand();
+                treeView1.SelectedNode = selectedNodeChild;
 
                 // auto save settings...use timer to prevent excessive saves while dragging and dropping nodes
                 timerDelayedSave.Stop();
@@ -922,16 +915,50 @@ namespace SuperPutty
             }
         }
 
-        #endregion
-
-        /*public void resetFoldersChildrenPaths(TreeNode nodePayload)
+        public TreeNode getTreeNode(TreeNode treeNodeParent, FolderData folderData)
         {
-            // Reset folders children nodes sessionId (path)
-            foreach (TreeNode node in nodePayload.Nodes)
+            foreach (TreeNode treeNode in treeNodeParent.Nodes)
             {
-              //  UpdateSessionId(node, (SessionData)node.Tag);
+                if (IsFolderNode(treeNode))
+                {
+                    FolderData tagData = (FolderData) treeNode.Tag;
+                    if (tagData == folderData)
+                    {
+                        return treeNode;
+                    }
+                }
+                TreeNode childTreeNode = getTreeNode(treeNode, folderData);
+                if (childTreeNode != null)
+                {
+                    return childTreeNode;
+                }
             }
-        }*/
+            return null;
+        }
+
+        public TreeNode getTreeNode(TreeNode treeNodeParent, SessionData sessionData)
+        {
+            foreach (TreeNode treeNode in treeNodeParent.Nodes)
+            {
+                if (IsSessionNode(treeNode))
+                {
+                    SessionData tagData = (SessionData)treeNode.Tag;
+                    if (tagData == sessionData)
+                    {
+                        return treeNode;
+                    }
+                }
+
+                TreeNode childTreeNode = getTreeNode(treeNode, sessionData);
+                if (childTreeNode != null)
+                {
+                    return childTreeNode;
+                }
+            }
+            return null;
+        }
+
+        #endregion
 
         private void timerDelayedSave_Tick(object sender, EventArgs e)
         {

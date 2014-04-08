@@ -160,7 +160,7 @@ namespace SuperPutty.Data
         }
 
         public FolderData GetParent(FolderData parent, FolderData folderDataToSearch) {
-            int index = folderChildren.IndexOf(folderDataToSearch);
+            int index = parent.folderChildren.IndexOf(folderDataToSearch);
             if (index >= 0)
             {
                 return parent;
@@ -177,7 +177,7 @@ namespace SuperPutty.Data
 
         public FolderData GetParent(FolderData parent, SessionData sessionDataToSearch)
         {
-            int index = sessionsList.IndexOf(sessionDataToSearch);
+            int index = parent.sessionsList.IndexOf(sessionDataToSearch);
             if (index >= 0)
             {
                 return parent;
@@ -205,14 +205,18 @@ namespace SuperPutty.Data
 
         public void moveTo(FolderData parent, SessionData sessionDataToMove)
         {
-            // remove it
-            FolderData pp = GetParent(this, sessionDataToMove);
-            pp.sessionsList.Remove(sessionDataToMove);
+            RemoveSession(sessionDataToMove);
 
             // add to new space
             parent.sessionsList.Add(sessionDataToMove);
         }
 
+        public void RemoveSession(SessionData sessionDataToRemove)
+        {
+            // remove it
+            FolderData pp = GetParent(this, sessionDataToRemove);
+            pp.sessionsList.Remove(sessionDataToRemove);
+        }
         public void moveUp(FolderData parent, FolderData folderDataToMove)
         {
             int index = folderChildren.IndexOf(folderDataToMove);
