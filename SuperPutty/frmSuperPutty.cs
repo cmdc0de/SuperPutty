@@ -966,13 +966,13 @@ namespace SuperPutty
             this.sendCommandsDocumentSelector.Show();
         }
 
-        private void tsSendCommandCombo_KeyDown(object sender, KeyEventArgs e)
+        private void tsSendCommandCombo_KeyUp(object sender, KeyEventArgs e)
         {
             if (Log.Logger.IsEnabledFor(Level.Trace))
             {
                 Log.DebugFormat("Keys={0}, control={1}, shift={2}, keyData={3}", e.KeyCode, e.Control, e.Shift, e.KeyData);
             }
-            if (e.KeyCode == Keys.Up)
+            /*if (e.KeyCode == Keys.Up)
             {
                 if (tsSendCommandCombo.Items.Count > 0)
                 {
@@ -1006,7 +1006,8 @@ namespace SuperPutty
                 }
                 e.Handled = true;
             }
-            else if (e.KeyCode == Keys.Enter)
+            else */
+            if (e.KeyCode == Keys.Enter)
             {
                 // send commands
                 TrySendCommandsFromToolbar(new CommandData(this.tsSendCommandCombo.Text), !this.tbBtnMaskText.Checked);
