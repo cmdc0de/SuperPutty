@@ -876,19 +876,30 @@ namespace SuperPutty
                 Log.DebugFormat("Drag drop");
 
                 TreeNode nodePayload = (TreeNode)e.Data.GetData(typeof(TreeNode));
-                TreeNode nodeNew = (TreeNode)nodePayload.Clone();
-
-                // If node was expanded before, ensure new node is also expanded when moved
-                if (nodePayload.IsExpanded)
+                if (IsFolderNode(nodePayload))
                 {
-                    nodeNew.Expand();
+                    SuperPuTTY.GetRootFolderData().moveTo((FolderData)node.Tag, (FolderData)nodePayload.Tag);
+                }
+                else { 
+                    SuperPuTTY.GetRootFolderData().moveTo((FolderData)node.Tag, (SessionData)nodePayload.Tag); 
                 }
 
-                // remove old
-                nodePayload.Remove();
+                LoadSessions();
+                treeView1.Refresh();
+                
+                /*TreeNode nodeNew = (TreeNode)nodePayload.Clone();
 
-                // add new
-                node.Nodes.Add(nodeNew);
+               // If node was expanded before, ensure new node is also expanded when moved
+                if (nodePayload.IsExpanded)
+                {
+                   nodeNew.Expand();
+                }
+
+               // remove old
+               nodePayload.Remove();
+
+               // add new
+               node.Nodes.Add(nodeNew);*/
                 //UpdateSessionId(nodeNew, (SessionData)nodeNew.Tag); //
 
                 // If this a folder, reset it's childrens sessionIds
@@ -899,10 +910,10 @@ namespace SuperPutty
                 }*/
 
                 // remove old
-                nodePayload.Remove();
+                //nodePayload.Remove();
 
                 // Show the newly added node if it is not already visible.
-                node.Expand();
+                //node.Expand();
 
                 // auto save settings...use timer to prevent excessive saves while dragging and dropping nodes
                 timerDelayedSave.Stop();

@@ -159,6 +159,59 @@ namespace SuperPutty.Data
             this.WriteXml(writer);
         }
 
+        public FolderData GetParent(FolderData parent, FolderData folderDataToSearch) {
+            int index = folderChildren.IndexOf(folderDataToSearch);
+            if (index >= 0)
+            {
+                return parent;
+            }
+            foreach (FolderData p in parent.folderChildren)
+            {
+                if (GetParent(p, folderDataToSearch) != null)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public FolderData GetParent(FolderData parent, SessionData sessionDataToSearch)
+        {
+            int index = sessionsList.IndexOf(sessionDataToSearch);
+            if (index >= 0)
+            {
+                return parent;
+            }
+            foreach (FolderData p in parent.folderChildren)
+            {
+                if (GetParent(p, sessionDataToSearch) != null)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+
+        public void moveTo(FolderData parent, FolderData folderDataToMove)
+        {
+            // remove it
+            FolderData pp = GetParent(this, folderDataToMove);
+            pp.folderChildren.Remove(folderDataToMove);
+
+            // add to new space
+            parent.folderChildren.Add(folderDataToMove);
+        }
+
+        public void moveTo(FolderData parent, SessionData sessionDataToMove)
+        {
+            // remove it
+            FolderData pp = GetParent(this, sessionDataToMove);
+            pp.sessionsList.Remove(sessionDataToMove);
+
+            // add to new space
+            parent.sessionsList.Add(sessionDataToMove);
+        }
 
         public void moveUp(FolderData parent, FolderData folderDataToMove)
         {
@@ -202,28 +255,28 @@ namespace SuperPutty.Data
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folder"))
                 {
-                    FolderData subFolderData = new FolderData(reader.ReadString());
+                    FolderData subFolderData = new FolderData(reader.GetAttribute("name"));
                     folderChildren.Add(subFolderData);
                 }
                 else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("session"))
                 {
 
                     SessionData sessionData = new SessionData();
-                    sessionData.SessionName = reader.GetAttribute("SessionName");
-                    sessionData.ImageKey = reader.GetAttribute("ImageKey");
-                    sessionData.Host = reader.GetAttribute("Host");
-                    String portStr = reader.GetAttribute("Port");
+                    sessionData.SessionName = reader.GetAttribute("name");
+                    sessionData.ImageKey = reader.GetAttribute("imagekey");
+                    sessionData.Host = reader.GetAttribute("host");
+                    String portStr = reader.GetAttribute("port");
                     if (portStr != null)
                     {
                         sessionData.Port = int.Parse(portStr);
                     }
-                    String protoStr = reader.GetAttribute("Proto");
+                    String protoStr = reader.GetAttribute("proto");
                     if (protoStr != null) { 
-                        sessionData.Proto = (ConnectionProtocol) Enum.Parse(typeof(ConnectionProtocol), reader.GetAttribute("Proto"), true);
+                        sessionData.Proto = (ConnectionProtocol) Enum.Parse(typeof(ConnectionProtocol), reader.GetAttribute("proto"), true);
                     }
-                    sessionData.PuttySession = reader.GetAttribute("PuttySession");
-                    sessionData.Username = reader.GetAttribute("Username");
-                    sessionData.ExtraArgs = reader.GetAttribute("ExtraArgs");
+                    sessionData.PuttySession = reader.GetAttribute("puttysession");
+                    sessionData.Username = reader.GetAttribute("username");
+                    sessionData.ExtraArgs = reader.GetAttribute("extraargs");
 
                     sessionsList.Add(sessionData);
                 }
@@ -238,13 +291,15 @@ namespace SuperPutty.Data
 
             foreach (FolderData myObject in folderChildren)
             {
-                writer.WriteElementString("folder", myObject.Name);
+                writer.WriteStartElement("folder");
+                writer.WriteAttributeString("name", myObject.Name);
                 WriteSessionData(writer, myObject.GetSessions());
+                writer.WriteEndElement();
             }
 
             WriteSessionData(writer, sessionsList);
            
-            writer.WriteEndElement(); // close Items tag
+            writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Close();
         }
@@ -258,14 +313,14 @@ namespace SuperPutty.Data
                 //XmlSerializer xs = new XmlSerializer(sessionData.GetType());
                 //xs.Serialize(writer, sessionData, null);
                 writer.WriteStartElement("session");
-                writer.WriteAttributeString("SessionName", sessionData.SessionName);
-                writer.WriteAttributeString("ImageKey", sessionData.ImageKey);
-                writer.WriteAttributeString("Host", sessionData.Host);
-                writer.WriteAttributeString("Port", sessionData.Port.ToString());
-                writer.WriteAttributeString("Proto", sessionData.Proto.ToString());
-                writer.WriteAttributeString("PuttySession", sessionData.PuttySession);
-                writer.WriteAttributeString("Username", sessionData.Username);
-                writer.WriteAttributeString("ExtraArgs", sessionData.ExtraArgs);
+                writer.WriteAttributeString("sessionname", sessionData.SessionName);
+                writer.WriteAttributeString("imagekey", sessionData.ImageKey);
+                writer.WriteAttributeString("host", sessionData.Host);
+                writer.WriteAttributeString("port", sessionData.Port.ToString());
+                writer.WriteAttributeString("proto", sessionData.Proto.ToString());
+                writer.WriteAttributeString("puttysession", sessionData.PuttySession);
+                writer.WriteAttributeString("username", sessionData.Username);
+                writer.WriteAttributeString("extraargs", sessionData.ExtraArgs);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
