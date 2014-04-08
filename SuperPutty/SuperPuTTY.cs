@@ -320,6 +320,9 @@ namespace SuperPutty
                 if (File.Exists(fileName))
                 {
                     rootFolder.LoadSessionsFromFile(fileName);
+
+                    // refresh the treeview
+                    MainForm.reloadSessions();
                 }
                 else
                 {
@@ -552,23 +555,25 @@ namespace SuperPutty
             {
                 Log.InfoFormat("Importing sessions from file, path={0}", fileName);
                 rootFolder.LoadSessionsFromFile(fileName);
-                
-               // ImportSessions(sessions, "Imported");
-            }
+
+                MainForm.reloadSessions();
+             }
         }
 
         public static void ImportSessionsFromPuTTY()
         {
             Log.InfoFormat("Importing sessions from PuTTY/KiTTY");
             FolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTY();
-            ImportSessions(sessions, "ImportedFromPuTTY");
+            //ImportSessions(sessions, "ImportedFromPuTTY");
+            MainForm.reloadSessions();
         }
 
         public static void ImportSessionsFromPuttyCM(string fileExport)
         {
             Log.InfoFormat("Importing sessions from PuttyCM");
             FolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTYCM(fileExport);
-            ImportSessions(sessions, "ImportedFromPuTTYCM");
+            //ImportSessions(sessions, "ImportedFromPuTTYCM");
+            MainForm.reloadSessions();
         }
 
         public static void ImportSessions(FolderData sessions, string folder)

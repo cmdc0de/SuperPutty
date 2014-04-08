@@ -407,6 +407,12 @@ namespace SuperPutty
             SuperPuTTY.LoadSessions();
         }
 
+        public void reloadSessions()
+        {
+            SessionTreeview treeview = (SessionTreeview) sessions.Instance;
+            treeview.LoadSessions();
+        }
+
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -960,22 +966,60 @@ namespace SuperPutty
             this.sendCommandsDocumentSelector.Show();
         }
 
-        private void tsSendCommandCombo_KeyUp(object sender, KeyEventArgs e)
+        private void tsSendCommandCombo_KeyDown(object sender, KeyEventArgs e)
         {
             if (Log.Logger.IsEnabledFor(Level.Trace))
             {
                 Log.DebugFormat("Keys={0}, control={1}, shift={2}, keyData={3}", e.KeyCode, e.Control, e.Shift, e.KeyData);
             }
-            
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+            if (e.KeyCode == Keys.Up)
+            {
+                if (tsSendCommandCombo.Items.Count > 0)
+                {
+                    commandMRUIndex--;
+                    if (commandMRUIndex < 0)
+                    {
+                        commandMRUIndex = tsSendCommandCombo.Items.Count - 1;
+                    }
+                    if (commandMRUIndex >= 0)
+                    {
+                        tsSendCommandCombo.Text = (string) tsSendCommandCombo.Items[commandMRUIndex];
+                        tsSendCommandCombo.SelectionStart = tsSendCommandCombo.Text.Length;
+                    }
+                }
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (tsSendCommandCombo.Items.Count > 0)
+                {
+                    commandMRUIndex++;
+                    if (commandMRUIndex >= tsSendCommandCombo.Items.Count)
+                    {
+                        commandMRUIndex = 0;
+                    }
+                    if (commandMRUIndex < tsSendCommandCombo.Items.Count)
+                    {
+                        tsSendCommandCombo.Text = (string)tsSendCommandCombo.Items[commandMRUIndex];
+                        tsSendCommandCombo.SelectionStart = tsSendCommandCombo.Text.Length;
+                    }
+                }
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Enter)
             {
                 // send commands
                 TrySendCommandsFromToolbar(new CommandData(this.tsSendCommandCombo.Text), !this.tbBtnMaskText.Checked);
                 e.Handled = true;
                 e.SuppressKeyPress = true;
-                return;
             }
-            e.Handled = false;
+            else if ((e.Control && e.KeyCode != Keys.ControlKey))
+            {
+                // special keys
+                TrySendCommandsFromToolbar(new CommandData(e), !this.tbBtnMaskText.Checked);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
 
 

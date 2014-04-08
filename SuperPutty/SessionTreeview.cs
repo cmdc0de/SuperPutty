@@ -122,8 +122,9 @@ namespace SuperPutty
         /// <summary>
         /// Load the sessions from the registry and populate the treeview control
         /// </summary>
-        void LoadSessions()
+        public void LoadSessions()
         {
+            treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
 
             this.nodeRoot = treeView1.Nodes.Add("root", "root", ImageKeyFolder, ImageKeyFolder);
@@ -132,7 +133,12 @@ namespace SuperPutty
             FolderData rootFolderData = SuperPuTTY.GetRootFolderData();
 
             this.nodeRoot.Tag = rootFolderData;
-            CreateNodes(rootFolderData, this.nodeRoot);           
+            CreateNodes(rootFolderData, this.nodeRoot);
+            CreateNodes(rootFolderData.GetSessions(), this.nodeRoot);
+
+            treeView1.SelectedNode = this.nodeRoot;
+            nodeRoot.Expand();
+            treeView1.EndUpdate();
         }
 
         private void CreateNodes(FolderData folderData, TreeNode currentNode)
@@ -148,7 +154,10 @@ namespace SuperPutty
         {
             foreach (SessionData session in sessions)
             {
-                AddSessionNode(currentNode, session, true);
+                if (this.filter == null || this.filter(session))
+                {
+                    AddSessionNode(currentNode, session, true);
+                }
             }
         }
 
@@ -437,17 +446,15 @@ namespace SuperPutty
                 int index = parent.Nodes.IndexOf(node);
                 if (index > 0)
                 {
-                    // SuperPuTTY.MoveUpSession(session.SessionId);
-                    // SuperPuTTY.ReportStatus("Move up : {0} {1}", index, node.Tag);
-                    
-                    
-
-                    parent.Nodes.RemoveAt(index);
-                    parent.Nodes.Insert(index - 1, node);
+                    //parent.Nodes.RemoveAt(index);
+                    //parent.Nodes.Insert(index - 1, node);
                     SuperPuTTY.ReportStatus("Move up : {0}", node.Index);
-
+                    FolderData rootFolderData = SuperPuTTY.GetRootFolderData();
+                    if (IsFolderNode(node))
+                    {
+                        rootFolderData.moveUp(rootFolderData, (FolderData)node.Tag);
+                    }
                     
-
                     node.TreeView.SelectedNode = node;
                 }
             }
@@ -944,8 +951,12 @@ namespace SuperPutty
         #endregion
 
         #region Search
-        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
+            this.ApplySearch(this.txtSearch.Text);
+            e.Handled = true;
+            //e.SuppressKeyPress = true;
+            /*
             switch (e.KeyCode)
             {
                 case Keys.Enter:
@@ -958,7 +969,7 @@ namespace SuperPutty
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                     break;
-            }
+            }*/
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
