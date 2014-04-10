@@ -1,4 +1,6 @@
-﻿namespace SuperPutty
+﻿using System;
+using System.Collections.Generic;
+namespace SuperPutty
 {
     partial class AboutBox1
     {
@@ -283,7 +285,12 @@
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(348, 150);
             this.richTextBox2.TabIndex = 0;
-            this.richTextBox2.Text = "Jim RADFORD <jimradford@gmail.com>\nSylvain MOUQUET <sylvain.mouquet@gmail.com>";
+
+            List<String> contributors =new List<String>();
+            contributors.Add("Jim RADFORD <jimradford@gmail.com>");
+            contributors.Add("Alejandro Sánchez");
+            contributors.Add("Sylvain MOUQUET <sylvain.mouquet@gmail.com>");
+            this.richTextBox2.Text = string.Join("\n", contributors.ToArray());
             // 
             // AboutBox1
             // 
