@@ -1,4 +1,5 @@
-﻿namespace SuperPutty
+﻿using System.Windows.Forms;
+namespace SuperPutty
 {
     partial class SessionTreeview
     {

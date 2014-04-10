@@ -8,6 +8,7 @@ using System.Xml;
 using Microsoft.Win32;
 using WeifenLuo.WinFormsUI.Docking;
 using SuperPutty.Utils;
+using System.Collections;
 
 namespace SuperPutty.Data
 {
@@ -65,6 +66,20 @@ namespace SuperPutty.Data
             return child;
         }
 
+        public void RenameSessionFolderName(String lastFolderName, String newFolderName)
+        {
+            BindingList<SessionFolderData> listSessionFolderData = GetSessionFolderDataChildren();
+            foreach (SessionFolderData sessionFolderData in listSessionFolderData)
+            {
+                if (sessionFolderData.Name == lastFolderName)
+                {
+                    sessionFolderData.Name = newFolderName;
+                    return;
+                }
+            }
+        }
+
+        /*
         /// <summary>
         /// Read any existing saved sessions from the registry, decode and populate a list containing the data
         /// </summary>
@@ -75,7 +90,7 @@ namespace SuperPutty.Data
             SessionRegistryHelper.LoadAllSessionsFromRegistry();
 
             List<SessionData> sessionList = new List<SessionData>();
-            /*RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\SuperPuTTY\Sessions");
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\SuperPuTTY\Sessions");
             if (key != null)
             {
                 string[] sessionKeys = key.GetSubKeyNames();
@@ -97,9 +112,9 @@ namespace SuperPutty.Data
                         sessionList.Add(sessionData);
                     }
                 }
-            }*/
+            }
             return sessionList;
-        }
+        }*/
 
         public void LoadSessionsFromFile(string fileName)
         {
@@ -270,12 +285,23 @@ namespace SuperPutty.Data
         {
             _SessionFolderDataChildren.Clear();
             _SessionDataChildren.Clear();
+
+            SessionFolderData parent = SuperPuTTY.GetRootFolderData();
+            Stack<SessionFolderData> stack = new Stack<SessionFolderData>();
+            stack.Push(parent);
+
             while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folder"))
                 {
                     SessionFolderData subFolderData = new SessionFolderData(reader.GetAttribute("name"));
                     _SessionFolderDataChildren.Add(subFolderData);
+
+                    stack.Push(subFolderData);
+                }
+                else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals("folder"))
+                {
+                    stack.Pop();
                 }
                 else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("session"))
                 {
@@ -297,7 +323,7 @@ namespace SuperPutty.Data
                     sessionData.Username = reader.GetAttribute("username");
                     sessionData.ExtraArgs = reader.GetAttribute("extraargs");
 
-                    _SessionDataChildren.Add(sessionData);
+                    stack.Peek().AddSession(sessionData);
                 }
             }
             reader.Close();
@@ -332,7 +358,7 @@ namespace SuperPutty.Data
                 //XmlSerializer xs = new XmlSerializer(sessionData.GetType());
                 //xs.Serialize(writer, sessionData, null);
                 writer.WriteStartElement("session");
-                writer.WriteAttributeString("sessionname", sessionData.SessionName);
+                writer.WriteAttributeString("name", sessionData.SessionName);
                 writer.WriteAttributeString("imagekey", sessionData.ImageKey);
                 writer.WriteAttributeString("host", sessionData.Host);
                 writer.WriteAttributeString("port", sessionData.Port.ToString());

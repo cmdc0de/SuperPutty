@@ -68,10 +68,12 @@ namespace SuperPutty
             this.ApplySettings();
 
             // populate sessions in the treeview from the registry
-            this.LoadSessions();
+            this.CreateTreeview();
             this.ExpandInitialTree();
             //SuperPuTTY.Sessions.ListChanged += new ListChangedEventHandler(Sessions_ListChanged);
             SuperPuTTY.Settings.SettingsSaving += new SettingsSavingEventHandler(Settings_SettingsSaving);
+
+            m_DockPanel.ContextMenuStrip = this.contextMenuStripFolder;
         }
 
         void ExpandInitialTree()
@@ -122,7 +124,7 @@ namespace SuperPutty
         /// <summary>
         /// Load the sessions from the registry and populate the treeview control
         /// </summary>
-        public void LoadSessions()
+        public void CreateTreeview()
         {
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
@@ -285,41 +287,29 @@ namespace SuperPutty
                     }
                     SuperPuTTY.AddSession(session, (SessionFolderData) nodeRef.Tag);
                     this.treeView1.SelectedNode = AddSessionNode(nodeRef, session, true);
-
-                    // find new node and select it
-                   /* TreeNode nodeNew = nodeRef.Nodes[session.SessionName];
-                    if (nodeNew != null)
-                    {
-                        this.treeView1.SelectedNode = nodeNew;
-                    }*/
                 }
                 else
                 {
                     // handle renames
-                    node.Text = session.SessionName;
+                    /*node.Text = session.SessionName;
                     node.Name = session.SessionName;
                     node.ImageKey = session.ImageKey;
-                    node.SelectedImageKey = session.ImageKey;
-                    //if (session.SessionId != session.OldSessionId)
-                    {
-                        try
-                        {
-                            this.isRenamingNode = true;
-                            //SuperPuTTY.RemoveSession(session.OldSessionId);
-                            SuperPuTTY.AddSession(session, (SessionFolderData)nodeRef.Tag);
-                        }
-                        finally
-                        {
-                            this.isRenamingNode = false;
-                        }
+                    node.SelectedImageKey = session.ImageKey;*/
 
+                    /*try
+                    {
+                        this.isRenamingNode = true;
+                        ((SessionFolderData)(nodeRef.Tag)).Name = session.SessionName;
                     }
-                    ResortNodes();
+                    finally
+                    {
+                        this.isRenamingNode = false;
+                    }*/
                     this.treeView1.SelectedNode = node;
                 }
 
-                //treeView1.ExpandAll();
                 SuperPuTTY.SaveSessions();
+                SuperPuTTY.LoadSessions();
             }
             
         }
@@ -351,7 +341,7 @@ namespace SuperPutty
                 //session.RegistryRemove(session.SessionName);
                 //treeView1.SelectedNode.Remove();
                 SuperPuTTY.GetRootFolderData().RemoveSession(session);
-                LoadSessions();
+                CreateTreeview();
                 treeView1.Refresh();
                 //m_SessionsById.Remove(session.SessionId);
             }
@@ -509,11 +499,10 @@ namespace SuperPutty
                 };
                 if (dialog.ShowDialog(this) == DialogResult.OK && node.Text != dialog.ItemName)
                 {
-                    node.Text = dialog.ItemName;
-                    node.Name = dialog.ItemName;
-                    //UpdateSessionId(node);
+
+                    SuperPuTTY.GetRootFolderData().RenameSessionFolderName(node.Text, dialog.ItemName);
                     SuperPuTTY.SaveSessions();
-                    ResortNodes();
+                    SuperPuTTY.LoadSessions();
                 }
             }
         }
@@ -713,11 +702,11 @@ namespace SuperPutty
 
         }
 
-        void ResortNodes()
+        /*void ResortNodes()
         {
             this.treeView1.TreeViewNodeSorter = null;
             this.treeView1.TreeViewNodeSorter = this;
-        }
+        }*/
 
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -889,7 +878,7 @@ namespace SuperPutty
                     SuperPuTTY.GetRootFolderData().moveTo(newParent, nodeToMove);
                 }
 
-                LoadSessions();
+                CreateTreeview();
 
                 TreeNode selectedNodeParent = getTreeNode(nodeRoot, newParent);
                 if (selectedNodeParent != null)
@@ -1034,7 +1023,7 @@ namespace SuperPutty
             this.filter = searchFilter.IsMatch;
 
             // reload
-            this.LoadSessions();
+            this.CreateTreeview();
 
             // if "clear" show init state otherwise expand all to show all matches
             if (string.IsNullOrEmpty(txt))

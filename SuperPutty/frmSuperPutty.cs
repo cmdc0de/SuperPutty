@@ -285,16 +285,32 @@ namespace SuperPutty
 
         #region File
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ExportSessions()
         {
+            String sessionName = "Sessions.XML";
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Filter = "XML Files|*.xml|All files|*.*";
-            saveDialog.FileName = "Sessions.XML";
+            saveDialog.FileName = sessionName;
             saveDialog.InitialDirectory = Application.StartupPath;
             if (saveDialog.ShowDialog(this) == DialogResult.OK)
             {
-                SuperPuTTY.GetRootFolderData().SaveToFile(saveDialog.FileName);
+                String folderPath = saveDialog.FileName.Substring(0, saveDialog.FileName.Length - ("\\" + sessionName).Length);
+                SuperPuTTY.UpdateSettingsFolder(folderPath);
+
+                SaveSessions();
             }
+        }
+
+
+        private void SaveSessions()
+        {
+            String sessionName = "Sessions.XML";
+            SuperPuTTY.GetRootFolderData().SaveToFile(SuperPuTTY.Settings.SettingsFolder + "\\" + sessionName);
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ExportSessions();
         }
 
         private void fromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -400,7 +416,8 @@ namespace SuperPutty
 
         private void editSessionsInNotepadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            reloadSessions();
+            SaveSessions();
+            RefreshTreeview();
             Process.Start(XmlEditor ?? "notepad", Path.Combine(SuperPuTTY.Settings.SettingsFolder, "Sessions.XML"));
         }
 
@@ -409,10 +426,10 @@ namespace SuperPutty
             SuperPuTTY.LoadSessions();
         }
 
-        public void reloadSessions()
+        public void RefreshTreeview()
         {
             SessionTreeview treeview = (SessionTreeview) sessions.Instance;
-            treeview.LoadSessions();
+            treeview.CreateTreeview();
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)

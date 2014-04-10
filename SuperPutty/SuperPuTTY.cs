@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using SuperPutty.Scp;
+using Microsoft.Win32;
 
 namespace SuperPutty
 {
@@ -68,8 +69,10 @@ namespace SuperPutty
                     }
                 }
 
+               
                 // load data
                 LoadLayouts();
+                LoadSettingsFolderName(); 
                 LoadSessions();
 
                 // determine starting layout, if any.  CLI has priority
@@ -301,6 +304,41 @@ namespace SuperPutty
 
         #endregion
 
+        #region Settings
+
+        /**
+         * Chargement du folderName depuis le registry
+         */
+        public static void LoadSettingsFolderName() { 
+            Log.Info("LoadSettingsFolderName");
+
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\SuperPuTTY");
+            if (key != null)
+            {
+                SuperPuTTY.Settings.SettingsFolder = (string)key.GetValue("SettingsFolder", "");
+                key.Close();
+            }
+            
+        }
+
+        public static void SaveSettingsFolderName()
+        {
+            Log.Info("SaveSettingsFolderName");
+
+            String registerName = @"Software\SuperPuTTY";
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(registerName, true);
+            if (key == null)
+            {
+                key = Registry.CurrentUser.CreateSubKey(registerName);
+            }
+
+            if (key != null)
+            {
+                key.SetValue("SettingsFolder", SuperPuTTY.Settings.SettingsFolder);
+                key.Close();
+            }
+        }
+        #endregion
         #region Sessions
 
         public static string SessionsFileName
@@ -322,7 +360,7 @@ namespace SuperPutty
                     rootFolder.LoadSessionsFromFile(fileName);
 
                     // refresh the treeview
-                    MainForm.reloadSessions();
+                    MainForm.RefreshTreeview();
                 }
                 else
                 {
@@ -556,7 +594,7 @@ namespace SuperPutty
                 Log.InfoFormat("Importing sessions from file, path={0}", fileName);
                 rootFolder.LoadSessionsFromFile(fileName);
 
-                MainForm.reloadSessions();
+                MainForm.RefreshTreeview();
              }
         }
 
@@ -565,7 +603,7 @@ namespace SuperPutty
             Log.InfoFormat("Importing sessions from PuTTY/KiTTY");
             SessionFolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTY();
             //ImportSessions(sessions, "ImportedFromPuTTY");
-            MainForm.reloadSessions();
+            MainForm.RefreshTreeview();
         }
 
         public static void ImportSessionsFromPuttyCM(string fileExport)
@@ -573,7 +611,7 @@ namespace SuperPutty
             Log.InfoFormat("Importing sessions from PuttyCM");
             SessionFolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTYCM(fileExport);
             //ImportSessions(sessions, "ImportedFromPuTTYCM");
-            MainForm.reloadSessions();
+            MainForm.RefreshTreeview();
         }
 
         public static void ImportSessions(SessionFolderData sessions, string folder)
@@ -613,7 +651,7 @@ namespace SuperPutty
             }*/
         }
 
-        public static string MakeUniqueSessionId(string sessionId)
+        /*public static string MakeUniqueSessionId(string sessionId)
         {
             String newSessionId = sessionId;
 
@@ -628,7 +666,7 @@ namespace SuperPutty
             }
 
             return newSessionId;
-        }
+        }*/
 
         #endregion
 
@@ -778,6 +816,13 @@ namespace SuperPutty
         public static ImageList Images { get; private set; }
 
         #endregion
+
+
+        public static void UpdateSettingsFolder(String newSettingsFolder)
+        {
+            Settings.SettingsFolder = newSettingsFolder;
+            SaveSettingsFolderName();
+        }
     }
 
     #region SuperPuttyAction

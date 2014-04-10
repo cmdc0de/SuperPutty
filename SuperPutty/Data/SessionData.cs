@@ -192,7 +192,7 @@ namespace SuperPutty.Data
             Proto = ConnectionProtocol.Auto;
         }
 
-        internal void SaveToRegistry()
+        /*internal void SaveToRegistry()
         {
             if (!String.IsNullOrEmpty(this.SessionName)
                 && !String.IsNullOrEmpty(this.Host)
@@ -228,10 +228,10 @@ namespace SuperPutty.Data
 
                     key.SetValue("Auto Start", this.AutoStartSession);
 
-                    /*if (this.SessionId != null)
+                    *if (this.SessionId != null)
                     {
                         key.SetValue("SessionId", this.SessionId);
-                    }*/
+                    }
                     key.Close();
                 }
                 else
@@ -260,14 +260,7 @@ namespace SuperPutty.Data
                     Logger.Log(e);
                 }
             }
-        }
-
- 
-
-
-
-
-
+        }*/
 
         public int CompareTo(object obj)
         {
