@@ -31,7 +31,7 @@ using System.IO;
 using System.Collections;
 using System.Reflection;
 using System.Xml;
-using System.Xml.Serialization;
+
 namespace SuperPutty.Data
 {
     public enum ConnectionProtocol
@@ -55,7 +55,7 @@ namespace SuperPutty.Data
         /// <summary>
         /// Full session id (includes path for session tree)
         /// </summary>
-        private string _SessionId;
+        /*private string _SessionId;
         [XmlAttribute]
         public string SessionId
         {
@@ -66,7 +66,7 @@ namespace SuperPutty.Data
                 this._SessionId = value;
             }
         }
-        internal string OldSessionId { get; set; }
+        internal string OldSessionId { get; set; }*/
 
         private string _OldName;
         [XmlIgnore]
@@ -83,10 +83,10 @@ namespace SuperPutty.Data
             get { return _SessionName; }
             set { OldName = _SessionName; 
                 _SessionName = value;
-                if (SessionId == null)
+               /* if (SessionId == null)
                 {
                     SessionId = value;
-                }
+                }*/
             }
         }
 
@@ -205,10 +205,10 @@ namespace SuperPutty.Data
                     RegistryRemove(this.OldName);
                 }
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Jim Radford\SuperPuTTY\Sessions\" + this.SessionName, true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\SuperPuTTY\Sessions\" + this.SessionName, true);
                 if (key == null)
                 {
-                    key = Registry.CurrentUser.CreateSubKey(@"Software\Jim Radford\SuperPuTTY\Sessions\" + this.SessionName);
+                    key = Registry.CurrentUser.CreateSubKey(@"Software\SuperPuTTY\Sessions\" + this.SessionName);
                 }
 
                 if (key != null)
@@ -228,10 +228,10 @@ namespace SuperPutty.Data
 
                     key.SetValue("Auto Start", this.AutoStartSession);
 
-                    if (this.SessionId != null)
+                    /*if (this.SessionId != null)
                     {
                         key.SetValue("SessionId", this.SessionId);
-                    }
+                    }*/
                     key.Close();
                 }
                 else
@@ -246,7 +246,7 @@ namespace SuperPutty.Data
             if (!String.IsNullOrEmpty(sessionName))
             {
                 Log.DebugFormat("Removing session, name={0}", sessionName);
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Jim Radford\SuperPuTTY\Sessions", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\SuperPuTTY\Sessions", true);
                 try
                 {
                     if (key.OpenSubKey(sessionName) != null)
@@ -272,10 +272,10 @@ namespace SuperPutty.Data
         public int CompareTo(object obj)
         {
             SessionData s = obj as SessionData;
-            return s == null ? 1 : this.SessionId.CompareTo(s.SessionId);
+            return s == null ? 1 : this.SessionName.CompareTo(s.SessionName);
         }
 
-        public static string CombineSessionIds(string parent, string child) 
+        /*public static string CombineSessionIds(string parent, string child) 
         {
             if (parent == null && child == null)
             {
@@ -318,7 +318,7 @@ namespace SuperPutty.Data
                 }
             }
             return parentPath;
-        }
+        }*/
 
 
         public object Clone()

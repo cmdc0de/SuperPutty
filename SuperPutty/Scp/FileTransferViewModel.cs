@@ -68,7 +68,7 @@ namespace SuperPutty.Scp
             : this()
         {
             this.Id = transfer.Id;
-            this.Session = transfer.Request.Session.SessionId;
+            this.Session = transfer.Request.Session.SessionName;
             this.Source = ToString(transfer.Request.SourceFiles);
             this.Target = transfer.Request.TargetFile.Path;
             this.Start = DateTime.Now;

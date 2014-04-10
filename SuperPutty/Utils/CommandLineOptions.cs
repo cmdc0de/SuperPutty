@@ -170,7 +170,7 @@ namespace SuperPutty.Utils
                 {
                     Host = this.Host,
                     SessionName = sessionName,
-                    SessionId = SuperPuTTY.MakeUniqueSessionId(SessionData.CombineSessionIds("CLI", this.Host)),
+                    //SessionId = SuperPuTTY.MakeUniqueSessionId(SessionData.CombineSessionIds("CLI", this.Host)),
                     Port = this.Port.GetValueOrDefault(22),
                     Proto = this.Protocol.GetValueOrDefault(ConnectionProtocol.SSH),
                     Username = this.UserName,

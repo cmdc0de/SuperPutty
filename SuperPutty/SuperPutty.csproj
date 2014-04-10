@@ -88,7 +88,8 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\FolderData.cs" />
+    <Compile Include="Data\AbstractSessionData.cs" />
+    <Compile Include="Data\SessionFolderData.cs" />
     <Compile Include="Data\KeyboardShortcut.cs" />
     <Compile Include="Gui\BaseViewModel.cs" />
     <Compile Include="Gui\DataGridViewProgressColumn.cs" />
@@ -161,6 +162,7 @@
       <DependentUpon>ToolWindowEx.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ChildWindowFocusHelper.cs" />
+    <Compile Include="Utils\SessionRegistryHelper.cs" />
     <Compile Include="Utils\CommandData.cs" />
     <Compile Include="Utils\CygtermStartInfo.cs" />
     <Compile Include="ctlApplicationPanel.cs">

@@ -49,7 +49,7 @@ namespace SuperPutty.Data
             return names;
         }
 
-        public static FolderData GetAllSessionsFromPuTTY()
+        public static SessionFolderData GetAllSessionsFromPuTTY()
         {
             /*
             List<SessionData> sessions = new List<SessionData>();
@@ -68,12 +68,12 @@ namespace SuperPutty.Data
                 }
             }*/
             // TODO
-            return new FolderData("");
+            return new SessionFolderData("");
         }
 
-        public static FolderData GetAllSessionsFromPuTTYCM(string fileExport)
+        public static SessionFolderData GetAllSessionsFromPuTTYCM(string fileExport)
         {
-            FolderData root = new FolderData("");
+            SessionFolderData root = new SessionFolderData("");
 
             if (fileExport == null || !File.Exists(fileExport))
             {
@@ -84,7 +84,7 @@ namespace SuperPutty.Data
             doc.Load(fileExport);
 
             XmlNodeList connections = doc.DocumentElement.SelectNodes("//connection[@type='PuTTY']");
-            FolderData currentFolderData = root;
+            SessionFolderData currentFolderData = root;
 
             foreach (XmlElement connection in connections)
             {

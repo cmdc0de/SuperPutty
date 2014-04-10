@@ -161,7 +161,7 @@ namespace SuperPutty
             Session.Port = port;
 
             Session.Username = textBoxUsername.Text.Trim();
-            Session.SessionId = SessionData.CombineSessionIds(SessionData.GetSessionParentId(Session.SessionId), Session.SessionName);
+            //Session.SessionId = SessionData.CombineSessionIds(SessionData.GetSessionParentId(Session.SessionId), Session.SessionName);
             Session.ImageKey = buttonImageSelect.ImageKey;
 
             for (int i = 0; i < groupBox1.Controls.Count; i++)

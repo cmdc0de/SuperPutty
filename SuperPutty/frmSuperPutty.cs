@@ -349,7 +349,7 @@ namespace SuperPutty
             {
                 data.ItemData.AddItemDataRow(
                     sd.SessionName,
-                    sd.SessionId,
+                    sd.SessionName,
                     sd.Proto == ConnectionProtocol.Cygterm || sd.Proto == ConnectionProtocol.Mintty ? Color.Blue : Color.Black, 
                     null);
             }
@@ -379,7 +379,7 @@ namespace SuperPutty
                     SessionData sd = panel.Session;
                     data.ItemData.AddItemDataRow(
                         panel.Text,
-                        sd.SessionId,
+                        sd.SessionName,
                         sd.Proto == ConnectionProtocol.Cygterm || sd.Proto == ConnectionProtocol.Mintty ? Color.Blue : Color.Black,
                         panel);
                 }
@@ -909,7 +909,7 @@ namespace SuperPutty
                 {
                     Host = connStr.Host,
                     SessionName = connStr.Host,
-                    SessionId = SuperPuTTY.MakeUniqueSessionId(SessionData.CombineSessionIds("ConnectBar", connStr.Host)),
+                    //SessionId = SuperPuTTY.MakeUniqueSessionId(SessionData.CombineSessionIds("ConnectBar", connStr.Host)),
                     Proto = proto,
                     Port = connStr.Port.GetValueOrDefault(dlgEditSession.GetDefaultPort(proto)),
                     Username = this.tbTxtBoxLogin.Text,
@@ -1067,7 +1067,7 @@ namespace SuperPutty
                     if (puttyPanel != null && this.sendCommandsDocumentSelector.IsDocumentSelected(puttyPanel))
                     {
                         int handle = puttyPanel.AppPanel.AppWindowHandle.ToInt32();
-                        Log.InfoFormat("SendCommand: session={0}, command=[{1}], handle={2}", puttyPanel.Session.SessionId, command, handle);
+                        Log.InfoFormat("SendCommand: session={0}, command=[{1}], handle={2}", puttyPanel.Session.SessionName, command, handle);
 
                         command.SendToTerminal(handle);
                         /*

@@ -104,7 +104,7 @@ namespace SuperPutty
             this.m_AppPanel.ApplicationParameters = this.m_puttyStartInfo.Args;
             this.m_AppPanel.ApplicationWorkingDirectory = this.m_puttyStartInfo.WorkingDir;
             this.m_AppPanel.Location = new System.Drawing.Point(0, 0);
-            this.m_AppPanel.Name = this.m_Session.SessionId; // "applicationControl1";
+            this.m_AppPanel.Name = this.m_Session.SessionName; // "applicationControl1";
             this.m_AppPanel.Size = new System.Drawing.Size(this.Width, this.Height);
             this.m_AppPanel.TabIndex = 0;            
             this.m_AppPanel.m_CloseCallback = this.m_ApplicationExit;
@@ -297,8 +297,8 @@ namespace SuperPutty
         protected override string GetPersistString()
         {
             string str = String.Format("{0}?SessionId={1}&TabName={2}", 
-                this.GetType().FullName, 
-                HttpUtility.UrlEncodeUnicode(this.m_Session.SessionId), 
+                this.GetType().FullName,
+                HttpUtility.UrlEncodeUnicode(this.m_Session.SessionName), 
                 HttpUtility.UrlEncodeUnicode(this.TextOverride));
             return str;
         }
@@ -374,7 +374,7 @@ namespace SuperPutty
         {
             dlgRenameItem dialog = new dlgRenameItem();
             dialog.ItemName = this.Text;
-            dialog.DetailName = this.m_Session.SessionId;
+            dialog.DetailName = this.m_Session.SessionName;
 
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {

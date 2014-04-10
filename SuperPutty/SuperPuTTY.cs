@@ -30,7 +30,7 @@ namespace SuperPutty
         public static event Action<String> StatusEvent;
 
         static BindingList<LayoutData> layouts = new BindingList<LayoutData>();
-        static FolderData rootFolder = new FolderData("root");
+        static SessionFolderData rootFolder = new SessionFolderData("root");
         static bool? isFirstRun;
 
         public static void Initialize(string[] args)
@@ -90,7 +90,7 @@ namespace SuperPutty
                         if (sessionStartInfo != null)
                         {
                             StartingSession = sessionStartInfo;
-                            Log.InfoFormat("Starting adhoc Session from command line, {0}", StartingSession.Session.SessionId);
+                            Log.InfoFormat("Starting adhoc Session from command line, {0}", StartingSession.Session.SessionName);
                         }
                     }
 
@@ -114,7 +114,7 @@ namespace SuperPutty
         }
 
 
-        public static FolderData GetRootFolderData()
+        public static SessionFolderData GetRootFolderData()
         {
             return rootFolder;
         }
@@ -396,7 +396,7 @@ namespace SuperPutty
             return session;
         }
 
-        public static void AddSession(SessionData sessionData, FolderData folderData)
+        public static void AddSession(SessionData sessionData, SessionFolderData folderData)
         {
             folderData.AddSession(sessionData);
 
@@ -426,14 +426,14 @@ namespace SuperPutty
 
         public static void OpenPuttySession(SessionData session)
         {
-            Log.InfoFormat("Opening putty session, id={0}", session == null ? "" : session.SessionId);
+            Log.InfoFormat("Opening putty session, id={0}", session == null ? "" : session.SessionName);
             if (session != null)
             {
                 ctlPuttyPanel sessionPanel = ctlPuttyPanel.NewPanel(session);
                 ApplyDockRestrictions(sessionPanel);
                 ApplyIconForWindow(sessionPanel, session);
                 sessionPanel.Show(MainForm.DockPanel, session.LastDockstate);
-                SuperPuTTY.ReportStatus("Opened session: {0} [{1}]", session.SessionId, session.Proto);
+                SuperPuTTY.ReportStatus("Opened session: {0} [{1}]", session.SessionName, session.Proto);
             }
         }
 
@@ -444,10 +444,10 @@ namespace SuperPutty
 
         public static void OpenScpSession(SessionData session)
         {
-            Log.InfoFormat("Opening scp session, id={0}", session == null ? "" : session.SessionId);
+            Log.InfoFormat("Opening scp session, id={0}", session == null ? "" : session.SessionName);
             if (!IsScpEnabled)
             {
-                SuperPuTTY.ReportStatus("Could not open session, pscp not found: {0} [SCP]", session.SessionId);
+                SuperPuTTY.ReportStatus("Could not open session, pscp not found: {0} [SCP]", session.SessionName);
             }
             else if (session != null)
             {
@@ -458,7 +458,7 @@ namespace SuperPutty
                 ApplyIconForWindow(panel, session);
                 panel.Show(MainForm.DockPanel, session.LastDockstate);
 
-                SuperPuTTY.ReportStatus("Opened session: {0} [SCP]", session.SessionId);
+                SuperPuTTY.ReportStatus("Opened session: {0} [SCP]", session.SessionName);
             }
             else
             {
@@ -468,10 +468,10 @@ namespace SuperPutty
 
         static void OpenScpSessionOld(SessionData session)
         {
-            Log.InfoFormat("Opening scp session, id={0}", session == null ? "" : session.SessionId);
+            Log.InfoFormat("Opening scp session, id={0}", session == null ? "" : session.SessionName);
             if (!IsScpEnabled)
             {
-                SuperPuTTY.ReportStatus("Could not open session, pscp not found: {0} [SCP]", session.SessionId);
+                SuperPuTTY.ReportStatus("Could not open session, pscp not found: {0} [SCP]", session.SessionName);
             }
             else if (session != null)
             {
@@ -495,7 +495,7 @@ namespace SuperPutty
                     }
                 }
 
-                SuperPuTTY.ReportStatus("Opened session: {0} [SCP]", session.SessionId);
+                SuperPuTTY.ReportStatus("Opened session: {0} [SCP]", session.SessionName);
             }
             else
             {
@@ -563,7 +563,7 @@ namespace SuperPutty
         public static void ImportSessionsFromPuTTY()
         {
             Log.InfoFormat("Importing sessions from PuTTY/KiTTY");
-            FolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTY();
+            SessionFolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTY();
             //ImportSessions(sessions, "ImportedFromPuTTY");
             MainForm.reloadSessions();
         }
@@ -571,12 +571,12 @@ namespace SuperPutty
         public static void ImportSessionsFromPuttyCM(string fileExport)
         {
             Log.InfoFormat("Importing sessions from PuttyCM");
-            FolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTYCM(fileExport);
+            SessionFolderData sessions = PuttyDataHelper.GetAllSessionsFromPuTTYCM(fileExport);
             //ImportSessions(sessions, "ImportedFromPuTTYCM");
             MainForm.reloadSessions();
         }
 
-        public static void ImportSessions(FolderData sessions, string folder)
+        public static void ImportSessions(SessionFolderData sessions, string folder)
         {
            /* foreach (FolderData session in sessions)
             {
