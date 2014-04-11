@@ -1046,16 +1046,16 @@ namespace SuperPutty
             public SearchFilter(string mode, string filter)
             {
                 this.Mode = FormUtils.SafeParseEnum(mode, true, SearchMode.CaseSensitive);
-                this.Filter = filter;
+                this.Filter = filter.Trim();
                 if (this.Mode == SearchMode.Regex)
                 {
                     try
                     {
-                        this.Regex = new Regex(filter);
+                        this.Regex = new Regex(this.Filter);
                     }
                     catch (Exception ex)
                     {
-                        Log.Error("Could not parse pattern: " + filter, ex);
+                        Log.Error("Could not parse pattern: " + this.Filter, ex);
                     }
                 }
             }
