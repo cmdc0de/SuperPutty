@@ -432,6 +432,7 @@ namespace SuperPutty
         private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode node = this.treeView1.SelectedNode;
+            int newNodeIndex = 0;
             if (node != null)
             {
                 TreeNode parent = node.Parent;
@@ -444,13 +445,19 @@ namespace SuperPutty
                     SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
                     if (IsFolderNode(node))
                     {
-                        rootFolderData.moveUp(rootFolderData, (SessionFolderData)node.Tag);
+                        newNodeIndex = rootFolderData.moveUp(rootFolderData, (SessionFolderData)node.Tag);
                     }
-                    
-                    node.TreeView.SelectedNode = node;
+                }
+
+                CreateTreeview();
+                this.treeView1.Refresh();
+                if (node != null)
+                {
+                    this.treeView1.SelectedNode = parent.Nodes[newNodeIndex];
                 }
             }
-            this.treeView1.Refresh();
+
+
         }
 
         private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
@@ -472,6 +479,8 @@ namespace SuperPutty
                     node.TreeView.SelectedNode = node;
                 }
             }
+
+            CreateTreeview();
             this.treeView1.Refresh();
         }
 

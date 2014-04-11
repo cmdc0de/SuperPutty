@@ -247,7 +247,7 @@ namespace SuperPutty.Data
             SessionFolderData pp = GetParent(this, sessionDataToRemove);
             pp._SessionDataChildren.Remove(sessionDataToRemove);
         }
-        public void moveUp(SessionFolderData parent, SessionFolderData folderDataToMove)
+        public int moveUp(SessionFolderData parent, SessionFolderData folderDataToMove)
         {
             int index = _SessionFolderDataChildren.IndexOf(folderDataToMove);
             if (index >= 0)
@@ -260,8 +260,10 @@ namespace SuperPutty.Data
                 {
                     _SessionFolderDataChildren.RemoveAt(index);
                     _SessionFolderDataChildren.Insert(index - 1, folderDataToMove);
+                    return index - 1;
                 }
             }
+            return 0;
             /*foreach (FolderData f in folderChildren) {
                 moveUp(f, folderDataToMove);
             }*/
