@@ -317,7 +317,7 @@ namespace SuperPutty
 
                     Log.InfoFormat("Restoring putty session, sessionId={0}, tabName={1}", sessionId, tabName);
 
-                    SessionData session = SuperPuTTY.GetSessionById(sessionId);
+                    SessionData session = SuperPuTTY.GetSessionByName(sessionId);
                     if (session != null)
                     {
                         panel = ctlPuttyPanel.NewPanel(session);
@@ -344,7 +344,7 @@ namespace SuperPutty
                     {
                         string sessionId = persistString.Substring(idx + 1);
                         Log.InfoFormat("Restoring putty session, sessionId={0}", sessionId);
-                        SessionData session = SuperPuTTY.GetSessionById(sessionId);
+                        SessionData session = SuperPuTTY.GetSessionByName(sessionId);
                         if (session != null)
                         {
                             panel = ctlPuttyPanel.NewPanel(session);

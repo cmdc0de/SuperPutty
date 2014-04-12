@@ -348,6 +348,11 @@ namespace SuperPutty
                 return Path.Combine(Settings.SettingsFolder, "Sessions.XML");
             }
         }
+
+        public static void RefreshSessions()
+        {
+            MainForm.RefreshTreeview();
+        }
         public static void LoadSessions()
         {
             string fileName = SessionsFileName;
@@ -380,24 +385,24 @@ namespace SuperPutty
             rootFolder.SaveToFile(SessionsFileName);
         }
 
-        public static SessionData RemoveSession(string sessionId)
+        public static SessionData RemoveSession(string sessionName)
         {
-            SessionData session = GetSessionById(sessionId);
+            SessionData session = GetSessionByName(sessionName);
             if (session != null)
             {
-                //sessionsMap.Remove(sessionId);
-                //sessionsList.Remove(session);
+                GetRootFolderData().RemoveSession(session);
+                RefreshSessions();
             }
-            Log.InfoFormat("Removed Session, id={0}, success={1}", sessionId, session != null);
+            Log.InfoFormat("Removed Session, id={0}, success={1}", sessionName, session != null);
 
             return session;
         
         }
 
-        public static void MoveUpSession(string sessionId)
+        public static void MoveUpSession(string sessionName)
         {
-            ReportStatus("sessionId = {0}", sessionId);
-             SessionData session = GetSessionById(sessionId);
+            ReportStatus("sessionId = {0}", sessionName);
+             SessionData session = GetSessionByName(sessionName);
              if (session != null)
              {
                 // int index = sessionsList.IndexOf(session);
@@ -406,32 +411,19 @@ namespace SuperPutty
              }
         }
 
-        public static SessionData GetSessionById(string sessionId)
+        public static SessionData GetSessionByName(string sessionName)
         {
-            SessionData session = null;
-            if (sessionId != null)
+            if (sessionName != null)
             {
-               /* if (!sessionsMap.TryGetValue(sessionId, out session))
+                foreach (SessionData sData in GetRootFolderData().GetSessions(GetRootFolderData()))
                 {
-                    // no hit by id...so try the list
-                    // @TODO: Revisit...this is a work around the sessionId changing in tree
-                    foreach (SessionData sd in sessionsList)
+                    if (sData.SessionName == sessionName)
                     {
-                        if (sd.SessionId == sessionId)
-                        {
-                            session = sd;
-                            // reindex list
-                            sessionsMap.Clear();
-                            foreach (SessionData s in sessionsList)
-                            {
-                                sessionsMap[s.SessionId] = s;
-                            }
-                            break;
-                        }
+                        return sData;
                     }
-                }*/
+                }
             }
-            return session;
+            return null;
         }
 
         public static void AddSession(SessionData sessionData, SessionFolderData folderData)
@@ -439,27 +431,10 @@ namespace SuperPutty
             folderData.AddSession(sessionData);
 
         }
-       /* public static bool AddSession(FolderData folderData)
+   
+        public static void OpenPuttySession(string sessionName)
         {
-            bool success = false;
-
-                Log.InfoFormat("Added Session, id={0}", session.SessionId);
-                //sessionsMap.Add(session.SessionId, session);
-                //sessionsList.Add(session);
-                folderList.First().AddSession(session);
-                success = true;
-           
-            return success;
-        }*/
-
-        /*public static List<SessionData> GetAllSessions()
-        {
-            return sessionsMap.Values.ToList();
-        }*/
-
-        public static void OpenPuttySession(string sessionId)
-        {
-            OpenPuttySession(GetSessionById(sessionId));
+            OpenPuttySession(GetSessionByName(sessionName));
         }
 
         public static void OpenPuttySession(SessionData session)
@@ -477,7 +452,7 @@ namespace SuperPutty
 
         public static void OpenScpSession(string sessionId)
         {
-            OpenScpSession(GetSessionById(sessionId));
+            OpenScpSession(GetSessionByName(sessionId));
         }
 
         public static void OpenScpSession(SessionData session)
@@ -504,7 +479,7 @@ namespace SuperPutty
             }
         }
 
-        static void OpenScpSessionOld(SessionData session)
+        /*static void OpenScpSessionOld(SessionData session)
         {
             Log.InfoFormat("Opening scp session, id={0}", session == null ? "" : session.SessionName);
             if (!IsScpEnabled)
@@ -539,7 +514,7 @@ namespace SuperPutty
             {
                 Log.Warn("Could not open null session");
             }
-        }
+        }*/
 
         public static void ApplyDockRestrictions(DockPanel panel)
         {

@@ -140,6 +140,8 @@ namespace SuperPutty
 
             treeView1.SelectedNode = this.nodeRoot;
             nodeRoot.Expand();
+
+            treeView1.Refresh();
             treeView1.EndUpdate();
         }
 
@@ -148,6 +150,14 @@ namespace SuperPutty
             foreach (SessionFolderData child in folderData.GetSessionFolderDataChildren())
             {
                 TreeNode childNode = AddFolderNode(currentNode, child);
+                if (child.IsExpand)
+                {
+                    childNode.Expand();
+                }
+                else
+                {
+                    childNode.Collapse();
+                }
                 CreateNodes(child, childNode);
                 CreateNodesSession(child.GetSessionDataChildren(), childNode);
             }
@@ -239,7 +249,7 @@ namespace SuperPutty
                     //session.SessionId = SuperPuTTY.MakeUniqueSessionId(session.SessionId);
                     //session.SessionName = SessionData.GetSessionNameFromId(session.SessionId);
                     nodeRef = treeView1.SelectedNode.Parent;
-                    title = "Create New Session Like " + session.OldName;
+                    title = "Create New Session Like " + session.SessionName;
                 }
                 else
                 {
@@ -432,7 +442,7 @@ namespace SuperPutty
         private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode node = this.treeView1.SelectedNode;
-            int newNodeIndex = 0;
+            
             if (node != null)
             {
                 TreeNode parent = node.Parent;
@@ -445,15 +455,11 @@ namespace SuperPutty
                     SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
                     if (IsFolderNode(node))
                     {
-                        newNodeIndex = rootFolderData.moveUp(rootFolderData, (SessionFolderData)node.Tag);
-                    }
-                }
+                        rootFolderData.MoveUp(rootFolderData, (SessionFolderData)node.Tag);
 
-                CreateTreeview();
-                this.treeView1.Refresh();
-                if (node != null)
-                {
-                    this.treeView1.SelectedNode = parent.Nodes[newNodeIndex];
+                        CreateTreeview();
+                        this.treeView1.SelectedNode = getTreeNode(this.treeView1.Nodes[0], (SessionFolderData)node.Tag);
+                    }
                 }
             }
 
@@ -471,17 +477,13 @@ namespace SuperPutty
                 {
                     SuperPuTTY.ReportStatus("Move down : {0}", index);
 
-                    parent.Nodes.RemoveAt(index);
-                    parent.Nodes.Insert(index + 1, node);
-
-                    //UpdateSessionId(node);
-
-                    node.TreeView.SelectedNode = node;
+                    SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
+                    rootFolderData.MoveDown(index);//, (SessionFolderData)node.Tag);
+                    
+                    CreateTreeview();
+                    this.treeView1.SelectedNode = getTreeNode(this.treeView1.Nodes[0], (SessionFolderData)node.Tag);
                 }
             }
-
-            CreateTreeview();
-            this.treeView1.Refresh();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -884,7 +886,7 @@ namespace SuperPutty
                 }
                 else {
                     SessionData nodeToMove = (SessionData)nodePayload.Tag;
-                    SuperPuTTY.GetRootFolderData().moveTo(newParent, nodeToMove);
+                    SuperPuTTY.GetRootFolderData().MoveTo(newParent, nodeToMove);
                 }
 
                 CreateTreeview();
@@ -1091,6 +1093,46 @@ namespace SuperPutty
         #endregion
 
         #region Key Handling
+        private void treeView1_BeforeExpand(object sender, System.Windows.Forms.TreeViewCancelEventArgs e)
+        {
+                        // Get the tree
+            TreeView tree = (TreeView)sender;
+
+            // Get the node underneath the mouse.
+            TreeNode node = e.Node;// e.Item as TreeNode;
+
+            // Start the drag-and-drop operation with a cloned copy of the node.
+            //if (node != null && IsSessionNode(node))
+            if (node != null && tree.Nodes[0] != node)
+            {
+                if (IsFolderNode(node))
+                {
+                    SessionFolderData sessionFolderData = (SessionFolderData) node.Tag;
+                    sessionFolderData.IsExpand = true;
+                }
+            }
+        }
+
+        private void treeView1_BeforeCollapse(object sender, System.Windows.Forms.TreeViewCancelEventArgs e)
+        {
+            // Get the tree
+            TreeView tree = (TreeView)sender;
+
+            // Get the node underneath the mouse.
+            TreeNode node = e.Node;// e.Item as TreeNode;
+
+            // Start the drag-and-drop operation with a cloned copy of the node.
+            //if (node != null && IsSessionNode(node))
+            if (node != null && tree.Nodes[0] != node)
+            {
+                if (IsFolderNode(node))
+                {
+                    SessionFolderData sessionFolderData = (SessionFolderData)node.Tag;
+                    sessionFolderData.IsExpand = false;
+                }
+            }
+        }
+
         private void treeView1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13 && IsSessionNode(this.treeView1.SelectedNode))

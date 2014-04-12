@@ -132,7 +132,7 @@ namespace SuperPutty.Utils
             if (this.SessionId != null)
             {
                 // first try to resolve by sessionId
-                SessionData session = SuperPuTTY.GetSessionById(this.SessionId);
+                SessionData session = SuperPuTTY.GetSessionByName(this.SessionId);
                 if (session == null)
                 {
                     Log.WarnFormat("Session from command line not found, id={0}", this.SessionId);

@@ -19,6 +19,13 @@ namespace SuperPutty.Data
         private String _Name;
         private BindingList<SessionData> _SessionDataChildren = new BindingList<SessionData>();
         private BindingList<SessionFolderData> _SessionFolderDataChildren = new BindingList<SessionFolderData>();
+        private bool _IsExpand = false;
+
+        public bool IsExpand
+        {
+            get { return _IsExpand; }
+            set { _IsExpand = value; }
+        }
 
         public String Name
         {
@@ -233,7 +240,7 @@ namespace SuperPutty.Data
             parent._SessionFolderDataChildren.Add(folderDataToMove);
         }
 
-        public void moveTo(SessionFolderData parent, SessionData sessionDataToMove)
+        public void MoveTo(SessionFolderData parent, SessionData sessionDataToMove)
         {
             RemoveSession(sessionDataToMove);
 
@@ -247,8 +254,10 @@ namespace SuperPutty.Data
             SessionFolderData pp = GetParent(this, sessionDataToRemove);
             pp._SessionDataChildren.Remove(sessionDataToRemove);
         }
-        public int moveUp(SessionFolderData parent, SessionFolderData folderDataToMove)
+
+        public int MoveUp(SessionFolderData parent, SessionFolderData folderDataToMove)
         {
+            // TODO : move Up d'un sous dossier
             int index = _SessionFolderDataChildren.IndexOf(folderDataToMove);
             if (index >= 0)
             {
@@ -264,16 +273,13 @@ namespace SuperPutty.Data
                 }
             }
             return 0;
-            /*foreach (FolderData f in folderChildren) {
-                moveUp(f, folderDataToMove);
-            }*/
         }
 
-        public void moveDown(int index)
+        public void MoveDown(int index)
         {
-            SessionData sessionData = _SessionDataChildren[index];
-            _SessionDataChildren.RemoveAt(index);
-            _SessionDataChildren.Insert(index, sessionData);
+            SessionFolderData sessionFolderData = _SessionFolderDataChildren[index];
+            _SessionFolderDataChildren.RemoveAt(index);
+            _SessionFolderDataChildren.Insert(index + 1, sessionFolderData);
         }
 
         #region IXmlSerializable Members
@@ -294,10 +300,19 @@ namespace SuperPutty.Data
 
             while (reader.Read())
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folder"))
+                if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folders"))
                 {
-                    SessionFolderData subFolderData = new SessionFolderData(reader.GetAttribute("name"));
-                    _SessionFolderDataChildren.Add(subFolderData);
+
+                } 
+                else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals("folders"))
+                {
+
+                } 
+                else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folder"))
+                {
+                    String name = reader.GetAttribute("name");
+                    SessionFolderData subFolderData = new SessionFolderData(name);
+                    stack.Peek().GetSessionFolderDataChildren().Add(subFolderData);
 
                     stack.Push(subFolderData);
                 }
@@ -334,25 +349,38 @@ namespace SuperPutty.Data
         public void WriteXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartDocument();
+            WriteSessionFolderData(writer, SuperPuTTY.GetRootFolderData());
+            writer.WriteEndDocument();
+            writer.Close();
+        }
+
+        private void WriteSessionFolderData(XmlWriter writer, SessionFolderData parent) {
+            if (parent.GetSessionFolderDataChildren().Count == 0 && parent.GetSessionDataChildren().Count == 0)
+            {
+                return;
+            } 
             writer.WriteStartElement("folders");
 
-            foreach (SessionFolderData myObject in _SessionFolderDataChildren)
+            foreach (SessionFolderData sessionFolderData in parent.GetSessionFolderDataChildren())
             {
                 writer.WriteStartElement("folder");
-                writer.WriteAttributeString("name", myObject.Name);
-                WriteSessionData(writer, myObject.GetSessionDataChildren());
+                writer.WriteAttributeString("name", sessionFolderData.Name);
+                WriteSessionFolderData(writer, sessionFolderData);
+                WriteSessionData(writer, sessionFolderData.GetSessionDataChildren());
                 writer.WriteEndElement();
             }
 
             WriteSessionData(writer, _SessionDataChildren);
            
             writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Close();
         }
 
         private void WriteSessionData(XmlWriter writer, BindingList<SessionData> sList)
         {
+            if (sList.Count == 0)
+            {
+                return;
+            }
             writer.WriteStartElement("sessions");
             foreach (SessionData sessionData in sList)
             {
