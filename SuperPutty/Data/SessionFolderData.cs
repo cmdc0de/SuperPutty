@@ -339,6 +339,7 @@ namespace SuperPutty.Data
                     sessionData.PuttySession = reader.GetAttribute("puttysession");
                     sessionData.Username = reader.GetAttribute("username");
                     sessionData.ExtraArgs = reader.GetAttribute("extraargs");
+                    sessionData.Enabled = (reader.GetAttribute("enabled") == "true");
 
                     stack.Peek().AddSession(sessionData);
                 }
@@ -401,6 +402,7 @@ namespace SuperPutty.Data
                 writer.WriteAttributeString("puttysession", sessionData.PuttySession);
                 writer.WriteAttributeString("username", sessionData.Username);
                 writer.WriteAttributeString("extraargs", sessionData.ExtraArgs);
+                writer.WriteAttributeString("enabled", sessionData.Enabled.ToString());
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();

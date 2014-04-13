@@ -37,7 +37,7 @@ using System.Text.RegularExpressions;
 
 namespace SuperPutty
 {
-    public partial class SessionTreeview : ToolWindow, IComparer
+    public partial class SessionTreeview : ToolWindow
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SessionTreeview));
 
@@ -63,7 +63,7 @@ namespace SuperPutty
         {
             m_DockPanel = dockPanel;
             InitializeComponent();
-            this.treeView1.TreeViewNodeSorter = this;
+            //this.treeView1.TreeViewNodeSorter = this;
             this.treeView1.ImageList = SuperPuTTY.Images;
             this.ApplySettings();
 
@@ -586,6 +586,9 @@ namespace SuperPutty
             fileBrowserToolStripMenuItem.Enabled = SuperPuTTY.IsScpEnabled;
 
             connectInNewSuperPuTTYToolStripMenuItem.Enabled = !SuperPuTTY.Settings.SingleInstanceMode;
+
+            SessionData sessionData = (SessionData) this.treeView1.SelectedNode.Tag;
+            checkboxEnable.Checked = sessionData.Enabled;
         }
 
         #region Node helpers
@@ -603,7 +606,10 @@ namespace SuperPutty
                 addedNode.Tag = session;
                 addedNode.ContextMenuStrip = this.contextMenuStripAddTreeItem;
                 addedNode.ToolTipText = GetSessionToolTip(session);
-
+                if (!session.Enabled)
+                {
+                    addedNode.ForeColor = SystemColors.GrayText;
+                }
                 // Override with custom icon if valid
                 if (IsValidImage(session.ImageKey))
                 {
@@ -637,64 +643,7 @@ namespace SuperPutty
             return !IsSessionNode(node);
         }
 
-        /*private void UpdateSessionId(TreeNode parentNode)
-        {
-            foreach (TreeNode node in parentNode.Nodes)
-            {
-                if (IsSessionNode(node))
-                {
-                    UpdateSessionId(node, (SessionData)node.Tag);
-                }
-                else
-                {
-                    UpdateSessionId(node);
-                }
-            }
-        }*/
-        /*private void UpdateSessionId(TreeNode addedNode, SessionData session)
-        {
-            // set session id as node path
-            List<string> parentNodeNames = new List<string>();
-            for (TreeNode node = addedNode; node.Parent != null; node = node.Parent)
-            {
-                parentNodeNames.Add(node.Text);
-            }
-            parentNodeNames.Reverse();
-            String sessionId = String.Join(SessionIdDelim, parentNodeNames.ToArray());
-            //Log.InfoFormat("sessionId={0}", sessionId);
-            //session.SessionId = sessionId;
-            if (session != null) session.SessionId = sessionId;
-            //SuperPuTTY.SaveSessions();
-            //session.SaveToRegistry();
-        }*/
-
-        /*TreeNode FindOrCreateParentNode(string sessionId)
-        {
-            Log.DebugFormat("Finding Node for sessionId ({0})", sessionId);
-            TreeNode nodeParent = this.nodeRoot;
-
-            string[] parts = sessionId.Split(SessionIdDelim.ToCharArray());
-            if (parts.Length > 1)
-            {
-                for (int i = 0; i < parts.Length - 1; i++)
-                {
-                    string part = parts[i];
-                    TreeNode node = nodeParent.Nodes[part];
-                    if (node == null)
-                    {
-                        nodeParent = this.AddFolderNode(nodeParent, part);
-                    }
-                    else if (IsFolderNode(node))
-                    {
-                        nodeParent = node;
-                    }
-                }
-            }
-
-            Log.DebugFormat("Returning node ({0})", nodeParent.Text);
-            return nodeParent;
-        }*/
-
+        /*
         public int Compare(object x, object y)
         {
             TreeNode tx = x as TreeNode;
@@ -710,6 +659,21 @@ namespace SuperPutty
             this.treeView1.TreeViewNodeSorter = this;
         }*/
 
+        private void checkboxEnable_StateChanged(object sender, EventArgs e)
+        {
+            SessionData sessionData = (SessionData) this.treeView1.SelectedNode.Tag;
+            sessionData.Enabled = checkboxEnable.Checked;
+
+            if (sessionData.Enabled)
+            {
+                this.treeView1.SelectedNode.ForeColor = Color.Black;
+            }
+            else
+            {
+                this.treeView1.SelectedNode.ForeColor = SystemColors.GrayText;
+            }
+            
+        }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1084,6 +1048,8 @@ namespace SuperPutty
         #endregion
 
         #region Key Handling
+
+
         private void treeView1_BeforeExpand(object sender, System.Windows.Forms.TreeViewCancelEventArgs e)
         {
                         // Get the tree

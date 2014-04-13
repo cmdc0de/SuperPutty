@@ -162,6 +162,10 @@
       <DependentUpon>ToolWindowEx.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ChildWindowFocusHelper.cs" />
+    <Compile Include="Utils\Win32Utility.cs" />
+    <Compile Include="Utils\NativeTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\SessionRegistryHelper.cs" />
     <Compile Include="Utils\CommandData.cs" />
     <Compile Include="Utils\CygtermStartInfo.cs" />

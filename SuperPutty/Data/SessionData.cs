@@ -132,6 +132,14 @@ namespace SuperPutty.Data
         {
             get { return m_AutoStartSession; }
             set { m_AutoStartSession = value; }
+        
+        }
+
+        private bool _Enabled;
+        public bool Enabled
+        {
+            get { return _Enabled; }
+            set { _Enabled = value; }
         }
 
         public SessionData(string sessionName, string hostName, int port, ConnectionProtocol protocol, string sessionConfig)
@@ -141,11 +149,13 @@ namespace SuperPutty.Data
             Port = port;
             Proto = protocol;
             PuttySession = sessionConfig;
+            this.Enabled = true;
         }
         
         public SessionData()
         {
             Proto = ConnectionProtocol.Auto;
+            this.Enabled = true;
         }
 
         /*internal void SaveToRegistry()

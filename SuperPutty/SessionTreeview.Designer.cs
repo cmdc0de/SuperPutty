@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using SuperPutty.Utils;
+using System.Drawing;
+using System.Windows.Forms;
 namespace SuperPutty
 {
     partial class SessionTreeview
@@ -42,6 +44,12 @@ namespace SuperPutty
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectExternalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectInNewSuperPuTTYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
+            // Adding a button to Menu
+            checkboxEnable = new CheckBox();
+            checkboxEnable.Text = "Enabled";
+            checkboxEnable.Checked = true;
+            this.checkboxEnableToolStripMenuItem = new ToolStripControlHost(checkboxEnable);
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.fileBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -52,16 +60,16 @@ namespace SuperPutty
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.connectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-
             this.timerDelayedSave = new System.Windows.Forms.Timer(this.components);
             this.panelSearch = new System.Windows.Forms.Panel();
+            this.sessionFilter = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -86,14 +94,14 @@ namespace SuperPutty
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(430, 478);
             this.treeView1.TabIndex = 0;
+            this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
+            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
             this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
             this.treeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView1_DragOver);
             this.treeView1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeView1_KeyPress);
-            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
-            this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
             // 
             // imageList1
             // 
@@ -113,6 +121,8 @@ namespace SuperPutty
             this.connectToolStripMenuItem,
             this.connectExternalToolStripMenuItem,
             this.connectInNewSuperPuTTYToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.checkboxEnableToolStripMenuItem,
             this.toolStripSeparator2,
             this.fileBrowserToolStripMenuItem});
             this.contextMenuStripAddTreeItem.Name = "contextMenuStripAddTreeItem";
@@ -173,6 +183,17 @@ namespace SuperPutty
             this.connectInNewSuperPuTTYToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.connectInNewSuperPuTTYToolStripMenuItem.Text = "Connect in New Instance";
             this.connectInNewSuperPuTTYToolStripMenuItem.Click += new System.EventHandler(this.connectInNewSuperPuTTYToolStripMenuItem_Click);
+
+            // 
+            // enableToolStripMenuItem
+            // 
+            this.checkboxEnableToolStripMenuItem.Name = "checkboxEnableToolStripMenuItem";
+            this.checkboxEnableToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.checkboxEnableToolStripMenuItem.AutoSize = true;
+            this.checkboxEnableToolStripMenuItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkboxEnableToolStripMenuItem.BackColor = Color.White;
+            this.checkboxEnable.CheckStateChanged += new System.EventHandler(this.checkboxEnable_StateChanged);
+
             // 
             // toolStripSeparator2
             // 
@@ -205,7 +226,7 @@ namespace SuperPutty
             this.collapseAllToolStripMenuItem});
             this.contextMenuStripFolder.Name = "contextMenuStripAddTreeItem";
             this.contextMenuStripFolder.ShowImageMargin = false;
-            this.contextMenuStripFolder.Size = new System.Drawing.Size(129, 182);
+            this.contextMenuStripFolder.Size = new System.Drawing.Size(129, 232);
             this.contextMenuStripFolder.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripFolder_Opening);
             // 
             // newSessionToolStripMenuItem1
@@ -219,8 +240,6 @@ namespace SuperPutty
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(125, 6);
-
-
             // 
             // newFolderToolStripMenuItem
             // 
@@ -252,7 +271,6 @@ namespace SuperPutty
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(125, 6);
-
             // 
             // moveUpToolStripMenuItem
             // 
@@ -260,7 +278,6 @@ namespace SuperPutty
             this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.moveUpToolStripMenuItem.Text = "Move up";
             this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
-
             // 
             // moveDownToolStripMenuItem
             // 
@@ -268,15 +285,11 @@ namespace SuperPutty
             this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.moveDownToolStripMenuItem.Text = "Move down";
             this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
-
-
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(125, 6);
- 
-            
             // 
             // connectAllToolStripMenuItem
             // 
@@ -311,29 +324,45 @@ namespace SuperPutty
             // 
             // panelSearch
             // 
+            this.panelSearch.Controls.Add(this.sessionFilter);
             this.panelSearch.Controls.Add(this.txtSearch);
             this.panelSearch.Controls.Add(this.btnSearch);
             this.panelSearch.Controls.Add(this.btnClear);
             this.panelSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSearch.Location = new System.Drawing.Point(0, 0);
+            this.panelSearch.Location = new System.Drawing.Point(2, 2);
             this.panelSearch.Margin = new System.Windows.Forms.Padding(4);
             this.panelSearch.Name = "panelSearch";
             this.panelSearch.Padding = new System.Windows.Forms.Padding(0, 2, 1, 2);
-            this.panelSearch.Size = new System.Drawing.Size(430, 25);
+            this.panelSearch.Size = new System.Drawing.Size(431, 25);
             this.panelSearch.TabIndex = 2;
+            // 
+            // sessionFilter
+            // 
+            this.sessionFilter.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.sessionFilter.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sessionFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sessionFilter.Items.AddRange(new object[] {
+            "All sessions", "Sessions enabled only", "Sessions disabled only"});
+            this.sessionFilter.SelectedIndex = 0;
+            this.sessionFilter.Location = new System.Drawing.Point(0, 2);
+            this.sessionFilter.Margin = new System.Windows.Forms.Padding(0);
+            this.sessionFilter.Name = "sessionFilter";
+            this.sessionFilter.Size = new System.Drawing.Size(132, 21);
+            this.sessionFilter.TabIndex = 0;
+
             // 
             // txtSearch
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Location = new System.Drawing.Point(0, 3);
+            this.txtSearch.Location = new System.Drawing.Point(137, 2);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(384, 19);
-            this.txtSearch.TabIndex = 0;
-//            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
+            this.txtSearch.Size = new System.Drawing.Size(245, 19);
+            this.txtSearch.TabIndex = 1;
             this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
+            Win32Utility.SetCueText(this.txtSearch, "Search...");
 
             // 
             // btnSearch
@@ -346,7 +375,7 @@ namespace SuperPutty
             this.btnSearch.Margin = new System.Windows.Forms.Padding(0);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(22, 21);
-            this.btnSearch.TabIndex = 1;
+            this.btnSearch.TabIndex = 2;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -360,7 +389,7 @@ namespace SuperPutty
             this.btnClear.Margin = new System.Windows.Forms.Padding(0);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(22, 21);
-            this.btnClear.TabIndex = 2;
+            this.btnClear.TabIndex = 3;
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -412,6 +441,8 @@ namespace SuperPutty
         private System.Windows.Forms.ToolStripMenuItem collapseAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem connectExternalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem connectInNewSuperPuTTYToolStripMenuItem;
+        private System.Windows.Forms.ToolStripControlHost checkboxEnableToolStripMenuItem;
+        private CheckBox checkboxEnable;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem connectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
@@ -421,5 +452,6 @@ namespace SuperPutty
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.ComboBox sessionFilter;
     }
 }
