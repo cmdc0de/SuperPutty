@@ -73,17 +73,9 @@ namespace SuperPutty.Data
             return child;
         }
 
-        public void RenameSessionFolderName(String lastFolderName, String newFolderName)
+        public void RenameSessionFolderName(SessionFolderData sessionFolderData, String newFolderName)
         {
-            BindingList<SessionFolderData> listSessionFolderData = GetSessionFolderDataChildren();
-            foreach (SessionFolderData sessionFolderData in listSessionFolderData)
-            {
-                if (sessionFolderData.Name == lastFolderName)
-                {
-                    sessionFolderData.Name = newFolderName;
-                    return;
-                }
-            }
+            sessionFolderData.Name = newFolderName;
         }
 
         /*
@@ -221,16 +213,17 @@ namespace SuperPutty.Data
             }
             foreach (SessionFolderData p in parent._SessionFolderDataChildren)
             {
-                if (GetParent(p, sessionDataToSearch) != null)
+                SessionFolderData pp = GetParent(p, sessionDataToSearch);
+                if (pp != null)
                 {
-                    return p;
+                    return pp;
                 }
             }
             return null;
         }
 
 
-        public void moveTo(SessionFolderData parent, SessionFolderData folderDataToMove)
+        public void MoveTo(SessionFolderData parent, SessionFolderData folderDataToMove)
         {
             // remove it
             SessionFolderData pp = GetParent(this, folderDataToMove);
@@ -253,6 +246,13 @@ namespace SuperPutty.Data
             // remove it
             SessionFolderData pp = GetParent(this, sessionDataToRemove);
             pp._SessionDataChildren.Remove(sessionDataToRemove);
+        }
+        
+        public void RemoveFolder(SessionFolderData sessionFolderDataToRemove)
+        {
+            // remove it
+            SessionFolderData pp = GetParent(this, sessionFolderDataToRemove);
+            pp._SessionFolderDataChildren.Remove(sessionFolderDataToRemove);
         }
 
         public int MoveUp(SessionFolderData parent, SessionFolderData folderDataToMove)
@@ -349,7 +349,10 @@ namespace SuperPutty.Data
         public void WriteXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartDocument();
+            writer.WriteStartElement("root");
             WriteSessionFolderData(writer, SuperPuTTY.GetRootFolderData());
+            WriteSessionData(writer, SuperPuTTY.GetRootFolderData().GetSessionDataChildren());
+            writer.WriteEndElement(); 
             writer.WriteEndDocument();
             writer.Close();
         }
@@ -357,6 +360,8 @@ namespace SuperPutty.Data
         private void WriteSessionFolderData(XmlWriter writer, SessionFolderData parent) {
             if (parent.GetSessionFolderDataChildren().Count == 0 && parent.GetSessionDataChildren().Count == 0)
             {
+                writer.WriteStartElement("folders");
+                writer.WriteEndElement();
                 return;
             } 
             writer.WriteStartElement("folders");
@@ -370,7 +375,7 @@ namespace SuperPutty.Data
                 writer.WriteEndElement();
             }
 
-            WriteSessionData(writer, _SessionDataChildren);
+            //WriteSessionData(writer, parent.GetSessionDataChildren());
            
             writer.WriteEndElement();
         }

@@ -131,7 +131,7 @@ namespace SuperPuttyUnitTests.Scp
 
             SessionData session = new SessionData
             {
-                SessionId = "Test/SessionId",
+                //SessionId = "Test/SessionId",
                 SessionName = "Test SessionName",
                 Username = ScpConfig.UserName,
                 Password = ScpConfig.Password, 
@@ -171,7 +171,7 @@ namespace SuperPuttyUnitTests.Scp
         {
             SessionData session = new SessionData
             {
-                SessionId = "Test/SessionId",
+                //SessionId = "Test/SessionId",
                 SessionName = "Test SessionName",
                 Username = ScpConfig.UserName,
                 Password = ScpConfig.Password,

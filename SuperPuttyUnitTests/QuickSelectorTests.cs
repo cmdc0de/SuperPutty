@@ -17,7 +17,7 @@ namespace SuperPuttyUnitTests
         [TestView]
         public void Test()
         {
-            List<SessionData> sessions = SessionData.LoadSessionsFromFile("c:/Users/beau/SuperPuTTY/sessions.xml");
+            /*List<SessionData> sessions = SessionData.LoadSessionsFromFile("c:/Users/beau/SuperPuTTY/sessions.xml");
             QuickSelectorData data = new QuickSelectorData();
 
             foreach (SessionData sd in sessions)
@@ -33,7 +33,7 @@ namespace SuperPuttyUnitTests
             opt.BaseText = "Open Session";
 
             QuickSelector d = new QuickSelector();
-            d.ShowDialog(null, data, opt);
+            d.ShowDialog(null, data, opt);*/
         }
 
 

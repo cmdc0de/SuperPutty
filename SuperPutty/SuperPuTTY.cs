@@ -365,7 +365,19 @@ namespace SuperPutty
                     rootFolder.LoadSessionsFromFile(fileName);
 
                     // refresh the treeview
-                    MainForm.RefreshTreeview();
+                    if (MainForm.InvokeRequired)
+                    {
+                        MainForm.Invoke(new Action( ()
+                            => {
+                                MainForm.RefreshTreeview();
+                            }
+                            )
+                        );
+                    }
+                    else {
+                        MainForm.RefreshTreeview();
+                    }
+
                 }
                 else
                 {
@@ -797,6 +809,11 @@ namespace SuperPutty
         {
             Settings.SettingsFolder = newSettingsFolder;
             SaveSettingsFolderName();
+        }
+
+        public static void RemoveFolder(SessionFolderData sFolderData)
+        {
+            GetRootFolderData().RemoveFolder(sFolderData);
         }
     }
 

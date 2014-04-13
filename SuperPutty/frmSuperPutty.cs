@@ -418,7 +418,12 @@ namespace SuperPutty
         {
             SaveSessions();
             RefreshTreeview();
-            Process.Start(XmlEditor ?? "notepad", Path.Combine(SuperPuTTY.Settings.SettingsFolder, "Sessions.XML"));
+            Process process = Process.Start(XmlEditor ?? "notepad", Path.Combine(SuperPuTTY.Settings.SettingsFolder, "Sessions.XML"));
+            process.EnableRaisingEvents = true;
+            process.Exited += delegate {
+                SuperPuTTY.LoadSessions();
+               
+            };
         }
 
         private void reloadSessionsToolStripMenuItem_Click(object sender, EventArgs e)
