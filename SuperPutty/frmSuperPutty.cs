@@ -162,9 +162,17 @@ namespace SuperPutty
             if (key != null)
             {
                 string[] commandsKeys = key.GetValueNames();
+                int maxElements = Math.Min(commandsKeys.Length, SuperPuTTY.Settings.MaxCommandHistory);
+
+                int i = 0;
                 foreach (string commandKey in commandsKeys)
                 {
+                    if (i >= maxElements)
+                    {
+                        break;
+                    }
                     tsSendCommandCombo.ComboBox.Items.Add(key.GetValue(commandKey));
+                    i++;
                 }
             }
         }
@@ -185,12 +193,12 @@ namespace SuperPutty
             {
                 string value = (string) parentKey.GetValue(commandKey);
                 commands.Add(value);
-               // parentKey.DeleteValue(commandKey);
+                parentKey.DeleteValue(commandKey);
             }
 
-            int MAX_COMMAND_HISTORY = 5;
+            
             // remove last command if commands list is full
-            if (commands.Count >= MAX_COMMAND_HISTORY)
+            while (commands.Count >= SuperPuTTY.Settings.MaxCommandHistory)
             {
                 commands.RemoveAt(commands.Count - 1);
             }
@@ -1169,7 +1177,7 @@ namespace SuperPutty
                 {
                     // success...clear text and save in mru
                     this.tsSendCommandCombo.Text = string.Empty;
-                    if (this.tsSendCommandCombo.Items.Count >= 5)
+                    if (this.tsSendCommandCombo.Items.Count >= SuperPuTTY.Settings.MaxCommandHistory)
                     {
                         this.tsSendCommandCombo.Items.RemoveAt(this.tsSendCommandCombo.Items.Count - 1);
                     }

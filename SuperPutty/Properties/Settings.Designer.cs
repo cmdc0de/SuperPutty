@@ -100,7 +100,24 @@ namespace SuperPutty.Properties {
                 this["SingleInstanceMode"] = value;
             }
         }
-        
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(SuperPutty.Utils.PortableSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int MaxCommandHistory
+        {
+            get
+            {
+                return ((int)(this["MaxCommandHistory"]));
+            }
+            set
+            {
+                this["MaxCommandHistory"] = value;
+            }
+
+        }
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(SuperPutty.Utils.PortableSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

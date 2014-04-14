@@ -205,6 +205,7 @@ namespace SuperPutty
             this.checkRestrictFloatingWindows.Checked = SuperPuTTY.Settings.DockingRestrictFloatingWindows;
             this.checkSessionsShowSearch.Checked = SuperPuTTY.Settings.SessionsShowSearch;
             this.checkPuttyEnableNewSessionMenu.Checked = SuperPuTTY.Settings.PuttyPanelShowNewSessionMenu;
+            this.maxCommandHistory.Value = (decimal) SuperPuTTY.Settings.MaxCommandHistory;
 
             if (SuperPuTTY.IsFirstRun)
             {
@@ -324,6 +325,7 @@ namespace SuperPutty
                 SuperPuTTY.Settings.DockingRestrictFloatingWindows = this.checkRestrictFloatingWindows.Checked;
                 SuperPuTTY.Settings.SessionsShowSearch = this.checkSessionsShowSearch.Checked;
                 SuperPuTTY.Settings.PuttyPanelShowNewSessionMenu = this.checkPuttyEnableNewSessionMenu.Checked;
+                SuperPuTTY.Settings.MaxCommandHistory = (int) this.maxCommandHistory.Value;
 
                 // save shortcuts
                 KeyboardShortcut[] shortcuts = new KeyboardShortcut[this.Shortcuts.Count];
@@ -503,6 +505,8 @@ namespace SuperPutty
         {
             return String.Format("{0}, {1} pt, {2}", font.FontFamily.Name, font.Size, font.Style);
         }
+
+
 
     }
 
