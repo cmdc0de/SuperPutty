@@ -113,6 +113,7 @@ namespace SuperPutty
             this.tbFocusHelperPassword = new TextBoxFocusHelper(this.tbTxtBoxPassword.TextBox);
             this.sendCommandsDocumentSelector = new frmDocumentSelector(this.DockPanel);
             this.sendCommandsDocumentSelector.Owner = this;
+            LoadCommandHistory();
 
             // Hook into status
             SuperPuTTY.StatusEvent += new Action<string>(delegate(String msg) { this.toolStripStatusLabelMessage.Text = msg; });
@@ -150,6 +151,59 @@ namespace SuperPutty
 
             this.DockPanel.ContentAdded += DockPanel_ContentAdded;
             this.DockPanel.ContentRemoved += DockPanel_ContentRemoved;
+        }
+
+        /**
+         * Load commands history from registry
+         */
+        private void LoadCommandHistory()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\SuperPuTTY\CommandsHistory");
+            if (key != null)
+            {
+                string[] commandsKeys = key.GetValueNames();
+                foreach (string commandKey in commandsKeys)
+                {
+                    tsSendCommandCombo.ComboBox.Items.Add(key.GetValue(commandKey));
+                }
+            }
+        }
+
+        private void AddCommandHistory(String commandValue)
+        {
+            String registerName = @"Software\SuperPuTTY\CommandsHistory";
+            RegistryKey parentKey = Registry.CurrentUser.OpenSubKey(registerName, true);
+            if (parentKey == null)
+            {
+                parentKey = Registry.CurrentUser.CreateSubKey(registerName);
+            }
+
+            // list commands and delete all
+            string[] commandsKeys = parentKey.GetValueNames();
+            List<string> commands = new List<string>();
+            foreach (string commandKey in commandsKeys)
+            {
+                string value = (string) parentKey.GetValue(commandKey);
+                commands.Add(value);
+               // parentKey.DeleteValue(commandKey);
+            }
+
+            int MAX_COMMAND_HISTORY = 5;
+            // remove last command if commands list is full
+            if (commands.Count >= MAX_COMMAND_HISTORY)
+            {
+                commands.RemoveAt(commands.Count - 1);
+            }
+
+            commands.Insert(0, commandValue);
+
+            int i = 0;
+            foreach (string command in commands)
+            {
+                parentKey.SetValue("command_" + i, command);
+                i++;
+            }
+            parentKey.Close();
         }
 
         void DockPanel_ContentAdded(object sender, DockContentEventArgs e)
@@ -361,7 +415,7 @@ namespace SuperPutty
 
             
             // TODO
-            foreach (SessionData sd in SuperPuTTY.GetRootFolderData().GetSessions(SuperPuTTY.GetRootFolderData()))
+            foreach (SessionData sd in SuperPuTTY.GetRootFolderData().GetSessionsList(SuperPuTTY.GetRootFolderData()))
             {
                 data.ItemData.AddItemDataRow(
                     sd.SessionName,
@@ -1033,17 +1087,25 @@ namespace SuperPutty
             else */
             if (e.KeyCode == Keys.Enter)
             {
+                if (!this.tbBtnMaskText.Checked)
+                {
+                    AddCommandHistory(this.tsSendCommandCombo.Text);
+                }
+
                 // send commands
                 TrySendCommandsFromToolbar(new CommandData(this.tsSendCommandCombo.Text), !this.tbBtnMaskText.Checked);
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+
             }
             else if ((e.Control && e.KeyCode != Keys.ControlKey))
             {
+                
                 // special keys
                 TrySendCommandsFromToolbar(new CommandData(e), !this.tbBtnMaskText.Checked);
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+
             }
         }
 
@@ -1107,10 +1169,14 @@ namespace SuperPutty
                 {
                     // success...clear text and save in mru
                     this.tsSendCommandCombo.Text = string.Empty;
+                    if (this.tsSendCommandCombo.Items.Count >= 5)
+                    {
+                        this.tsSendCommandCombo.Items.RemoveAt(this.tsSendCommandCombo.Items.Count - 1);
+                    }
                     if (command != null && !string.IsNullOrEmpty(command.Command) && saveHistory)
 
                     {
-                        this.tsSendCommandCombo.Items.Add(command.ToString());
+                        this.tsSendCommandCombo.Items.Insert(0, command.ToString());
                     }
                 }
             }

@@ -427,7 +427,7 @@ namespace SuperPutty
         {
             if (sessionName != null)
             {
-                foreach (SessionData sData in GetRootFolderData().GetSessions(GetRootFolderData()))
+                foreach (SessionData sData in GetRootFolderData().GetSessionsList(GetRootFolderData()))
                 {
                     if (sData.SessionName == sessionName)
                     {
