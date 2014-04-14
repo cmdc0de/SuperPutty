@@ -454,10 +454,30 @@ namespace SuperPutty
             Log.InfoFormat("Opening putty session, id={0}", session == null ? "" : session.SessionName);
             if (session != null)
             {
-                ctlPuttyPanel sessionPanel = ctlPuttyPanel.NewPanel(session);
-                ApplyDockRestrictions(sessionPanel);
-                ApplyIconForWindow(sessionPanel, session);
-                sessionPanel.Show(MainForm.DockPanel, session.LastDockstate);
+                bool isFound = false;
+	            foreach (DockContent dContent in MainForm.DockPanel.Contents)
+	            {
+                    if (dContent is ctlPuttyPanel)
+                    {
+                        ctlPuttyPanel tab = (ctlPuttyPanel)dContent;
+
+                        if (tab.Session == session)
+                        {
+                            tab.Activate();
+                            isFound = true;
+                        }
+                        SuperPuTTY.ReportStatus("dContent: {0}", tab.Session);
+
+                    }
+	            }
+
+                if (!isFound)
+                {
+                    ctlPuttyPanel sessionPanel = ctlPuttyPanel.NewPanel(session);
+                    ApplyDockRestrictions(sessionPanel);
+                    ApplyIconForWindow(sessionPanel, session);
+                    sessionPanel.Show(MainForm.DockPanel, session.LastDockstate);
+                }
                 SuperPuTTY.ReportStatus("Opened session: {0} [{1}]", session.SessionName, session.Proto);
             }
         }
