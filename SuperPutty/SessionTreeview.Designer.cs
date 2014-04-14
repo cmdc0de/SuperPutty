@@ -342,14 +342,14 @@ namespace SuperPutty
             this.sessionFilter.Dock = System.Windows.Forms.DockStyle.Left;
             this.sessionFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sessionFilter.Items.AddRange(new object[] {
-            "All sessions", "Sessions enabled only", "Sessions disabled only"});
+            "All sessions", "Sessions enabled only", "Sessions disabled only", "Sessions opened only", "Sessions closed only"});
             this.sessionFilter.SelectedIndex = 0;
             this.sessionFilter.Location = new System.Drawing.Point(0, 2);
             this.sessionFilter.Margin = new System.Windows.Forms.Padding(0);
             this.sessionFilter.Name = "sessionFilter";
             this.sessionFilter.Size = new System.Drawing.Size(132, 21);
             this.sessionFilter.TabIndex = 0;
-
+            this.sessionFilter.SelectedValueChanged += new System.EventHandler(this.sessionFilterSelectionValue_Changed);
             // 
             // txtSearch
             // 

@@ -477,14 +477,22 @@ namespace SuperPutty
                     ApplyDockRestrictions(sessionPanel);
                     ApplyIconForWindow(sessionPanel, session);
                     sessionPanel.Show(MainForm.DockPanel, session.LastDockstate);
+                    sessionPanel.FormClosed += sessionPanel_FormClosed;
+                    session.IsActive = true;
+
+                    SuperPuTTY.RefreshSessions();
                 }
                 SuperPuTTY.ReportStatus("Opened session: {0} [{1}]", session.SessionName, session.Proto);
             }
         }
+        private static void sessionPanel_FormClosed(object sender, EventArgs e) {
+            ((ctlPuttyPanel)sender).Session.IsActive = false;
+            SuperPuTTY.RefreshSessions();
+        }
 
-        public static void OpenScpSession(string sessionId)
+        public static void OpenScpSession(string sessionName)
         {
-            OpenScpSession(GetSessionByName(sessionId));
+            OpenScpSession(GetSessionByName(sessionName));
         }
 
         public static void OpenScpSession(SessionData session)
@@ -503,7 +511,10 @@ namespace SuperPutty
                 ApplyIconForWindow(panel, session);
                 panel.Show(MainForm.DockPanel, session.LastDockstate);
 
+                session.IsActive = true;
                 SuperPuTTY.ReportStatus("Opened session: {0} [SCP]", session.SessionName);
+
+                SuperPuTTY.RefreshSessions();
             }
             else
             {

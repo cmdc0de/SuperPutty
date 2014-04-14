@@ -76,7 +76,7 @@ namespace SuperPutty
             m_DockPanel.ContextMenuStrip = this.contextMenuStripFolder;
         }
 
-        void ExpandInitialTree()
+        void ExpandInitialTree() 
         {
             if (SuperPuTTY.Settings.ExpandSessionsTreeOnStartup)
             {
@@ -593,16 +593,41 @@ namespace SuperPutty
 
         #region Node helpers
 
-        private TreeNode AddSessionNode(TreeNode parentNode, SessionData session, bool isInitializing)
+        private void AddSessionNode(TreeNode parentNode, SessionData session, bool isInitializing)
         {
-            TreeNode addedNode = null;
-        /*    if (parentNode.Nodes.ContainsKey(session.SessionName))
+            SelectionFilter selectionFilter = (SelectionFilter) Enum.ToObject(typeof(SelectionFilter), sessionFilter.SelectedIndex);
+            if (SelectionFilter.ENABLED_ONLY.Equals(selectionFilter))
             {
-                SuperPuTTY.ReportStatus("Node with the same name exists.  New node ({0}) NOT added", session.SessionName);
+                if (!session.Enabled)
+                {
+                    return;
+                }
             }
-            else
-            {*/
-                addedNode = parentNode.Nodes.Add(session.SessionName, session.SessionName, ImageKeySession, ImageKeySession);
+            else if (SelectionFilter.DISABLED_ONLY.Equals(selectionFilter))
+            {
+                if (session.Enabled)
+                {
+                    return;
+                }
+            }
+            else if (SelectionFilter.ACTIVE_ONLY.Equals(selectionFilter))
+            {
+                // active only
+                if (!session.IsActive)
+                {
+                    return;
+                }
+            }
+            else if (SelectionFilter.UNACTIVE_ONLY.Equals(selectionFilter))
+            {
+                // inactive only
+                if (session.IsActive)
+                {
+                    return;
+                }
+            }
+
+            TreeNode addedNode = parentNode.Nodes.Add(session.SessionName, session.SessionName, ImageKeySession, ImageKeySession);
                 addedNode.Tag = session;
                 addedNode.ContextMenuStrip = this.contextMenuStripAddTreeItem;
                 addedNode.ToolTipText = GetSessionToolTip(session);
@@ -610,15 +635,17 @@ namespace SuperPutty
                 {
                     addedNode.ForeColor = SystemColors.GrayText;
                 }
+                if (session.IsActive)
+                {
+                    Font boldFont = new Font(this.treeView1.Font, FontStyle.Bold);
+                    addedNode.NodeFont = boldFont;
+                }
                 // Override with custom icon if valid
                 if (IsValidImage(session.ImageKey))
                 {
                     addedNode.ImageKey = session.ImageKey;
                     addedNode.SelectedImageKey = session.ImageKey;
                 }
-//            }
-
-            return addedNode;
         }
 
         private TreeNode AddFolderNode(TreeNode parentNode, SessionFolderData folderData)
@@ -925,6 +952,11 @@ namespace SuperPutty
             SuperPuTTY.ReportStatus("Saved Sessions after Drag-Drop @ {0}", DateTime.Now);
         }
 
+        private void sessionFilterSelectionValue_Changed(object sender, EventArgs e) {
+            //changed
+            //int indexSelection = sessionFilter.SelectedIndex;
+            CreateTreeview();
+        }
         #region Icon
         bool IsValidImage(string imageKey)
         {
@@ -1113,6 +1145,11 @@ namespace SuperPutty
         }
         #endregion
 
+
+        enum SelectionFilter
+        {
+            ALL, ENABLED_ONLY, DISABLED_ONLY, ACTIVE_ONLY, UNACTIVE_ONLY
+        };
     }
 
 }

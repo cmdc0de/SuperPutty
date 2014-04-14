@@ -142,6 +142,14 @@ namespace SuperPutty.Data
             set { _Enabled = value; }
         }
 
+        private bool _IsActive;
+        public bool IsActive
+        {
+            get { return _IsActive; }
+            set { _IsActive = value; }
+        }
+
+
         public SessionData(string sessionName, string hostName, int port, ConnectionProtocol protocol, string sessionConfig)
         {
             SessionName = sessionName;
