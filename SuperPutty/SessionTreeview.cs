@@ -150,6 +150,9 @@ namespace SuperPutty
             foreach (SessionFolderData child in folderData.GetSessionFolderDataChildren())
             {
                 TreeNode childNode = AddFolderNode(currentNode, child);
+                CreateNodes(child, childNode);
+                CreateNodesSession(child.GetSessionDataChildren(), childNode);
+
                 if (child.IsExpand)
                 {
                     childNode.Expand();
@@ -158,8 +161,6 @@ namespace SuperPutty
                 {
                     childNode.Collapse();
                 }
-                CreateNodes(child, childNode);
-                CreateNodesSession(child.GetSessionDataChildren(), childNode);
             }
         }
 
@@ -1024,11 +1025,12 @@ namespace SuperPutty
             this.CreateTreeview();
 
             // if "clear" show init state otherwise expand all to show all matches
-            if (string.IsNullOrEmpty(txt))
+            /*if (string.IsNullOrEmpty(txt))
             {
                 this.ExpandInitialTree();
             }
-            else
+            else*/
+            if (!string.IsNullOrEmpty(txt))
             {
                 this.treeView1.ExpandAll();
             }
