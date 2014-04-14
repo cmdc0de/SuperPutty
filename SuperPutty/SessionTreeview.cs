@@ -70,7 +70,7 @@ namespace SuperPutty
 
             // populate sessions in the treeview from the registry
             this.CreateTreeview();
-            this.ExpandInitialTree();
+
             //SuperPuTTY.Sessions.ListChanged += new ListChangedEventHandler(Sessions_ListChanged);
             SuperPuTTY.Settings.SettingsSaving += new SettingsSavingEventHandler(Settings_SettingsSaving);
 
@@ -101,6 +101,8 @@ namespace SuperPutty
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+            this.ExpandInitialTree();
         }
 
         void Settings_SettingsSaving(object sender, CancelEventArgs e)
@@ -148,7 +150,8 @@ namespace SuperPutty
             {
                 treeView1.ExpandAll();
             }
-            treeView1.Refresh();
+
+            treeView1.Invalidate();
             treeView1.EndUpdate();
         }
 
