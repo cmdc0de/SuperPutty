@@ -47,6 +47,7 @@ namespace SuperPutty
         public const string ImageKeySession = "computer";
         public const string ImageKeyFolder = "folder";
 
+        private SelectionFilter selectionFilter = SelectionFilter.ALL;
         private DockPanel m_DockPanel;
         private bool isRenamingNode;
         TreeNode nodeRoot;
@@ -129,6 +130,8 @@ namespace SuperPutty
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
 
+            selectionFilter = (SelectionFilter)Enum.ToObject(typeof(SelectionFilter), sessionFilter.SelectedIndex);
+
             this.nodeRoot = treeView1.Nodes.Add("root", "root", ImageKeyFolder, ImageKeyFolder);
             this.nodeRoot.ContextMenuStrip = this.contextMenuStripFolder;
 
@@ -141,6 +144,10 @@ namespace SuperPutty
             treeView1.SelectedNode = this.nodeRoot;
             nodeRoot.Expand();
 
+            if (!SelectionFilter.ALL.Equals(selectionFilter))
+            {
+                treeView1.ExpandAll();
+            }
             treeView1.Refresh();
             treeView1.EndUpdate();
         }
@@ -596,7 +603,6 @@ namespace SuperPutty
 
         private void AddSessionNode(TreeNode parentNode, SessionData session, bool isInitializing)
         {
-            SelectionFilter selectionFilter = (SelectionFilter) Enum.ToObject(typeof(SelectionFilter), sessionFilter.SelectedIndex);
             if (SelectionFilter.ENABLED_ONLY.Equals(selectionFilter))
             {
                 if (!session.Enabled)
