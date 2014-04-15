@@ -285,9 +285,19 @@ namespace SuperPutty
         {
             if (SuperPuTTY.Settings.ExitConfirmation && !forceClose)
             {
-                if (MessageBox.Show("Exit SuperPuTTY?", "Confirm Exit", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                // Open a popup with 3 choices : Ok(save sessions), Ok(without saving), Annuler
+                ExitForm exitForm = new ExitForm();
+                DialogResult result = exitForm.ShowDialog();
+                // MessageBox.Show("Exit SuperPuTTY?", "Confirm Exit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation)
+                if (result == DialogResult.Cancel)
                 {
                     e.Cancel = true;
+                }
+                else if (result == DialogResult.Yes)
+                {
+                    // save and exit
+                    SuperPuTTY.SaveSessions();
+                    e.Cancel = false;
                 }
             }
         }
