@@ -19,6 +19,11 @@ namespace SuperPutty.Gui
             InitializeComponent();
         }
 
+        /*protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+        }*/
+
         void DoClose()
         {
             this.SelectedItem = null;
@@ -38,14 +43,14 @@ namespace SuperPutty.Gui
 
         void UpdateFilter()
         {
-            if (this.textBoxData.Text == string.Empty)
+            if (this.textBoxData.Text.Trim() == string.Empty)
             {
                 this.DataView.RowFilter = String.Empty;
             }
             else
             {
                 this.DataView.RowFilter = string.Format(
-                    "[Name] like '%{0}%' OR [Detail] like '%{0}%'", this.textBoxData.Text);
+                    "[Name] like '%{0}%' OR [Detail] like '%{0}%'", this.textBoxData.Text.Trim());
             }
             this.Text = string.Format("{0} [{1}]", this.Options.BaseText, this.DataView.Count);
         }
@@ -59,10 +64,11 @@ namespace SuperPutty.Gui
 
         private void textBoxData_KeyDown(object sender, KeyEventArgs e)
         {
+            Log.DebugFormat("textbox keycode = {0}, sender {1}, shift {2}", e.KeyCode, sender, e.Shift);
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                    if (this.DataView.Count == 1)
+                    if (this.dataGridViewData.SelectedRows.Count > 0)
                     {
                         this.DoSelectItem();
                     }
@@ -74,13 +80,15 @@ namespace SuperPutty.Gui
                 case Keys.Down:
                     // focus grid and move selection down by 1 row if possible
                     this.dataGridViewData.Focus();
-                    if (this.dataGridViewData.SelectedRows[0].Index == 0)
+                    SendKeys.Send("{DOWN}");
+
+                    /*if (this.dataGridViewData.SelectedRows[0].Index == 0)
                     {
                         if (this.dataGridViewData.Rows.Count > 1)
                         {
                             this.dataGridViewData.Rows[1].Selected = true;
                         }
-                    }
+                    }*/
                     e.Handled = true;
                     break;
                 case Keys.Back:
@@ -102,6 +110,7 @@ namespace SuperPutty.Gui
                     }
                     break;
                 default:
+                    e.Handled = false;
                     break;
             }
         }
@@ -113,6 +122,7 @@ namespace SuperPutty.Gui
 
         private void dataGridViewData_KeyDown(object sender, KeyEventArgs e)
         {
+            Log.DebugFormat("dataGrid keycode = {0}", e.KeyData);
             switch (e.KeyCode)
             {
                 case Keys.Enter:
@@ -124,13 +134,37 @@ namespace SuperPutty.Gui
                     e.Handled = true;
                     break;
                 case Keys.Up:
+                case Keys.Down:
+                    //nothing
+                    e.Handled = false;
+                    break;
+                /*case Keys.Up:
                     if (this.dataGridViewData.Rows[0].Selected)
                     {
                         this.textBoxData.Focus();
                         e.Handled = true;
                     }
-                    break;
+                    break;*/
                 default:
+                    this.textBoxData.Focus();
+
+                    // limiting to letter and digit
+                    if (char.IsLetterOrDigit((char)e.KeyCode))
+                    {
+                        string keyToSend = e.KeyCode.ToString();
+                        // HACK : check e.Shift for eviting to send A if use press a...
+                        if (e.Shift)
+                        {
+                            keyToSend = keyToSend.ToUpper();
+                        }
+                        else
+                        {
+                            keyToSend = keyToSend.ToLower();
+                        }
+                        SendKeys.Send(keyToSend);
+                    }
+                    
+                    e.Handled = false;
                     break;
             }
         }
@@ -204,7 +238,8 @@ namespace SuperPutty.Gui
             }
 
             // update title
-            this.UpdateFilter();            
+            this.UpdateFilter();
+
             return ShowDialog(parent);
         }
 
