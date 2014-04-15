@@ -16,6 +16,7 @@ namespace SuperPutty.Utils
         public const int WM_DESTROY = 0x02;
         public const short WM_COPYDATA = 74;
 
+        public const int WM_SETTEXT = 0x000C;
         public const int WM_KEYDOWN = 0x100;
         public const int WM_KEYUP = 0x101;
         public const int WM_CHAR = 0x102;
@@ -1111,6 +1112,9 @@ namespace SuperPutty.Utils
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, uint Msg, long wParam, long lParam);
 
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, string lParam);
+
         [DllImport("user32.dll")]
         private static extern int FindWindow(string className, string windowText);
 
@@ -1121,7 +1125,7 @@ namespace SuperPutty.Utils
         public static extern bool AnimateWindow(IntPtr hwnd, int time, AnimateWindowFlags flags);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, int wParam, IntPtr lParam);
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, int wParam, string lParam);
 
         [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);

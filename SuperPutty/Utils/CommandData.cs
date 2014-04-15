@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace SuperPutty.Utils
 {
     public class CommandData
@@ -21,6 +22,7 @@ namespace SuperPutty.Utils
         public string Command { get; private set; }
         public KeyEventArgs KeyData { get; private set; }
 
+
         public void SendToTerminal(int handle)
         {
             if (!string.IsNullOrEmpty(this.Command))
@@ -30,6 +32,9 @@ namespace SuperPutty.Utils
                 {
                     NativeMethods.SendMessage(handle, NativeMethods.WM_CHAR, (int)c, 0);
                 }
+                // send a string           
+               // NativeMethods.SendMessage((System.IntPtr) handle, NativeMethods.WM_SETTEXT, 0, this.Command);
+
                 NativeMethods.SendMessage(handle, NativeMethods.WM_CHAR, (int)Keys.Enter, 0);
             }
             else if (this.KeyData != null)

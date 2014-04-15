@@ -1275,6 +1275,26 @@ namespace SuperPutty
                         }
                     }
 
+                    if (isControlDown && !isShiftDown && keys == Keys.V)
+                    {
+                        if (this.DockPanel.ActiveDocument is ctlPuttyPanel)
+                        {
+                            ctlPuttyPanel puttyPanel = (ctlPuttyPanel)this.DockPanel.ActiveDocument;
+                            string commandText = Clipboard.GetText();
+                            CommandData commandData = new CommandData(commandText);
+                            int handle = puttyPanel.AppPanel.AppWindowHandle.ToInt32();
+                            Log.InfoFormat("SendCommand: session={0}, command=[{1}], handle={2}", puttyPanel.Session.SessionName, commandText, handle);
+                            try
+                            {
+                                commandData.SendToTerminal(handle);
+                                return (IntPtr)1;
+                            }
+                            catch (Exception e)
+                            {
+                                Log.ErrorFormat("Send command failed : {0}", e.Message);
+                            }
+                        }
+                    }
                     // misc action handling (eat keyup and down)
                     if (SuperPuTTY.Settings.EnableKeyboadShortcuts &&
                         isKeyDown &&
@@ -1290,6 +1310,7 @@ namespace SuperPutty
                         {
                             Log.DebugFormat("#### TryExecute shortcut: keys={0}", keys);
                         }
+
                         SuperPuttyAction action;
                         if (this.shortcuts.TryGetValue(keys, out action))
                         {

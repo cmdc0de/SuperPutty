@@ -447,6 +447,10 @@ namespace SuperPutty
             }
         }
 
+        public void sendCommand(string command)
+        {
+
+        }
         private void puTTYMenuTSMI_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = (ToolStripMenuItem) sender;
