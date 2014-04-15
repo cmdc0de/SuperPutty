@@ -69,8 +69,16 @@ namespace SuperPutty
                             dlgLogin m_Login = new dlgLogin(m_Session);
                             if (m_Login.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                             {
-                                m_Session.Username = m_Login.Username;
-                                m_Session.Password = m_Login.Password;
+                                if (m_Login.Username != null)
+                                {
+                                    m_Session.Username = m_Login.Username.Trim();
+                                }
+                                
+                                if (m_Login.Password != null)
+                                {
+                                    m_Session.Password = m_Login.Password.Trim();
+                                }
+                                
                                 LoadDirectory(path);
                             }
                             else

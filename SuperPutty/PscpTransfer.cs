@@ -206,8 +206,15 @@ namespace SuperPutty
             {
                 if (m_Login.ShowDialog(SuperPuTTY.MainForm) == System.Windows.Forms.DialogResult.OK)
                 {
-                    m_Session.Username = m_Login.Username;
-                    m_Session.Password = m_Login.Password;
+                    if (m_Login.Username != null)
+                    {
+                        m_Session.Username = m_Login.Username.Trim();
+                    }
+                    if (m_Login.Password != null)
+                    {
+                        m_Session.Password = m_Login.Password.Trim();
+                    }
+                    
 
                     if (m_Login.Remember)
                     {
@@ -453,8 +460,15 @@ namespace SuperPutty
             {
                 if (m_Login.ShowDialog(SuperPuTTY.MainForm) == System.Windows.Forms.DialogResult.OK)
                 {
-                    m_Session.Username = m_Login.Username;
-                    m_Session.Password = m_Login.Password;
+                    if (m_Login.Username != null)
+                    {
+                        m_Session.Username = m_Login.Username.Trim();
+                    }
+
+                    if (m_Login.Password != null)
+                    {
+                        m_Session.Password = m_Login.Password.Trim();
+                    }
                 }
             }
 
