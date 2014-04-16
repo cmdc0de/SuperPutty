@@ -29,10 +29,12 @@ namespace SuperPutty
         public static event EventHandler<LayoutChangedEventArgs> LayoutChanged;
 
         public static event Action<String> StatusEvent;
+        public static SuperPutty.SessionTreeview.SelectionFilter selectionFilter = SuperPutty.SessionTreeview.SelectionFilter.ALL;
 
         static BindingList<LayoutData> layouts = new BindingList<LayoutData>();
         static SessionFolderData rootFolder = new SessionFolderData("root");
         static bool? isFirstRun;
+       
 
         public static void Initialize(string[] args)
         {

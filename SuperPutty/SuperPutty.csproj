@@ -89,6 +89,7 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\AbstractSessionData.cs" />
+    <Compile Include="Data\Database.cs" />
     <Compile Include="Data\SessionFolderData.cs" />
     <Compile Include="Data\KeyboardShortcut.cs" />
     <Compile Include="ExitForm.cs">

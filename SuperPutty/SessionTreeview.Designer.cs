@@ -235,7 +235,7 @@ namespace SuperPutty
             // 
             this.newSessionToolStripMenuItem1.Name = "newSessionToolStripMenuItem1";
             this.newSessionToolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
-            this.newSessionToolStripMenuItem1.Text = "New";
+            this.newSessionToolStripMenuItem1.Text = "New Session";
             this.newSessionToolStripMenuItem1.Click += new System.EventHandler(this.CreateOrEditSessionToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
@@ -345,7 +345,7 @@ namespace SuperPutty
             this.sessionFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sessionFilter.Items.AddRange(new object[] {
             "All sessions", "Sessions enabled only", "Sessions disabled only", "Sessions opened only", "Sessions closed only"});
-            this.sessionFilter.SelectedIndex = 0;
+            this.sessionFilter.SelectedIndex = (int) SuperPuTTY.selectionFilter;
             this.sessionFilter.Location = new System.Drawing.Point(0, 2);
             this.sessionFilter.Margin = new System.Windows.Forms.Padding(0);
             this.sessionFilter.Name = "sessionFilter";

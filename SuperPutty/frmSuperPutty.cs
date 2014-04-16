@@ -56,7 +56,7 @@ namespace SuperPutty
 
         public ToolWindowDocument CurrentPanel { get; set; }
 
-        private SingletonToolWindowHelper<SessionTreeview> sessions;
+        public SingletonToolWindowHelper<SessionTreeview> sessions;
         private SingletonToolWindowHelper<LayoutsList> layouts;
         private SingletonToolWindowHelper<Log4netLogViewer> logViewer;
 
@@ -881,6 +881,8 @@ namespace SuperPutty
                 ctlPuttyPanel puttyPanel = ctlPuttyPanel.FromPersistString(persistString);
                 if (puttyPanel != null)
                 {
+                    // refresh treeview for session active format
+                    RefreshTreeview();
                     return puttyPanel;
                 }
 

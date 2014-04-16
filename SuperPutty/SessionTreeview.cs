@@ -47,7 +47,7 @@ namespace SuperPutty
         public const string ImageKeySession = "computer";
         public const string ImageKeyFolder = "folder";
 
-        private SelectionFilter selectionFilter = SelectionFilter.ALL;
+
         private DockPanel m_DockPanel;
         private bool isRenamingNode;
         TreeNode nodeRoot;
@@ -102,7 +102,7 @@ namespace SuperPutty
         {
             base.OnLoad(e);
 
-            this.ExpandInitialTree();
+           // this.ExpandInitialTree();
         }
 
         void Settings_SettingsSaving(object sender, CancelEventArgs e)
@@ -132,7 +132,7 @@ namespace SuperPutty
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
 
-            selectionFilter = (SelectionFilter)Enum.ToObject(typeof(SelectionFilter), sessionFilter.SelectedIndex);
+            SuperPuTTY.selectionFilter = (SelectionFilter)Enum.ToObject(typeof(SelectionFilter), sessionFilter.SelectedIndex);
 
             this.nodeRoot = treeView1.Nodes.Add("root", "root", ImageKeyFolder, ImageKeyFolder);
             this.nodeRoot.ContextMenuStrip = this.contextMenuStripFolder;
@@ -146,7 +146,7 @@ namespace SuperPutty
             treeView1.SelectedNode = this.nodeRoot;
             nodeRoot.Expand();
 
-            if (!SelectionFilter.ALL.Equals(selectionFilter))
+            if (!SelectionFilter.ALL.Equals(SuperPuTTY.selectionFilter))
             {
                 treeView1.ExpandAll();
             }
@@ -326,7 +326,7 @@ namespace SuperPutty
                 }
 
                 CreateTreeview();
-                this.treeView1.SelectedNode = getTreeNode(nodeRoot.Nodes[0], session);
+                this.treeView1.SelectedNode = getTreeNode(nodeRoot, session);
             }
             
         }
@@ -606,21 +606,21 @@ namespace SuperPutty
 
         private void AddSessionNode(TreeNode parentNode, SessionData session, bool isInitializing)
         {
-            if (SelectionFilter.ENABLED_ONLY.Equals(selectionFilter))
+            if (SelectionFilter.ENABLED_ONLY.Equals(SuperPuTTY.selectionFilter))
             {
                 if (!session.Enabled)
                 {
                     return;
                 }
             }
-            else if (SelectionFilter.DISABLED_ONLY.Equals(selectionFilter))
+            else if (SelectionFilter.DISABLED_ONLY.Equals(SuperPuTTY.selectionFilter))
             {
                 if (session.Enabled)
                 {
                     return;
                 }
             }
-            else if (SelectionFilter.ACTIVE_ONLY.Equals(selectionFilter))
+            else if (SelectionFilter.ACTIVE_ONLY.Equals(SuperPuTTY.selectionFilter))
             {
                 // active only
                 if (!session.IsActive)
@@ -628,7 +628,7 @@ namespace SuperPutty
                     return;
                 }
             }
-            else if (SelectionFilter.UNACTIVE_ONLY.Equals(selectionFilter))
+            else if (SelectionFilter.UNACTIVE_ONLY.Equals(SuperPuTTY.selectionFilter))
             {
                 // inactive only
                 if (session.IsActive)
@@ -1157,7 +1157,7 @@ namespace SuperPutty
         #endregion
 
 
-        enum SelectionFilter
+        public enum SelectionFilter
         {
             ALL, ENABLED_ONLY, DISABLED_ONLY, ACTIVE_ONLY, UNACTIVE_ONLY
         };

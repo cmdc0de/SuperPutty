@@ -39,6 +39,7 @@ namespace SuperPutty.Data
         }
         public SessionFolderData(String name)
         {
+            
             this.Name = name;
         }
         public void AddSession(SessionData sessionData) {
@@ -248,7 +249,12 @@ namespace SuperPutty.Data
 
             while (reader.Read())
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folders"))
+                if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("root"))
+                {
+                    SuperPutty.SessionTreeview.SelectionFilter selectionFilter = (SuperPutty.SessionTreeview.SelectionFilter)  int.Parse(reader.GetAttribute("filter"));
+                    SuperPuTTY.selectionFilter = selectionFilter;
+                }
+                else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folders"))
                 {
 
                 } 
@@ -259,7 +265,9 @@ namespace SuperPutty.Data
                 else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folder"))
                 {
                     String name = reader.GetAttribute("name");
+                    bool isExpand = bool.Parse(reader.GetAttribute("isexpand"));
                     SessionFolderData subFolderData = new SessionFolderData(name);
+                    subFolderData.IsExpand = isExpand;
                     stack.Peek().GetSessionFolderDataChildren().Add(subFolderData);
 
                     stack.Push(subFolderData);
@@ -287,7 +295,7 @@ namespace SuperPutty.Data
                     sessionData.PuttySession = reader.GetAttribute("puttysession");
                     sessionData.Username = reader.GetAttribute("username");
                     sessionData.ExtraArgs = reader.GetAttribute("extraargs");
-                    sessionData.Enabled = (reader.GetAttribute("enabled") == "true");
+                    sessionData.Enabled = bool.Parse(reader.GetAttribute("enabled"));
 
                     stack.Peek().AddSession(sessionData);
                 }
@@ -299,6 +307,7 @@ namespace SuperPutty.Data
         {
             writer.WriteStartDocument();
             writer.WriteStartElement("root");
+            writer.WriteAttributeString("filter", "" + ((int)SuperPuTTY.selectionFilter));
             WriteSessionFolderData(writer, SuperPuTTY.GetRootFolderData());
             WriteSessionData(writer, SuperPuTTY.GetRootFolderData().GetSessionDataChildren());
             writer.WriteEndElement(); 
@@ -319,6 +328,7 @@ namespace SuperPutty.Data
             {
                 writer.WriteStartElement("folder");
                 writer.WriteAttributeString("name", sessionFolderData.Name);
+                writer.WriteAttributeString("isexpand", sessionFolderData.IsExpand.ToString());
                 WriteSessionFolderData(writer, sessionFolderData);
                 WriteSessionData(writer, sessionFolderData.GetSessionDataChildren());
                 writer.WriteEndElement();
