@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net;
 using System.ComponentModel;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPutty.Scp
 {

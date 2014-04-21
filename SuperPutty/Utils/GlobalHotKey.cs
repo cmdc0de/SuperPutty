@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPutty.Utils
 {

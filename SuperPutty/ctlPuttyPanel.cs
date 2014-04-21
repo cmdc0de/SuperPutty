@@ -32,7 +32,7 @@ using log4net;
 using System.Diagnostics;
 using System.Web;
 using System.Collections.Specialized;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using WeifenLuo.WinFormsUI.Docking;
 using SuperPutty.Utils;
 using System.Threading;
@@ -298,8 +298,8 @@ namespace SuperPutty
         {
             string str = String.Format("{0}?SessionName={1}&TabName={2}", 
                 this.GetType().FullName,
-                HttpUtility.UrlEncodeUnicode(this.m_Session.SessionName), 
-                HttpUtility.UrlEncodeUnicode(this.TextOverride));
+                HttpUtility.UrlEncode(this.m_Session.SessionName), 
+                HttpUtility.UrlEncode(this.TextOverride));
             return str;
         }
 
@@ -414,7 +414,7 @@ namespace SuperPutty
                         && puttyPanel.DockState != DockState.Hidden)
                     {
                         sessionData.LastDockstate = puttyPanel.DockState;
-                        SuperPuTTY.SaveSessions();
+                        //SuperPuTTY.SaveSessions();
                         //sessionData.SaveToRegistry();
                     }
 

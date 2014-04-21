@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPutty.Scp
 {

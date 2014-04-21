@@ -89,7 +89,7 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public ApplicationPanel()
         {
             this.Disposed += new EventHandler(ApplicationPanel_Disposed);
-            SuperPuTTY.LayoutChanged += new EventHandler<Data.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
+            SuperPuTTY.LayoutChanged += new EventHandler<Manager.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
 
             // setup up the hook to watch for all EVENT_SYSTEM_FOREGROUND events system wide
 
@@ -115,12 +115,12 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         void ApplicationPanel_Disposed(object sender, EventArgs e)
         {
             this.Disposed -= new EventHandler(ApplicationPanel_Disposed);
-            SuperPuTTY.LayoutChanged -= new EventHandler<Data.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
+            SuperPuTTY.LayoutChanged -= new EventHandler<Manager.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
             NativeMethods.UnhookWinEvent(m_hWinEventHook);
             SuperPuTTY.Settings.SettingsSaving -= Settings_SettingsSaving;
         }
 
-        void SuperPuTTY_LayoutChanged(object sender, Data.LayoutChangedEventArgs e)
+        void SuperPuTTY_LayoutChanged(object sender, Manager.LayoutChangedEventArgs e)
         {
             // move 1x after we're done loading
             this.MoveWindow("LayoutChanged");

@@ -27,7 +27,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using log4net;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using SuperPutty.Utils;
 using WeifenLuo.WinFormsUI.Docking;
 using SuperPutty.Gui;
@@ -958,7 +958,7 @@ namespace SuperPutty
             timerDelayedSave.Stop();
 
             // do save
-            SuperPuTTY.SaveSessions();
+           // SuperPuTTY.SaveSessions();
             SuperPuTTY.ReportStatus("Saved Sessions after Drag-Drop @ {0}", DateTime.Now);
         }
 

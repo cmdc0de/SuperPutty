@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using log4net;
 
 namespace SuperPutty.Utils

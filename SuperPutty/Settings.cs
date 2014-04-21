@@ -2,7 +2,7 @@
 using Microsoft.Win32;
 using System.IO;
 using SuperPutty.Utils;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using System;
 using System.Windows.Forms;
 using System.Configuration;

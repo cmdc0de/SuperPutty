@@ -27,7 +27,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using System.Text.RegularExpressions;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 
 namespace SuperPutty
@@ -219,7 +219,7 @@ namespace SuperPutty
                     if (m_Login.Remember)
                     {
                         //Session.SaveToRegistry(); // passwords are *never* saved and stored permanently
-                        SuperPuTTY.SaveSessions();
+                        //SuperPuTTY.SaveSessions();
                     }
                 }
                 else

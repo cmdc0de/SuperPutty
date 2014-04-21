@@ -27,7 +27,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Security.Principal;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 
 namespace SuperPutty

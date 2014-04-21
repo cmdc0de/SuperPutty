@@ -6,7 +6,7 @@ using System.IO;
 using System.Security.Principal;
 using log4net;
 using System.Security.AccessControl;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using System.Threading;
 
 namespace SuperPutty.Scp

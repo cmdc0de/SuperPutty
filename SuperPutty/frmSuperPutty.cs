@@ -32,7 +32,7 @@ using System.IO;
 using Microsoft.Win32;
 using WeifenLuo.WinFormsUI.Docking;
 using SuperPutty.Properties;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using log4net;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -286,19 +286,19 @@ namespace SuperPutty
             if (SuperPuTTY.Settings.ExitConfirmation && !forceClose)
             {
                 // Open a popup with 3 choices : Ok(save sessions), Ok(without saving), Annuler
-                ExitForm exitForm = new ExitForm();
-                DialogResult result = exitForm.ShowDialog();
-                // MessageBox.Show("Exit SuperPuTTY?", "Confirm Exit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation)
-                if (result == DialogResult.Cancel)
+               // ExitForm exitForm = new ExitForm();
+
+                DialogResult result = MessageBox.Show("Exit SuperPuTTY?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
                 {
                     e.Cancel = true;
                 }
-                else if (result == DialogResult.Yes)
+                /*else if (result == DialogResult.Yes)
                 {
                     // save and exit
                     SuperPuTTY.SaveSessions();
                     e.Cancel = false;
-                }
+                }*/
             }
         }
 
@@ -357,7 +357,7 @@ namespace SuperPutty
 
         #region File
 
-        private void ExportSessions()
+        /*private void ExportSessions()
         {
             String sessionName = "Sessions.XML";
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -371,20 +371,37 @@ namespace SuperPutty
 
                 SaveSessions();
             }
-        }
+        }*/
 
 
-        private void SaveSessions()
+        /*private void SaveSessions()
         {
             String sessionName = "Sessions.XML";
             SuperPuTTY.GetRootFolderData().SaveToFile(SuperPuTTY.Settings.SettingsFolder + "\\" + sessionName);
-        }
+        }*/
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void newDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExportSessions();
+            DatabaseForm form = new DatabaseForm();
+            form.ShowDialog();
         }
 
+
+        private void openDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter = "Database Files (*.db)|*.db|All files|*.*";
+           // openDialog.FileName = "Sessions.XML";
+            openDialog.CheckFileExists = true;
+            openDialog.InitialDirectory = DatabaseManager.getFolderPath();
+            if (openDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                SuperPuTTY.OpenDatabase(openDialog.FileName);
+                //SuperPuTTY.ImportSessionsFromFile(openDialog.FileName);
+            }
+        }
+
+        
         private void fromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
@@ -486,7 +503,7 @@ namespace SuperPutty
             }
         }
 
-        private void editSessionsInNotepadToolStripMenuItem_Click(object sender, EventArgs e)
+        /*private void editSessionsInNotepadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveSessions();
             RefreshTreeview();
@@ -501,7 +518,7 @@ namespace SuperPutty
         private void reloadSessionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SuperPuTTY.LoadSessions();
-        }
+        }*/
 
         public void RefreshTreeview()
         {
@@ -1670,5 +1687,6 @@ namespace SuperPutty
         private void menuStrip1_MenuDeactivate(object sender, EventArgs e) {
             menuStrip1.Visible = SuperPuTTY.Settings.ShowMenuBar;
         }
+
     }
 }

@@ -28,7 +28,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using log4net;
 
 namespace SuperPutty

@@ -10,9 +10,9 @@ using WeifenLuo.WinFormsUI.Docking;
 using SuperPutty.Utils;
 using System.Collections;
 
-namespace SuperPutty.Data
+namespace SuperPutty.Manager
 {
-    public class SessionFolderData : AbstractSessionData, IXmlSerializable
+    public class SessionFolderData : AbstractSessionData //, IXmlSerializable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SessionFolderData));
 
@@ -79,7 +79,7 @@ namespace SuperPutty.Data
             sessionFolderData.Name = newFolderName;
         }
 
-        public void LoadSessionsFromFile(string fileName)
+        /*public void LoadSessionsFromFile(string fileName)
         {
             if (File.Exists(fileName))
             {
@@ -135,7 +135,7 @@ namespace SuperPutty.Data
             XmlTextWriter writer = new XmlTextWriter(fileName, null);
             writer.Formatting = Formatting.Indented;
             this.WriteXml(writer);
-        }
+        }*/
 
         public SessionFolderData GetParent(SessionFolderData parent, SessionFolderData folderDataToSearch) {
             int index = parent._SessionFolderDataChildren.IndexOf(folderDataToSearch);
@@ -231,7 +231,7 @@ namespace SuperPutty.Data
             _SessionFolderDataChildren.Insert(index + 1, sessionFolderData);
         }
 
-        #region IXmlSerializable Members
+        /*#region IXmlSerializable Members
 
         public System.Xml.Schema.XmlSchema GetSchema()
         {
@@ -365,7 +365,7 @@ namespace SuperPutty.Data
             }
             writer.WriteEndElement();
         }
-        #endregion
+        #endregion*/
     }
 
 }

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using log4net;
 using System.Threading;
 using System.Configuration;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using SuperPutty.Scp;
 using System;
 using System.IO;

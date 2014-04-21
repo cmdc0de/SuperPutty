@@ -136,7 +136,7 @@ namespace SuperPutty
             // 
             this.newSessionToolStripMenuItem.Name = "newSessionToolStripMenuItem";
             this.newSessionToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.newSessionToolStripMenuItem.Text = "New";
+            this.newSessionToolStripMenuItem.Text = "New Session";
             this.newSessionToolStripMenuItem.Click += new System.EventHandler(this.CreateOrEditSessionToolStripMenuItem_Click);
             // 
             // createLikeToolStripMenuItem

@@ -28,7 +28,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using log4net;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using SuperPutty.Utils;
 using SuperPutty.Gui;
 

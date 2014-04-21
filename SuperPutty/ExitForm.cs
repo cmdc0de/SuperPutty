@@ -24,21 +24,21 @@ namespace SuperPutty
         private void button1_Click(object sender, EventArgs e)
         {
             // quit with saving
-            this.DialogResult = DialogResult.Yes;
-            this.Close();
+            //this.DialogResult = DialogResult.Yes;
+            //   this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             // quit without saving
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            //this.DialogResult = DialogResult.OK;
+            //this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            //this.DialogResult = DialogResult.Cancel;
+            //this.Close();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

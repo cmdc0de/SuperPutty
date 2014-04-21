@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using System.ComponentModel;
 using Microsoft.Win32;
 using WeifenLuo.WinFormsUI.Docking;

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using log4net;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using SuperPutty.Properties;
 using SuperPutty.Utils;
 using WeifenLuo.WinFormsUI.Docking;
@@ -74,7 +74,8 @@ namespace SuperPutty
                
                 // load data
                 LoadLayouts();
-                LoadSettingsFolderName(); 
+                LoadSettingsFolderName();
+                //OpenLayerAuthentification();
                 LoadSessions();
 
                 // determine starting layout, if any.  CLI has priority
@@ -118,6 +119,32 @@ namespace SuperPutty
             Log.Info("Initialized");
         }
 
+        public static void OpenLayerAuthentification()
+        {
+           /* AuthentificationForm form = new AuthentificationForm();
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                // try to connect to the selected profil with login and password
+                if (string.IsNullOrEmpty(form.login)){
+                    // failed
+                }
+                bool connexionsuccess = true;
+                if (connexionsuccess)
+                {
+                    // close the form
+                    form.Close();
+                    
+                    // load sessions
+                    //EncryptedDatabase.LoadSessions("");
+                }
+            }
+            else
+            {
+                // show layer create new profil
+
+            }*/
+        }
 
         public static SessionFolderData GetRootFolderData()
         {
@@ -364,7 +391,9 @@ namespace SuperPutty
             {
                 if (File.Exists(fileName))
                 {
-                    rootFolder.LoadSessionsFromFile(fileName);
+                    // Load sessions from database
+
+                    //rootFolder.LoadSessionsFromFile(fileName);
 
                     // refresh the treeview
                     if (MainForm.InvokeRequired)
@@ -393,11 +422,11 @@ namespace SuperPutty
             }
         }
 
-        public static void SaveSessions()
+        /*public static void SaveSessions()
         {
             Log.InfoFormat("Saving all sessions");
             rootFolder.SaveToFile(SessionsFileName);
-        }
+        }*/
 
         public static SessionData RemoveSession(string sessionName)
         {
@@ -585,6 +614,11 @@ namespace SuperPutty
             }
         }
 
+        public static void OpenDatabase(string dblocation)
+        {
+            // open a popup with password
+            DatabaseManager.Instance.Open(dblocation, "password");
+        }
         public static void OpenSession(SessionDataStartInfo ssi)
         {
             if (MainForm.InvokeRequired)
@@ -612,7 +646,7 @@ namespace SuperPutty
             if (File.Exists(fileName))
             {
                 Log.InfoFormat("Importing sessions from file, path={0}", fileName);
-                rootFolder.LoadSessionsFromFile(fileName);
+                //rootFolder.LoadSessionsFromFile(fileName);
 
                 MainForm.RefreshTreeview();
              }
@@ -645,7 +679,7 @@ namespace SuperPutty
             }
             Log.InfoFormat("Imported {0} sessions into {1}", sessions.Count, folder);
             */
-            SaveSessions();
+            //SaveSessions();
         }
 
         public static void ImportSessionsFromSuperPutty1030()
@@ -848,6 +882,8 @@ namespace SuperPutty
         {
             GetRootFolderData().RemoveFolder(sFolderData);
         }
+
+
     }
 
     #region SuperPuttyAction

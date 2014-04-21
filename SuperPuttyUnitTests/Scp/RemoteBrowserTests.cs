@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SuperPutty.Scp;
 using System.Windows.Forms;
 using System.Drawing;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPuttyUnitTests.Scp
 {

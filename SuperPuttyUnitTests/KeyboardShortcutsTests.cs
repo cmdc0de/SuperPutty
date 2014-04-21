@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using System.Windows.Forms;
 using SuperPutty.Gui;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPuttyUnitTests
 {

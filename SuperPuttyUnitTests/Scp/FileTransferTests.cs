@@ -8,7 +8,7 @@ using log4net;
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using System.IO;
 
 namespace SuperPuttyUnitTests.Scp

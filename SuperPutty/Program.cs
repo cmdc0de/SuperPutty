@@ -26,7 +26,7 @@ using System.Threading;
 using log4net;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 using System.Configuration;
 using SuperPutty.Utils;
 using System.Reflection;

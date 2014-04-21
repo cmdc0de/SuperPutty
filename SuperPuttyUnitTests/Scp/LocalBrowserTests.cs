@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
 using System.ComponentModel;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPuttyUnitTests.Scp
 {

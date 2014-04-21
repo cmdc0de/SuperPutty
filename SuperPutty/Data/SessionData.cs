@@ -32,7 +32,7 @@ using System.Collections;
 using System.Reflection;
 using System.Xml;
 
-namespace SuperPutty.Data
+namespace SuperPutty.Manager
 {
     public enum ConnectionProtocol
     {

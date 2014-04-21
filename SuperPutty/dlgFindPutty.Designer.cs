@@ -894,7 +894,7 @@
             // 
             // keyboardShortcutBindingSource
             // 
-            this.keyboardShortcutBindingSource.DataSource = typeof(SuperPutty.Data.KeyboardShortcut);
+            this.keyboardShortcutBindingSource.DataSource = typeof(SuperPutty.Manager.KeyboardShortcut);
             // 
             // tabPageAdvanced
             // 

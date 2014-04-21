@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using log4net;
 using System.IO;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPutty.Scp
 {

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using log4net;
 using log4net.Core;
-using SuperPutty.Data;
+using SuperPutty.Manager;
 
 namespace SuperPutty.Scp
 {

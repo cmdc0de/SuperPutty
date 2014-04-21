@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace SuperPutty.Data
+namespace SuperPutty.Manager
 {
     public class LayoutData
     {
