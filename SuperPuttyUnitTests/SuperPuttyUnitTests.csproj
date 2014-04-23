@@ -52,7 +52,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SuperPuttyUnitTests.Program</StartupObject>
+    <StartupObject>SuperPuTTYUnitTests.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
@@ -111,9 +111,9 @@
     <None Include="SuperPuTTY.nunit" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperPutty\SuperPutty.csproj">
+    <ProjectReference Include="..\SuperPutty\SuperPuTTY.csproj">
       <Project>{E03FA8D9-555B-4AD6-A310-6A72B20024D1}</Project>
-      <Name>SuperPutty</Name>
+      <Name>SuperPuTTY</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

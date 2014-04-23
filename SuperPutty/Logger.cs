@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public delegate void LogCallback(string logLine);
     public static class Logger

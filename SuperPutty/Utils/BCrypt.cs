@@ -19,7 +19,7 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
 
     /// <summary>BCrypt implements OpenBSD-style Blowfish password hashing

@@ -7,10 +7,10 @@ using System;
 using System.Xml;
 using Microsoft.Win32;
 using WeifenLuo.WinFormsUI.Docking;
-using SuperPutty.Utils;
+using SuperPuTTY.Utils;
 using System.Collections;
 
-namespace SuperPutty.Manager
+namespace SuperPuTTY.Manager
 {
     public class SessionFolderData : AbstractSessionData //, IXmlSerializable
     {
@@ -251,7 +251,7 @@ namespace SuperPutty.Manager
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("root"))
                 {
-                    SuperPutty.SessionTreeview.SelectionFilter selectionFilter = (SuperPutty.SessionTreeview.SelectionFilter)  int.Parse(reader.GetAttribute("filter"));
+                    SuperPuTTY.SessionTreeview.SelectionFilter selectionFilter = (SuperPuTTY.SessionTreeview.SelectionFilter)  int.Parse(reader.GetAttribute("filter"));
                     SuperPuTTY.selectionFilter = selectionFilter;
                 }
                 else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folders"))

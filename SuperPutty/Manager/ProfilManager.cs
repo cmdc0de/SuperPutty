@@ -1,13 +1,13 @@
 ﻿using Microsoft.Win32;
-using SuperPutty.Manager;
-using SuperPutty.Utils;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperPutty.Manager
+namespace SuperPuTTY.Manager
 {
     class ProfilManager
     {

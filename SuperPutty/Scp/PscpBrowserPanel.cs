@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     public partial class PscpBrowserPanel : ToolWindowDocument
     {

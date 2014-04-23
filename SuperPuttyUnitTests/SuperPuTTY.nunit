@@ -1,7 +1,7 @@
 ﻿<NUnitProject>
   <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
-    <assembly path="bin\Debug\SuperPuttyUnitTests.exe" />
+    <assembly path="bin\Debug\SuperPuTTYUnitTests.exe" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

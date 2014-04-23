@@ -1,4 +1,4 @@
-﻿using SuperPutty.Manager;
+﻿using SuperPuTTY.Manager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class DatabaseForm : Form
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     public class CommandData
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// Make a text box focus and select all on mouse click, tab in, etc.

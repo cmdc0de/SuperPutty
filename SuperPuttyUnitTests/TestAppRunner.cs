@@ -7,12 +7,12 @@ using System.IO;
 using System.Threading;
 using NUnit.Gui;
 
-namespace SuperPuttyUnitTests
+namespace SuperPuTTYUnitTests
 {
     public partial class TestAppRunner : Form
     {
         public const string NoAutoStart = "<Disable>";
-        private static readonly string AutoStartFile = Path.Combine(Path.GetTempPath(), "SuperPutty-UnitTest-AutoStart.txt");
+        private static readonly string AutoStartFile = Path.Combine(Path.GetTempPath(), "SuperPuTTY-UnitTest-AutoStart.txt");
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(TestAppRunner));
 

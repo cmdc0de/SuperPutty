@@ -27,7 +27,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     partial class AboutBox1 : Form
     {
@@ -39,7 +39,7 @@ namespace SuperPutty
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.linkLabelCompany.Text = AssemblyCompany;
-            this.linkLabelCompany2.Text = "https://github.com/revo22/SuperPutty";
+            this.linkLabelCompany2.Text = "https://github.com/revo22/SuperPuTTY";
             //this.textBoxDescription.Text = AssemblyDescription;
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// Helper class to track single instance tool windows (sessions, log viewer, layouts)

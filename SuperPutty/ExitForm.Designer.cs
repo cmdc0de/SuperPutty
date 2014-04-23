@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-namespace SuperPutty
+namespace SuperPuTTY
 {
     partial class ExitForm
     {

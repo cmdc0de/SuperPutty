@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using log4net;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// Helper class for cygterm support

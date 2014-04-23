@@ -8,10 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using log4net;
-using SuperPutty.Manager;
-using SuperPutty.Utils;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Utils;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class frmDocumentSelector : Form
     {

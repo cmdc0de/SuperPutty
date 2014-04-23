@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using log4net;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// Helper class to parse host connection strings (e.g. ssh://localhost:2222)

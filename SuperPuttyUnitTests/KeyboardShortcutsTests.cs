@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using System.Windows.Forms;
-using SuperPutty.Gui;
-using SuperPutty.Manager;
+using SuperPuTTY.Gui;
+using SuperPuTTY.Manager;
 
-namespace SuperPuttyUnitTests
+namespace SuperPuTTYUnitTests
 {
     [TestFixture]
     public class KeyboardShortcutsTets

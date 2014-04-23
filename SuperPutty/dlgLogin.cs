@@ -27,10 +27,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Security.Principal;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class dlgLogin : Form
     {

@@ -13,7 +13,7 @@ using log4net.Core;
 using log4net.Layout;
 using System.IO;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class Log4netLogViewer : ToolWindow
     {

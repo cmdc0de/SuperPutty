@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using log4net;
 using System.IO;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     public class LocalBrowserModel : IBrowserModel
     {

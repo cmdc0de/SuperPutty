@@ -28,10 +28,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using log4net;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class RemoteFileListPanel : ToolWindowDocument
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using log4net;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     #region WindowActivator
     public abstract class WindowActivator

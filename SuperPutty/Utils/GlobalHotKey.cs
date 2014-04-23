@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     public class GlobalHotkey : IDisposable
     {

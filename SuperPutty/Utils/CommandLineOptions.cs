@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using log4net;
 using System.Web;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// Use:
     /// --------------------------------------------------------------------------
-    /// SuperPutty.exe -layout LAYOUT_NAME
+    /// SuperPuTTY.exe -layout LAYOUT_NAME
     /// OR
-    /// SuperPutty.exe -session SESSION_NAME
+    /// SuperPuTTY.exe -session SESSION_NAME
     /// OR 
-    /// SuperPutty.exe -[PROTOCOL] -P PORT -l USER -pw PASSWORD -load SETTINGS HOSTNAME
+    /// SuperPuTTY.exe -[PROTOCOL] -P PORT -l USER -pw PASSWORD -load SETTINGS HOSTNAME
     /// OR 
-    /// SuperPutty.exe -l USER -pw PASSWORD -load SETTINGS PROTOCOL://HOSTNAME:port
+    /// SuperPuTTY.exe -l USER -pw PASSWORD -load SETTINGS PROTOCOL://HOSTNAME:port
     /// ------------
     /// Options:
     /// -ssh|-serial|-telnet|-scp|-raw|-rlogin|-cygterm   -Choose Protocol (default: ssh)
@@ -26,10 +26,10 @@ namespace SuperPutty.Utils
     /// -pw                                               -Login Password
     /// -load                                             -Session to load (default: Default Session)
     /// --------------------------------------------------------------------------
-    /// SuperPutty.exe -layout LAYOUT_NAME
-    /// SuperPutty.exe -session SESSION_ID
-    /// SuperPutty.exe -ssh -P 22 -l homer -pw springfield -load pp1 prod-reactor
-    /// SuperPutty.exe -l peter -pw donut foobar
+    /// SuperPuTTY.exe -layout LAYOUT_NAME
+    /// SuperPuTTY.exe -session SESSION_ID
+    /// SuperPuTTY.exe -ssh -P 22 -l homer -pw springfield -load pp1 prod-reactor
+    /// SuperPuTTY.exe -l peter -pw donut foobar
     /// </summary>
     public class CommandLineOptions
     {
@@ -197,11 +197,11 @@ namespace SuperPutty.Utils
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Usage:");
             sb.AppendLine("");
-            sb.AppendLine("  SuperPutty.exe -session SESSION");
-            sb.AppendLine("  SuperPutty.exe -layout LAYOUT");
-            sb.AppendLine("  SuperPutty.exe -load SETTINGS");
-            sb.AppendLine("  SuperPutty.exe -PROTO -P PORT -l USER -pw PASSWORD -load SETTINGS HOST");
-            sb.AppendLine("  SuperPutty.exe -l USER -pw PASSWORD -load SETTINGS PROTO://HOST:PORT");
+            sb.AppendLine("  SuperPuTTY.exe -session SESSION");
+            sb.AppendLine("  SuperPuTTY.exe -layout LAYOUT");
+            sb.AppendLine("  SuperPuTTY.exe -load SETTINGS");
+            sb.AppendLine("  SuperPuTTY.exe -PROTO -P PORT -l USER -pw PASSWORD -load SETTINGS HOST");
+            sb.AppendLine("  SuperPuTTY.exe -l USER -pw PASSWORD -load SETTINGS PROTO://HOST:PORT");
             sb.AppendLine();
             sb.AppendLine("Options:");
             sb.AppendLine();
@@ -215,11 +215,11 @@ namespace SuperPutty.Utils
             sb.AppendLine();
             sb.AppendLine("Examples:");
             sb.AppendLine();
-            sb.AppendLine("  SuperPutty.exe -session nyc-qa-1");
-            sb.AppendLine("  SuperPutty.exe -layout prod");
-            sb.AppendLine("  SuperPutty.exe -ssh -P 22 -l homer -pw springfield -load pp1 prod-reactor");
-            sb.AppendLine("  SuperPutty.exe -l peter -pw griffin stewie01");
-            sb.AppendLine("  SuperPutty.exe -load localhost");
+            sb.AppendLine("  SuperPuTTY.exe -session nyc-qa-1");
+            sb.AppendLine("  SuperPuTTY.exe -layout prod");
+            sb.AppendLine("  SuperPuTTY.exe -ssh -P 22 -l homer -pw springfield -load pp1 prod-reactor");
+            sb.AppendLine("  SuperPuTTY.exe -l peter -pw griffin stewie01");
+            sb.AppendLine("  SuperPuTTY.exe -load localhost");
             
             return sb.ToString();
         }

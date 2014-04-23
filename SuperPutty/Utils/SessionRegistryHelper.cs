@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using System.ComponentModel;
 using Microsoft.Win32;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     class SessionRegistryHelper
     {

@@ -1,4 +1,4 @@
-﻿namespace SuperPutty.Scp
+﻿namespace SuperPuTTY.Scp
 {
     partial class PscpBrowserPanel
     {
@@ -30,9 +30,9 @@
         {
             this.splitContainerUpDown = new System.Windows.Forms.SplitContainer();
             this.splitContainerBrowsers = new System.Windows.Forms.SplitContainer();
-            this.browserViewLocal = new SuperPutty.Scp.BrowserView();
-            this.browserViewRemote = new SuperPutty.Scp.BrowserView();
-            this.fileTransferView = new SuperPutty.Scp.FileTransferView();
+            this.browserViewLocal = new Scp.BrowserView();
+            this.browserViewRemote = new Scp.BrowserView();
+            this.fileTransferView = new Scp.FileTransferView();
             this.splitContainerUpDown.Panel1.SuspendLayout();
             this.splitContainerUpDown.Panel2.SuspendLayout();
             this.splitContainerUpDown.SuspendLayout();

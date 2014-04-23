@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using log4net;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// Utility class to save/restore form locations accounting multiple monitors, etc.

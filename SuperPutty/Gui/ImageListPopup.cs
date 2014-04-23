@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace SuperPutty.Gui
+namespace SuperPuTTY.Gui
 {
     public delegate void ImageListPopupEventHandler(object sender, ImageListPopupEventArgs ilpea);
 

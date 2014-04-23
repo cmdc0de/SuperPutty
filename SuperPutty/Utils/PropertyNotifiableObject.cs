@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
 
     #region PropertyNotifiableObject

@@ -32,16 +32,16 @@ using log4net;
 using System.Diagnostics;
 using System.Web;
 using System.Collections.Specialized;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using WeifenLuo.WinFormsUI.Docking;
-using SuperPutty.Utils;
+using SuperPuTTY.Utils;
 using System.Threading;
 using System.Configuration;
-using SuperPutty.Gui;
+using SuperPuTTY.Gui;
 using log4net.Core;
 
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class ctlPuttyPanel : ToolWindowDocument
     {

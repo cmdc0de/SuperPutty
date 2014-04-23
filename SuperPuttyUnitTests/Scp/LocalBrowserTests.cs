@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using SuperPutty.Scp;
+using SuperPuTTY.Scp;
 using log4net;
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
 using System.ComponentModel;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPuttyUnitTests.Scp
+namespace SuperPuTTYUnitTests.Scp
 {
     [TestFixture]
     public class LocalBrowserTests

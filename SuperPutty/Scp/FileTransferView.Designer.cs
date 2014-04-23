@@ -1,4 +1,4 @@
-﻿namespace SuperPutty.Scp
+﻿namespace SuperPuTTY.Scp
 {
     partial class FileTransferView
     {
@@ -48,7 +48,7 @@
             this.targetDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.progressDataGridViewTextBoxColumn = new SuperPutty.Gui.DataGridViewProgressColumn();
+            this.progressDataGridViewTextBoxColumn = new Gui.DataGridViewProgressColumn();
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
@@ -145,7 +145,7 @@
             // 
             // bindingSource
             // 
-            this.bindingSource.DataSource = typeof(SuperPutty.Scp.FileTransferViewItem);
+            this.bindingSource.DataSource = typeof(Scp.FileTransferViewItem);
             // 
             // colId
             // 

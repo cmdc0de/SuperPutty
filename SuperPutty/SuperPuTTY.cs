@@ -6,17 +6,17 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using log4net;
-using SuperPutty.Manager;
-using SuperPutty.Properties;
-using SuperPutty.Utils;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Properties;
+using SuperPuTTY.Utils;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Drawing;
-using SuperPutty.Scp;
+using SuperPuTTY.Scp;
 using Microsoft.Win32;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     /// <summary>
     /// Represents the SuperPuTTY application itself
@@ -29,7 +29,7 @@ namespace SuperPutty
         public static event EventHandler<LayoutChangedEventArgs> LayoutChanged;
 
         public static event Action<String> StatusEvent;
-        public static SuperPutty.SessionTreeview.SelectionFilter selectionFilter = SuperPutty.SessionTreeview.SelectionFilter.ALL;
+        public static SessionTreeview.SelectionFilter selectionFilter = SessionTreeview.SelectionFilter.ALL;
 
         static BindingList<LayoutData> layouts = new BindingList<LayoutData>();
         static SessionFolderData rootFolder = new SessionFolderData("root");
@@ -65,7 +65,7 @@ namespace SuperPutty
                 // display help if --help specified
                 if (CommandLine.Help)
                 {
-                    if (DialogResult.Cancel == MessageBox.Show(CommandLineOptions.Usage(), "SuperPutty CLI Help", MessageBoxButtons.OKCancel))
+                    if (DialogResult.Cancel == MessageBox.Show(CommandLineOptions.Usage(), "SuperPuTTY CLI Help", MessageBoxButtons.OKCancel))
                     {
                         Environment.Exit(0);
                     }
@@ -682,7 +682,7 @@ namespace SuperPutty
             //SaveSessions();
         }
 
-        public static void ImportSessionsFromSuperPutty1030()
+        public static void ImportSessionsFromSuperPuTTY1030()
         {
             // TODO
             /*try
@@ -735,8 +735,8 @@ namespace SuperPutty
             ImageList imgIcons = new ImageList();
 
             // Load the 2 standard icons in case no icons exist in icons directory, these will be used.
-            imgIcons.Images.Add(SessionTreeview.ImageKeyFolder, SuperPutty.Properties.Resources.folder);
-            imgIcons.Images.Add(SessionTreeview.ImageKeySession, SuperPutty.Properties.Resources.computer);
+            imgIcons.Images.Add(SessionTreeview.ImageKeyFolder, Properties.Resources.folder);
+            imgIcons.Images.Add(SessionTreeview.ImageKeySession, Properties.Resources.computer);
 
             try
             {
@@ -827,7 +827,7 @@ namespace SuperPutty
                 return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
         }
-        public static frmSuperPutty MainForm { get; set; }
+        public static frmSuperPuTTY MainForm { get; set; }
 
         internal static Settings Settings { get { return Settings.Default; } }
 
@@ -886,8 +886,8 @@ namespace SuperPutty
 
     }
 
-    #region SuperPuttyAction
-    public enum SuperPuttyAction
+    #region SuperPuTTYAction
+    public enum SuperPuTTYAction
     {
         CloseTab,
         NextTab,

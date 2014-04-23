@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using log4net;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     #region IFileTransferPresenter
     public interface IFileTransferPresenter

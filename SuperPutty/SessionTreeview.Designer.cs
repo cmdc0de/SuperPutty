@@ -1,7 +1,7 @@
-﻿using SuperPutty.Utils;
+﻿using SuperPuTTY.Utils;
 using System.Drawing;
 using System.Windows.Forms;
-namespace SuperPutty
+namespace SuperPuTTY
 {
     partial class SessionTreeview
     {
@@ -372,7 +372,7 @@ namespace SuperPutty
             this.btnSearch.AutoSize = true;
             this.btnSearch.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSearch.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSearch.Image = global::SuperPutty.Properties.Resources.find;
+            this.btnSearch.Image = global::SuperPuTTY.Properties.Resources.find;
             this.btnSearch.Location = new System.Drawing.Point(385, 2);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(0);
             this.btnSearch.Name = "btnSearch";
@@ -386,7 +386,7 @@ namespace SuperPutty
             this.btnClear.AutoSize = true;
             this.btnClear.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnClear.Image = global::SuperPutty.Properties.Resources.cross_black;
+            this.btnClear.Image = global::SuperPuTTY.Properties.Resources.cross_black;
             this.btnClear.Location = new System.Drawing.Point(407, 2);
             this.btnClear.Margin = new System.Windows.Forms.Padding(0);
             this.btnClear.Name = "btnClear";

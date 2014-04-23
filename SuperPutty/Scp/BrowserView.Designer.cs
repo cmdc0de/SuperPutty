@@ -1,4 +1,4 @@
-﻿namespace SuperPutty.Scp
+﻿namespace SuperPuTTY.Scp
 {
     partial class BrowserView
     {
@@ -274,7 +274,7 @@
             // 
             // bindingSource
             // 
-            this.bindingSource.DataSource = typeof(SuperPutty.Scp.IBrowserViewModel);
+            this.bindingSource.DataSource = typeof(Scp.IBrowserViewModel);
             // 
             // BrowserView
             // 

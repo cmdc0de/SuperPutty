@@ -8,11 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using log4net;
-using SuperPutty.Gui;
-using SuperPutty.Utils;
+using SuperPuTTY.Gui;
+using SuperPuTTY.Utils;
 using System.IO;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     /// <summary>
     /// Notes:

@@ -28,12 +28,12 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Web;
-using SuperPutty.Manager;
-using SuperPutty.Utils;
-using SuperPutty.Gui;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Utils;
+using SuperPuTTY.Gui;
 using log4net;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class dlgEditSession : Form
     {

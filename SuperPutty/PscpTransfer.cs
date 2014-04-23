@@ -27,10 +27,10 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using System.Text.RegularExpressions;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public enum RequestResult
     {

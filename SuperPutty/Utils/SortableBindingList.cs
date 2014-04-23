@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// http://www.pcreview.co.uk/forums/sort-bindinglist-t3370884.html

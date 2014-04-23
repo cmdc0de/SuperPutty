@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using log4net;
 using System.Threading;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     #region FileTransfer
     public class FileTransfer

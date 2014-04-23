@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
 using log4net;
 using System.Runtime.Remoting.Messaging;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     public class SingleInstanceHelper : MarshalByRefObject
     {

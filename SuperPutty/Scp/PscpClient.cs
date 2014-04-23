@@ -9,9 +9,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using log4net;
 using log4net.Core;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     /// <summary>
     /// Simplified version of PscpTransfer class

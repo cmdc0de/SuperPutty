@@ -5,7 +5,7 @@ using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using log4net;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     #region TabSwitcher
     public class TabSwitcher : IDisposable

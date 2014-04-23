@@ -6,12 +6,12 @@ using System.IO;
 using System.Security.Principal;
 using log4net;
 using System.Security.AccessControl;
-using SuperPutty.Manager;
-using SuperPutty.Gui;
-using SuperPutty.Utils;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Gui;
+using SuperPuTTY.Utils;
 using System.Threading;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     #region FileTransferViewModel
     /// <summary>

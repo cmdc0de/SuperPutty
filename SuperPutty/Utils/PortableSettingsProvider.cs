@@ -9,7 +9,7 @@ using System.Xml;
 using log4net;
 using System.Collections;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     /// <summary>
     /// PortableSettingsProvider
