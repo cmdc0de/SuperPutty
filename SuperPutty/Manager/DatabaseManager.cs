@@ -92,7 +92,7 @@ namespace SuperPutty.Manager
 
                 string hash = BCrypt.HashPassword(password, salt);
                 string connection_string = "Data Source=" + dblocation + ";Version=3;Password=" + hash + ";";
-                _conn = new System.Data.SQLite.SQLiteConnection(connection_string);
+                _conn = new SQLiteConnection(connection_string);
                 _conn.Open();              
                 
                 CreateOrUpdateTables();
