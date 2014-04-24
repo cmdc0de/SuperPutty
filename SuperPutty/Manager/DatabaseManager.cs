@@ -8,7 +8,7 @@
  */
 
 using Microsoft.Win32;
-using SuperPutty.Utils;
+using SuperPuTTY.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +17,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
 
-namespace SuperPutty.Manager
+namespace SuperPuTTY.Manager
 {
     public class DatabaseManager
     {
@@ -94,7 +94,7 @@ namespace SuperPutty.Manager
 
                 string hash = BCrypt.HashPassword(password, salt);
                 string connection_string = "Data Source=" + dblocation + ";Version=3;Password=" + hash + ";";
-                _conn = new System.Data.SQLite.SQLiteConnection(connection_string);
+                _conn = new SQLiteConnection(connection_string);
                 _conn.Open();              
                 
                 CreateOrUpdateTables();
@@ -114,7 +114,7 @@ namespace SuperPutty.Manager
 
         public static string getFolderPath()
         {
-            return Path.Combine(Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "SuperPutty"), "data");
+            return Path.Combine(Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "SuperPuTTY"), "data");
         }
 
         public DataTable FillDataTable(string sql)

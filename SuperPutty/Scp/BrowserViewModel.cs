@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using SuperPutty.Gui;
+using SuperPuTTY.Gui;
 using System.Threading;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     /// <summary>
     /// Adapter class over the IBrowserModel to facilitate GUI binding

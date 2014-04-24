@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     /// <summary>
     /// ToolWindow that supports an MRU tab switching

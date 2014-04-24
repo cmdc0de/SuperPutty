@@ -6,10 +6,10 @@ using System.IO;
 using System.Security.Principal;
 using log4net;
 using System.Security.AccessControl;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using System.Threading;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     #region IBrowserPresenter
     public interface IBrowserPresenter

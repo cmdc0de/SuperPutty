@@ -1,8 +1,8 @@
 ﻿using log4net;
 using Microsoft.Win32;
 using System.IO;
-using SuperPutty.Utils;
-using SuperPutty.Manager;
+using SuperPuTTY.Utils;
+using SuperPuTTY.Manager;
 using System;
 using System.Windows.Forms;
 using System.Configuration;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Globalization;
 
-namespace SuperPutty.Properties {
+namespace SuperPuTTY.Properties {
     
     
     // This class allows you to handle specific events on the settings class:
@@ -81,7 +81,7 @@ namespace SuperPutty.Properties {
         {
             List<KeyboardShortcut> shortcuts = new List<KeyboardShortcut>();
 
-            foreach (SuperPuttyAction action in Enum.GetValues(typeof(SuperPuttyAction)))
+            foreach (SuperPuTTYAction action in Enum.GetValues(typeof(SuperPuTTYAction)))
             {
                 string name = string.Format("Action_{0}_Shortcut", action);
 
@@ -115,7 +115,7 @@ namespace SuperPutty.Properties {
         {
             foreach (KeyboardShortcut ks in shortcuts)
             {
-                SuperPuttyAction action = (SuperPuttyAction)Enum.Parse(typeof(SuperPuttyAction), ks.Name);
+                SuperPuTTYAction action = (SuperPuTTYAction)Enum.Parse(typeof(SuperPuTTYAction), ks.Name);
                 string name = string.Format("Action_{0}_Shortcut", action);
                 try
                 {

@@ -31,10 +31,10 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.IO;
 using log4net;
 using System.Configuration;
-using SuperPutty.Utils;
+using SuperPuTTY.Utils;
 using System.Text;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public delegate void PuttyClosedCallback(bool error);
 
@@ -184,7 +184,7 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         * http://social.msdn.microsoft.com/Forums/en-US/clr/thread/c04e343f-f2e7-469a-8a54-48ca84f78c28
         *
         * The idea is to watch for the EVENT_SYSTEM_FOREGROUND window, and when we see that from the putty terminal window
-        * bring the superputty window to the foreground
+        * bring the SuperPuTTY window to the foreground
          * 
          * Other hacks:
          * http://stackoverflow.com/questions/4867210/how-to-bring-a-window-foreground-using-c
@@ -222,7 +222,7 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
                     return;
                 }
 
-                // This is the easiest way I found to get the superputty window to be brought to the top
+                // This is the easiest way I found to get the SuperPuTTY window to be brought to the top
                 // if you leave TopMost = true; then the window will always be on top.
                 if (this.TopLevelControl != null)
                 {
@@ -264,15 +264,15 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
             string controlText = sb.ToString();
             string parentText = ((ctlPuttyPanel)this.Parent).TextOverride;
 
-            switch ((SuperPutty.frmSuperPutty.TabTextBehavior)Enum.Parse(typeof(frmSuperPutty.TabTextBehavior), SuperPuTTY.Settings.TabTextBehavior))
+            switch ((frmSuperPuTTY.TabTextBehavior)Enum.Parse(typeof(frmSuperPuTTY.TabTextBehavior), SuperPuTTY.Settings.TabTextBehavior))
             {
-                case frmSuperPutty.TabTextBehavior.Static:
+                case frmSuperPuTTY.TabTextBehavior.Static:
                     this.Parent.Text = parentText;
                     break;
-                case frmSuperPutty.TabTextBehavior.Dynamic:
+                case frmSuperPuTTY.TabTextBehavior.Dynamic:
                     this.Parent.Text = controlText;
                     break;
-                case frmSuperPutty.TabTextBehavior.Mixed:
+                case frmSuperPuTTY.TabTextBehavior.Mixed:
                     this.Parent.Text = parentText + ": " + controlText;
                     break;
             }

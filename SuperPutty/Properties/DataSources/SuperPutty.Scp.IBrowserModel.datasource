@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="IBrowserModel" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>SuperPutty.Scp.IBrowserModel, SuperPutty, Version=1.4.0.3, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>SuperPuTTY.Scp.IBrowserModel, SuperPuTTY, Version=1.4.0.3, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

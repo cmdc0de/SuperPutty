@@ -26,15 +26,15 @@ using System.Threading;
 using log4net;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using System.Configuration;
-using SuperPutty.Utils;
+using SuperPuTTY.Utils;
 using System.Reflection;
 using System.IO;
 using System.Drawing;
 using System.Text;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     static class Program
     {
@@ -53,7 +53,7 @@ namespace SuperPutty
             log4net.Config.BasicConfigurator.Configure();
 
             bool onlyInstance = false;
-            Mutex mutex = new Mutex(true, "SuperPutty", out onlyInstance);
+            Mutex mutex = new Mutex(true, "SuperPuTTY", out onlyInstance);
 
             Log.InfoFormat(
                 "IsFirstRun={0}, SingleInstanceMode={1}, onlyInstance={2}", 
@@ -87,7 +87,7 @@ namespace SuperPutty
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                frmSuperPutty mainForm = new frmSuperPutty();
+                frmSuperPuTTY mainForm = new frmSuperPuTTY();
                 SetDefaultIcon(mainForm);
                 Application.Run(SuperPuTTY.MainForm = mainForm);
                 SuperPuTTY.Shutdown();
@@ -107,7 +107,7 @@ namespace SuperPutty
             // pure evil
             try
             {
-                string iconFile = Path.Combine(Application.StartupPath, "SuperPutty.ico");
+                string iconFile = Path.Combine(Application.StartupPath, "SuperPuTTY.ico");
                 if (File.Exists(iconFile))
                 {
                     form.Icon = new Icon(iconFile);
@@ -140,7 +140,7 @@ namespace SuperPutty
             StringBuilder sb = new StringBuilder();
             if (e.Exception.Message.Contains("Could not load file or assembly 'System.Core, Version=3.5.0.0"))
             {
-                sb.Append("SuperPutty requires the Microsoft .NET Framework version 3.5, or greater, in order to run.\n\nPlease contact your System Administrator for more information.");
+                sb.Append("SuperPuTTY requires the Microsoft .NET Framework version 3.5, or greater, in order to run.\n\nPlease contact your System Administrator for more information.");
             }
             else
             {

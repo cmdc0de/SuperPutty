@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SuperPutty.Manager
+namespace SuperPuTTY.Manager
 {
     public abstract class AbstractSessionData
     {

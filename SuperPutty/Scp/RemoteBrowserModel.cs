@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using log4net;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using System.IO;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     public class RemoteBrowserModel : IBrowserModel
     {

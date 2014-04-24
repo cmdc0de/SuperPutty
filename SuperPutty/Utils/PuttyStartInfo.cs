@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using log4net;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     public class PuttyStartInfo
     {

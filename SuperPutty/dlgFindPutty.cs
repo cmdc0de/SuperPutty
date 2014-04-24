@@ -28,11 +28,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using log4net;
-using SuperPutty.Manager;
-using SuperPutty.Utils;
-using SuperPutty.Gui;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Utils;
+using SuperPuTTY.Gui;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class dlgFindPutty : Form
     {
@@ -151,7 +151,7 @@ namespace SuperPutty
             this.OrigSettingsFolder = SuperPuTTY.Settings.SettingsFolder;
 
             // tab text
-            foreach(String s in Enum.GetNames(typeof(frmSuperPutty.TabTextBehavior)))
+            foreach(String s in Enum.GetNames(typeof(frmSuperPuTTY.TabTextBehavior)))
             {
                 this.comboBoxTabText.Items.Add(s);
             }
@@ -447,7 +447,7 @@ namespace SuperPutty
             if (SuperPuTTY.IsFirstRun)
             {
                 // first run, got nothing...try to import from registry
-                SuperPuTTY.ImportSessionsFromSuperPutty1030();
+                SuperPuTTY.ImportSessionsFromSuperPuTTY1030();
             }
         }
 

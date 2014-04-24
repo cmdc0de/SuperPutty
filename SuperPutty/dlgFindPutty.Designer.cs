@@ -1,4 +1,4 @@
-﻿namespace SuperPutty
+﻿namespace SuperPuTTY
 {
     partial class dlgFindPutty
     {
@@ -333,7 +333,7 @@
             this.checkExitConfirmation.Size = new System.Drawing.Size(104, 17);
             this.checkExitConfirmation.TabIndex = 27;
             this.checkExitConfirmation.Text = "Exit Confirmation";
-            this.toolTip.SetToolTip(this.checkExitConfirmation, "Ask for confirmation before closing SuperPutty");
+            this.toolTip.SetToolTip(this.checkExitConfirmation, "Ask for confirmation before closing SuperPuTTY");
             this.checkExitConfirmation.UseVisualStyleBackColor = true;
             // 
             // checkExpandTree
@@ -456,7 +456,7 @@
             this.label6.Size = new System.Drawing.Size(52, 13);
             this.label6.TabIndex = 0;
             this.label6.Text = "Activator:";
-            this.toolTip.SetToolTip(this.label6, "Method for activating SuperPutty when clicking on a putty session.");
+            this.toolTip.SetToolTip(this.label6, "Method for activating SuperPuTTY when clicking on a putty session.");
             // 
             // label12
             // 
@@ -487,7 +487,7 @@
             this.checkEnableControlTabSwitching.Size = new System.Drawing.Size(188, 17);
             this.checkEnableControlTabSwitching.TabIndex = 28;
             this.checkEnableControlTabSwitching.Text = "Enable Control-Tab Tab Switching";
-            this.toolTip.SetToolTip(this.checkEnableControlTabSwitching, "Ask for confirmation before closing SuperPutty");
+            this.toolTip.SetToolTip(this.checkEnableControlTabSwitching, "Ask for confirmation before closing SuperPuTTY");
             this.checkEnableControlTabSwitching.UseVisualStyleBackColor = true;
             // 
             // checkEnableKeyboardShortcuts
@@ -498,7 +498,7 @@
             this.checkEnableKeyboardShortcuts.Size = new System.Drawing.Size(155, 17);
             this.checkEnableKeyboardShortcuts.TabIndex = 29;
             this.checkEnableKeyboardShortcuts.Text = "Enable Keyboard Shortcuts";
-            this.toolTip.SetToolTip(this.checkEnableKeyboardShortcuts, "Ask for confirmation before closing SuperPutty");
+            this.toolTip.SetToolTip(this.checkEnableKeyboardShortcuts, "Ask for confirmation before closing SuperPuTTY");
             this.checkEnableKeyboardShortcuts.UseVisualStyleBackColor = true;
             // 
             // label14
@@ -894,7 +894,7 @@
             // 
             // keyboardShortcutBindingSource
             // 
-            this.keyboardShortcutBindingSource.DataSource = typeof(SuperPutty.Manager.KeyboardShortcut);
+            this.keyboardShortcutBindingSource.DataSource = typeof(Manager.KeyboardShortcut);
             // 
             // tabPageAdvanced
             // 

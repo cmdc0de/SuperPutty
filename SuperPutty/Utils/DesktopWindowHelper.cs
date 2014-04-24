@@ -7,7 +7,7 @@ using log4net;
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
 
     /// <summary>

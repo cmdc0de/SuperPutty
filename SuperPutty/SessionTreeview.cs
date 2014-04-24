@@ -27,15 +27,15 @@ using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using log4net;
-using SuperPutty.Manager;
-using SuperPutty.Utils;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Utils;
 using WeifenLuo.WinFormsUI.Docking;
-using SuperPutty.Gui;
+using SuperPuTTY.Gui;
 using System.IO;
 using System.Text.RegularExpressions;
 
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class SessionTreeview : ToolWindow
     {

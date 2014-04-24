@@ -4,12 +4,12 @@ using System.Diagnostics;
 using log4net;
 using System.Threading;
 using System.Configuration;
-using SuperPutty.Manager;
-using SuperPutty.Scp;
+using SuperPuTTY.Manager;
+using SuperPuTTY.Scp;
 using System;
 using System.IO;
 
-namespace SuperPuttyUnitTests.Scp
+namespace SuperPuTTYUnitTests.Scp
 {
     /// <summary>
     /// Basic SCP tests to test underlying process invocation limitations/quirks

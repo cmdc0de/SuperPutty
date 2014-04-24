@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using NUnit.Gui;
-using SuperPuttyUnitTests.Scp;
+using SuperPuTTYUnitTests.Scp;
 using System.Windows.Forms;
 using log4net;
 using System.Drawing;
 using System.IO;
 using System.Threading;
 
-namespace SuperPuttyUnitTests
+namespace SuperPuTTYUnitTests
 {
     class Program
     {

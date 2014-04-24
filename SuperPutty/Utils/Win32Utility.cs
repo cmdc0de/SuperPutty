@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     //Copyright (c) 2008 Jason Kemp
 

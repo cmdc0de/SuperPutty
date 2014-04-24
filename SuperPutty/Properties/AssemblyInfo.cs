@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SuperPutty")]
+[assembly: AssemblyTitle("SuperPuTTY")]
 [assembly: AssemblyDescription("PuTTY Window Manager")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("http://www.github.com/")]
-[assembly: AssemblyProduct("SuperPutty")]
+[assembly: AssemblyProduct("SuperPuTTY")]
 [assembly: AssemblyCopyright("Free and Open Source Application")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

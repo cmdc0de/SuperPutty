@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     class ScpUtils
     {

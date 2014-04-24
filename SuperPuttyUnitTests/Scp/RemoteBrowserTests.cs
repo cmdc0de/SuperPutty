@@ -1,11 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
-using SuperPutty.Scp;
+using SuperPuTTY.Scp;
 using System.Windows.Forms;
 using System.Drawing;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPuttyUnitTests.Scp
+namespace SuperPuTTYUnitTests.Scp
 {
     [TestFixture]
     public class RemoteBrowserTests

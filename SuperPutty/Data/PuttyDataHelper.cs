@@ -8,7 +8,7 @@ using log4net;
 using System.Xml;
 using System.IO;
 
-namespace SuperPutty.Manager
+namespace SuperPuTTY.Manager
 {
     public class PuttyDataHelper
     {

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace SuperPutty.Gui
+namespace SuperPuTTY.Gui
 {
 
     /// <summary>

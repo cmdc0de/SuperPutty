@@ -1,9 +1,9 @@
 ﻿using System;
 using log4net;
 using System.ComponentModel;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 
-namespace SuperPutty.Scp
+namespace SuperPuTTY.Scp
 {
     #region LocalBrowserPresenter
     /// <summary>

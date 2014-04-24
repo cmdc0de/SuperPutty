@@ -1,6 +1,5 @@
 # Compiled binaries
-/bin/Debug
-/bin/Release
+/bin
 /SuperPutty/obj
 
 # Unit test binaries

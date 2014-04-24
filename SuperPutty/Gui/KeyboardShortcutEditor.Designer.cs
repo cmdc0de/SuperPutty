@@ -1,4 +1,4 @@
-﻿namespace SuperPutty.Gui
+﻿namespace SuperPuTTY.Gui
 {
     partial class KeyboardShortcutEditor
     {

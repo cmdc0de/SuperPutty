@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace SuperPutty
+namespace SuperPuTTY
 {
     partial class AboutBox1
     {
@@ -183,7 +183,7 @@ namespace SuperPutty
             this.textBox1.Size = new System.Drawing.Size(344, 140);
             this.textBox1.TabIndex = 24;
             this.textBox1.TabStop = false;
-            this.textBox1.Text = "SuperPutty is a tabbed interface for the PuTTY SSH Client. It is can be used for " +
+            this.textBox1.Text = "SuperPuTTY is a tabbed interface for the PuTTY SSH Client. It is can be used for " +
     "both terminal sessions and file transfers both utilizing the secure SSH protocol" +
     ".";
             // 

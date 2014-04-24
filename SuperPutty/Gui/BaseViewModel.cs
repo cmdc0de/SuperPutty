@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using SuperPutty.Utils;
+using SuperPuTTY.Utils;
 
-namespace SuperPutty.Gui
+namespace SuperPuTTY.Gui
 {
     #region BaseViewModel
     /// <summary>

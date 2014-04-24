@@ -1,4 +1,5 @@
-﻿namespace SuperPutty.Gui
+﻿using SuperPuTTY.Gui;
+namespace SuperPuTTY.Gui
 {
     partial class QuickSelector
     {
@@ -37,7 +38,7 @@
             this.detailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textColorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceData = new System.Windows.Forms.BindingSource(this.components);
-            this.quickSelectorData = new SuperPutty.Gui.QuickSelectorData();
+            this.quickSelectorData = new QuickSelectorData();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceData)).BeginInit();

@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace SuperPutty.Utils
+namespace SuperPuTTY.Utils
 {
     public class NativeMethods
     {

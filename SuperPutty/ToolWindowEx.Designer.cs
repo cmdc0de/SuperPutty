@@ -1,4 +1,4 @@
-﻿namespace SuperPutty
+﻿namespace SuperPuTTY
 {
     partial class ToolWindowDocument
     {

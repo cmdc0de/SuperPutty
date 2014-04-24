@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using SuperPutty.Scp;
+using SuperPuTTY.Scp;
 using log4net;
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
-using SuperPutty.Manager;
+using SuperPuTTY.Manager;
 using System.IO;
 
-namespace SuperPuttyUnitTests.Scp
+namespace SuperPuTTYUnitTests.Scp
 {
     [TestFixture]
     public class FileTransferTests

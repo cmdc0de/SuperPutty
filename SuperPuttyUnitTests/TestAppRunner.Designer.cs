@@ -1,4 +1,4 @@
-﻿namespace SuperPuttyUnitTests
+﻿namespace SuperPuTTYUnitTests
 {
     partial class TestAppRunner
     {

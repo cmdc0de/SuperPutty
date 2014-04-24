@@ -27,7 +27,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SuperPutty
+namespace SuperPuTTY
 {
     public partial class DebugLogViewer : ToolWindow
     {
