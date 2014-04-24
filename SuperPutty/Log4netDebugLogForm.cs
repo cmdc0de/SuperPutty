@@ -46,7 +46,7 @@ namespace SuperPuTTY
             this.memoryAppender.Name = this.GetType().Name + "MemoryAppender";
 
             PatternLayout layout = new PatternLayout();
-            layout.ConversionPattern = "%date %-5level %20.20logger{1} - %message%newline";
+            layout.ConversionPattern = "%date [%thread] %-5level %logger - %message%newline";
             layout.ActivateOptions();
             this.memoryAppender.Layout = layout;
 
