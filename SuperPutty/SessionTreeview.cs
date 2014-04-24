@@ -49,10 +49,9 @@ namespace SuperPuTTY
 
 
         private DockPanel m_DockPanel;
-        private bool isRenamingNode;
-        TreeNode nodeRoot;
-        ImageList imgIcons = new ImageList();
-        Func<SessionData, bool> filter;
+        private TreeNode nodeRoot;
+        private ImageList imgIcons = new ImageList();
+        private Func<SessionData, bool> filter;
 
         /// <summary>
         /// Instantiate the treeview containing the sessions
@@ -115,6 +114,7 @@ namespace SuperPuTTY
             this.treeView1.ShowLines = SuperPuTTY.Settings.SessionsTreeShowLines;
             this.treeView1.Font = SuperPuTTY.Settings.SessionsTreeFont;
             this.panelSearch.Visible = SuperPuTTY.Settings.SessionsShowSearch;
+            this.treeView1.Margin = new System.Windows.Forms.Padding(4);
         }
 
         protected override void OnClosed(EventArgs e)
@@ -134,14 +134,14 @@ namespace SuperPuTTY
 
             SuperPuTTY.selectionFilter = (SelectionFilter)Enum.ToObject(typeof(SelectionFilter), sessionFilter.SelectedIndex);
 
-            this.nodeRoot = treeView1.Nodes.Add("root", "root", ImageKeyFolder, ImageKeyFolder);
+            this.nodeRoot = treeView1.Nodes.Add("root", "PuTTY Sessions", ImageKeyFolder, ImageKeyFolder);
             this.nodeRoot.ContextMenuStrip = this.contextMenuStripFolder;
 
             SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
 
             this.nodeRoot.Tag = rootFolderData;
             CreateNodes(rootFolderData, this.nodeRoot);
-            CreateNodesSession(rootFolderData.GetSessionDataChildren(), this.nodeRoot);
+            CreateNodesSession(rootFolderData.SessionDataChildren, this.nodeRoot);
 
             treeView1.SelectedNode = this.nodeRoot;
             nodeRoot.Expand();
@@ -157,11 +157,11 @@ namespace SuperPuTTY
 
         private void CreateNodes(SessionFolderData folderData, TreeNode currentNode)
         {
-            foreach (SessionFolderData child in folderData.GetSessionFolderDataChildren())
+            foreach (SessionFolderData child in folderData.SessionFolderDataChildren)
             {
                 TreeNode childNode = AddFolderNode(currentNode, child);
                 CreateNodes(child, childNode);
-                CreateNodesSession(child.GetSessionDataChildren(), childNode);
+                CreateNodesSession(child.SessionDataChildren, childNode);
 
                 if (child.IsExpand)
                 {
@@ -187,10 +187,10 @@ namespace SuperPuTTY
 
         void Sessions_ListChanged(object sender, ListChangedEventArgs e)
         {
-            if (isRenamingNode)
+            /*if (isRenamingNode)
             {
                 return;
-            }
+            }*/
             BindingList<SessionData> sessions = (BindingList<SessionData>) sender;
             if (e.ListChangedType == ListChangedType.ItemAdded)
             {
@@ -540,7 +540,7 @@ namespace SuperPuTTY
                     //GetAllSessions(node, sessions);
                     SessionFolderData sFolderData = (SessionFolderData) node.Tag;
                     if (DialogResult.Yes == MessageBox.Show(
-                        "Remove Folder [" + node.Text + "] and [" + sFolderData.GetSessionDataChildren().Count + "] sessions?",
+                        "Remove Folder [" + node.Text + "] and [" + sFolderData.SessionDataChildren.Count + "] sessions?",
                         "Remove Folder?", 
                         MessageBoxButtons.YesNo))
                     {

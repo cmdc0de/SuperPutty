@@ -32,11 +32,11 @@ namespace SuperPuTTY.Utils
                 Logger.Log("Unable to create registry key [folderData] with name = " + folderData.Name);
             }
 
-            foreach (SessionData sessionData in folderData.GetSessionDataChildren())
+            foreach (SessionData sessionData in folderData.SessionDataChildren)
             {
                 CreateSubKeySessionData(sessionData, registerName);
             }
-            foreach (SessionFolderData sessionFolderData in folderData.GetSessionFolderDataChildren())
+            foreach (SessionFolderData sessionFolderData in folderData.SessionFolderDataChildren)
             {
                 CreateSubKeySessionFolderData(sessionFolderData, registerName);
             }
@@ -76,12 +76,12 @@ namespace SuperPuTTY.Utils
 
         public static void SaveAllSessionsToRegistry() {
             SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
-            foreach(SessionFolderData folderChild in rootFolderData.GetSessionFolderDataChildren())
+            foreach(SessionFolderData folderChild in rootFolderData.SessionFolderDataChildren)
             {
                 CreateSubKeySessionFolderData(folderChild, REGISTER_BASENAME);
             }
 
-            foreach (SessionData sessionData in rootFolderData.GetSessionDataChildren())
+            foreach (SessionData sessionData in rootFolderData.SessionDataChildren)
             {
                 CreateSubKeySessionData(sessionData, REGISTER_BASENAME);
             }

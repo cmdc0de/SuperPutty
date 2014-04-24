@@ -27,8 +27,8 @@ namespace SuperPuTTY.Manager
         {
             get { return _Position; }
             set { _Position = value; }
-
         }
+
         public int ParentFolderId
         {
             get { return _ParentFolderId; }
@@ -46,6 +46,18 @@ namespace SuperPuTTY.Manager
         {
             get { return _Name; }
             set { _Name = value; }
+        }
+
+        public BindingList<SessionData> SessionDataChildren
+        {
+            get { return _SessionDataChildren; }
+            set { _SessionDataChildren = value; }
+        }
+
+        public BindingList<SessionFolderData> SessionFolderDataChildren
+        {
+            get { return _SessionFolderDataChildren; }
+            set { _SessionFolderDataChildren = value; }
         }
 
         public SessionFolderData()
@@ -68,19 +80,10 @@ namespace SuperPuTTY.Manager
             {
                 result.AddRange(GetSessionsList(child));
             }
-            result.AddRange(parent.GetSessionDataChildren());
+            result.AddRange(parent.SessionDataChildren);
             return new BindingList<SessionData>(result);
         }
 
-        public BindingList<SessionData> GetSessionDataChildren()
-        {
-            return _SessionDataChildren;
-        }
-
-        public BindingList<SessionFolderData> GetSessionFolderDataChildren()
-        {
-            return _SessionFolderDataChildren;
-        }
         public SessionFolderData AddChildFolderData(String folderDataName)
         {
             SessionFolderData child = new SessionFolderData(folderDataName);
@@ -93,64 +96,6 @@ namespace SuperPuTTY.Manager
         {
             sessionFolderData.Name = newFolderName;
         }
-
-        /*public void LoadSessionsFromFile(string fileName)
-        {
-            if (File.Exists(fileName))
-            {
-                XmlTextReader reader = new XmlTextReader(fileName);
-                this.ReadXml(reader);
-            }
-            else
-            {
-                Log.WarnFormat("Could not load sessions, file doesn't exist.  file={0}", fileName);
-            }
-            return;
-        }
-
-
-        private static void BackUpFiles(string fileName, int count)
-        {
-            if (File.Exists(fileName) && count > 0)
-            {
-                try
-                {
-                    // backup
-                    string fileBaseName = Path.GetFileNameWithoutExtension(fileName);
-                    string dirName = Path.GetDirectoryName(fileName);
-                    string backupName = Path.Combine(dirName, string.Format("{0}.{1:yyyyMMdd_hhmmss}.XML", fileBaseName, DateTime.Now));
-                    File.Copy(fileName, backupName, true);
-
-                    // limit last count saves
-                    List<string> oldFiles = new List<string>(Directory.GetFiles(dirName, fileBaseName + ".*.XML"));
-                    oldFiles.Sort();
-                    oldFiles.Reverse();
-                    if (oldFiles.Count > count)
-                    {
-                        for (int i = 20; i < oldFiles.Count; i++)
-                        {
-                            Log.InfoFormat("Cleaning up old file, {0}", oldFiles[i]);
-                            File.Delete(oldFiles[i]);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error backing up files", ex);
-                }
-            }
-        }
-
-        public void SaveToFile(string fileName)
-        {
-            Log.InfoFormat("Saving sessions to {0}", fileName);
-
-            BackUpFiles(fileName, 20);
-
-            XmlTextWriter writer = new XmlTextWriter(fileName, null);
-            writer.Formatting = Formatting.Indented;
-            this.WriteXml(writer);
-        }*/
 
         public SessionFolderData GetParent(SessionFolderData parent, SessionFolderData folderDataToSearch) {
             int index = parent._SessionFolderDataChildren.IndexOf(folderDataToSearch);
@@ -245,142 +190,6 @@ namespace SuperPuTTY.Manager
             _SessionFolderDataChildren.RemoveAt(index);
             _SessionFolderDataChildren.Insert(index + 1, sessionFolderData);
         }
-
-        /*#region IXmlSerializable Members
-
-        public System.Xml.Schema.XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(System.Xml.XmlReader reader)
-        {
-            _SessionFolderDataChildren.Clear();
-            _SessionDataChildren.Clear();
-
-            SessionFolderData parent = SuperPuTTY.GetRootFolderData();
-            Stack<SessionFolderData> stack = new Stack<SessionFolderData>();
-            stack.Push(parent);
-
-            while (reader.Read())
-            {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("root"))
-                {
-                    SuperPuTTY.SessionTreeview.SelectionFilter selectionFilter = (SuperPuTTY.SessionTreeview.SelectionFilter)  int.Parse(reader.GetAttribute("filter"));
-                    SuperPuTTY.selectionFilter = selectionFilter;
-                }
-                else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folders"))
-                {
-
-                } 
-                else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals("folders"))
-                {
-
-                } 
-                else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("folder"))
-                {
-                    String name = reader.GetAttribute("name");
-                    bool isExpand = bool.Parse(reader.GetAttribute("isexpand"));
-                    SessionFolderData subFolderData = new SessionFolderData(name);
-                    subFolderData.IsExpand = isExpand;
-                    stack.Peek().GetSessionFolderDataChildren().Add(subFolderData);
-
-                    stack.Push(subFolderData);
-                }
-                else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals("folder"))
-                {
-                    stack.Pop();
-                }
-                else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("session"))
-                {
-
-                    SessionData sessionData = new SessionData();
-                    sessionData.SessionName = reader.GetAttribute("name");
-                    sessionData.ImageKey = reader.GetAttribute("imagekey");
-                    sessionData.Host = reader.GetAttribute("host");
-                    String portStr = reader.GetAttribute("port");
-                    if (portStr != null)
-                    {
-                        sessionData.Port = int.Parse(portStr);
-                    }
-                    String protoStr = reader.GetAttribute("proto");
-                    if (protoStr != null) { 
-                        sessionData.Proto = (ConnectionProtocol) Enum.Parse(typeof(ConnectionProtocol), reader.GetAttribute("proto"), true);
-                    }
-                    sessionData.PuttySession = reader.GetAttribute("puttysession");
-                    sessionData.Username = reader.GetAttribute("username");
-                    sessionData.ExtraArgs = reader.GetAttribute("extraargs");
-                    sessionData.Enabled = bool.Parse(reader.GetAttribute("enabled"));
-
-                    stack.Peek().AddSession(sessionData);
-                }
-            }
-            reader.Close();
-        }
-
-        public void WriteXml(System.Xml.XmlWriter writer)
-        {
-            writer.WriteStartDocument();
-            writer.WriteStartElement("root");
-            writer.WriteAttributeString("filter", "" + ((int)SuperPuTTY.selectionFilter));
-            WriteSessionFolderData(writer, SuperPuTTY.GetRootFolderData());
-            WriteSessionData(writer, SuperPuTTY.GetRootFolderData().GetSessionDataChildren());
-            writer.WriteEndElement(); 
-            writer.WriteEndDocument();
-            writer.Close();
-        }
-
-        private void WriteSessionFolderData(XmlWriter writer, SessionFolderData parent) {
-            if (parent.GetSessionFolderDataChildren().Count == 0 && parent.GetSessionDataChildren().Count == 0)
-            {
-                writer.WriteStartElement("folders");
-                writer.WriteEndElement();
-                return;
-            } 
-            writer.WriteStartElement("folders");
-
-            foreach (SessionFolderData sessionFolderData in parent.GetSessionFolderDataChildren())
-            {
-                writer.WriteStartElement("folder");
-                writer.WriteAttributeString("name", sessionFolderData.Name);
-                writer.WriteAttributeString("isexpand", sessionFolderData.IsExpand.ToString());
-                WriteSessionFolderData(writer, sessionFolderData);
-                WriteSessionData(writer, sessionFolderData.GetSessionDataChildren());
-                writer.WriteEndElement();
-            }
-
-            //WriteSessionData(writer, parent.GetSessionDataChildren());
-           
-            writer.WriteEndElement();
-        }
-
-        private void WriteSessionData(XmlWriter writer, BindingList<SessionData> sList)
-        {
-            if (sList.Count == 0)
-            {
-                return;
-            }
-            writer.WriteStartElement("sessions");
-            foreach (SessionData sessionData in sList)
-            {
-                
-                //XmlSerializer xs = new XmlSerializer(sessionData.GetType());
-                //xs.Serialize(writer, sessionData, null);
-                writer.WriteStartElement("session");
-                writer.WriteAttributeString("name", sessionData.SessionName);
-                writer.WriteAttributeString("imagekey", sessionData.ImageKey);
-                writer.WriteAttributeString("host", sessionData.Host);
-                writer.WriteAttributeString("port", sessionData.Port.ToString());
-                writer.WriteAttributeString("proto", sessionData.Proto.ToString());
-                writer.WriteAttributeString("puttysession", sessionData.PuttySession);
-                writer.WriteAttributeString("username", sessionData.Username);
-                writer.WriteAttributeString("extraargs", sessionData.ExtraArgs);
-                writer.WriteAttributeString("enabled", sessionData.Enabled.ToString());
-                writer.WriteEndElement();
-            }
-            writer.WriteEndElement();
-        }
-        #endregion*/
     }
 
 }
