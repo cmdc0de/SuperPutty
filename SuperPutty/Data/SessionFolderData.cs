@@ -20,6 +20,21 @@ namespace SuperPutty.Manager
         private BindingList<SessionData> _SessionDataChildren = new BindingList<SessionData>();
         private BindingList<SessionFolderData> _SessionFolderDataChildren = new BindingList<SessionFolderData>();
         private bool _IsExpand = false;
+        private int _ParentFolderId;
+        private int _Position;
+
+        public int Position
+        {
+            get { return _Position; }
+            set { _Position = value; }
+
+        }
+        public int ParentFolderId
+        {
+            get { return _ParentFolderId; }
+            set { _ParentFolderId = value; }
+        }
+
 
         public bool IsExpand
         {

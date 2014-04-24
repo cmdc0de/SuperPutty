@@ -10,7 +10,9 @@
 using Microsoft.Win32;
 using SuperPutty.Utils;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
@@ -25,6 +27,7 @@ namespace SuperPutty.Manager
             salt
         };
 
+        public bool isOpened = false;
         private SQLiteConnection _conn;
         private static DatabaseManager instance;
         private DatabaseManager() { }
@@ -71,7 +74,6 @@ namespace SuperPutty.Manager
             //DatabaseManager db = new DatabaseManager(label, hash);
             SQLiteConnection con = Open(dblocation, password);
 
-           // return (db.ExecuteCountQuery("SELECT count(*) FROM sqlite_master;") > 0);
             return dblocation;
         }
 
@@ -101,7 +103,10 @@ namespace SuperPutty.Manager
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                throw ex;
             }
+
+            isOpened = true;
 
             return _conn;
         }
@@ -131,17 +136,99 @@ namespace SuperPutty.Manager
                 /*string sql = "create table if not exists sessions (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, auto_start boolean, host varchar(255), last_dock integer, ";
                 sql += "last_path varchar(255), port integer, proto varchar(255), putty_session varchar(255));";*/
                 {
-                    string sql = "CREATE TABLE IF NOT EXISTS session (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, parent_folder_id int, position integer, label varchar(255), image_key varchar(255), host varchar(255), port integer, proto varchar(255), putty_session varchar(255), username varchar(255));";
+                    string sql = "CREATE TABLE IF NOT EXISTS session (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, parent_folder_id integer, position integer, label varchar(255), image_key varchar(255), host varchar(255), port integer, proto varchar(255), putty_session varchar(255), username varchar(255));";
                     SQLiteCommand cmd = new SQLiteCommand(sql, _conn);
                     cmd.ExecuteNonQuery();
                 }
 
                 {
-                    string sql = "CREATE TABLE IF NOT EXISTS folders (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, parent_id integer, position integer, is_expand boolean, label varchar(255));";
+                    string sql = "CREATE TABLE IF NOT EXISTS folder (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, parent_id integer, position integer, is_expand boolean, label varchar(255));";
                     SQLiteCommand cmd = new SQLiteCommand(sql, _conn);
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public void InsertFolder(SessionFolderData sessionFolderData)
+        {
+            string sql = "INSERT INTO folder (parent_id, position, is_expand, label) VALUES ";
+            sql += "(@parent_id, @position, @is_expand, @label)";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, _conn);
+            cmd.Parameters.AddWithValue("@parent_id", -1);
+            cmd.Parameters.AddWithValue("@position", -1);
+            cmd.Parameters.AddWithValue("@is_expand", sessionFolderData.IsExpand);
+            cmd.Parameters.AddWithValue("@label", sessionFolderData.Name);
+            
+            int result = cmd.ExecuteNonQuery();
+            if (result == 1)
+            {
+                MessageBox.Show("session inserted");
+            }
+            else
+            {
+                MessageBox.Show("fail to insert session");
+            }
+            cmd.Dispose();
+        }
+        public void InsertSession(SessionData sessionData)
+        {
+            string sql = "INSERT INTO session (parent_folder_id, position, label, image_key, host, port, proto, putty_session, username) VALUES ";
+            sql += "(@parent_folder_id, @position, @label, @image_key, @host, @port, @proto, @putty_session, @username)";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, _conn);
+            cmd.Parameters.AddWithValue("@parent_folder_id", -1);
+            cmd.Parameters.AddWithValue("@position", -1);
+            cmd.Parameters.AddWithValue("@label", sessionData.SessionName);
+            cmd.Parameters.AddWithValue("@image_key", sessionData.ImageKey);
+            cmd.Parameters.AddWithValue("@host", sessionData.Host);
+            cmd.Parameters.AddWithValue("@port", sessionData.Port);
+            cmd.Parameters.AddWithValue("@proto", sessionData.Proto);
+            cmd.Parameters.AddWithValue("@putty_session", sessionData.PuttySession);
+            cmd.Parameters.AddWithValue("@username", sessionData.Username);
+            
+            int result = cmd.ExecuteNonQuery();
+            if (result == 1)
+            {
+                MessageBox.Show("session inserted");
+            }
+            else
+            {
+                MessageBox.Show("fail to insert session");
+            }
+            cmd.Dispose();
+        }
+
+        public List<SessionData> getSessions()
+        {
+            List<SessionData> result = new List<SessionData>();
+
+            string mySelectQuery = "SELECT * FROM session";
+            SQLiteCommand sqCommand = new SQLiteCommand(mySelectQuery, _conn);
+            SQLiteDataReader sqReader = sqCommand.ExecuteReader();
+            try
+            {
+                while (sqReader.Read())
+                {
+                    Console.WriteLine(sqReader.GetInt32(0) + ", " + sqReader.GetString(1));
+                    SessionData sessionData = new SessionData();
+                    sessionData.SessionName = sqReader["label"].ToString();
+                    sessionData.ImageKey = sqReader["image_key"].ToString();
+                    sessionData.Host = sqReader["host"].ToString();
+                    sessionData.Port = (int) sqReader["port"];
+                    sessionData.Proto = (ConnectionProtocol) Enum.Parse(typeof(ConnectionProtocol), (string) sqReader["proto"].ToString());
+                    sessionData.PuttySession = sqReader["putty_session"].ToString();
+                    sessionData.Username = sqReader["username"].ToString();
+                    result.Add(sessionData);
+                }
+            }
+            finally
+            {
+                // always call Close when done reading. 
+                sqReader.Close();
+            } 
+
+            return result;
         }
 
         public int ExecuteNonQuery(string sql)
