@@ -26,11 +26,15 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
+using log4net;
 
 namespace SuperPuTTY
 {
     partial class AboutBox1 : Form
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(AboutBox1));
+
+
         public AboutBox1()
         {
             InitializeComponent();
@@ -41,6 +45,9 @@ namespace SuperPuTTY
             this.linkLabelCompany.Text = AssemblyCompany;
             this.linkLabelCompany2.Text = "https://github.com/revo22/SuperPuTTY";
             //this.textBoxDescription.Text = AssemblyDescription;
+
+            this.KeyPreview = true;
+            this.KeyDown += (s, e) => form_KeyDown(s, e);
         }
 
         #region Assembly Attribute Accessors
@@ -132,6 +139,18 @@ namespace SuperPuTTY
         {
             LinkLabel link = (LinkLabel)sender;
             Process.Start(link.Text);
+        }
+
+        private void form_KeyDown(object sender, KeyEventArgs e)
+        {
+            Log.DebugFormat("aboutBox keycode = {0}, sender {1}, shift {2}", e.KeyCode, sender, e.Shift);
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    this.Hide();
+                    e.Handled = true;
+                    break;
+            }
         }
     }
 }

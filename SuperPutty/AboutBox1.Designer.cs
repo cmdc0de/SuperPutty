@@ -39,21 +39,21 @@ namespace SuperPuTTY
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.linkLabelCompany = new System.Windows.Forms.LinkLabel();
             this.linkLabelCompany2 = new System.Windows.Forms.LinkLabel();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -187,6 +187,27 @@ namespace SuperPuTTY
     "both terminal sessions and file transfers both utilizing the secure SSH protocol" +
     ".";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.richTextBox2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(350, 146);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Contributors";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox2.Location = new System.Drawing.Point(2, 0);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(348, 150);
+            this.richTextBox2.TabIndex = 0;
+            this.richTextBox2.Text = "Jim RADFORD <jimradford@gmail.com>\nAlejandro Sánchez\nSylvain MOUQUET <sylvain.mou" +
+    "quet@gmail.com>";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.textBox2);
@@ -267,31 +288,6 @@ namespace SuperPuTTY
             this.linkLabelCompany2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabelCompany2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCompany2_LinkClicked);
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.richTextBox2);
-            this.tabPage4.Location = new System.Drawing.Point(4, 24);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(350, 146);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Contributors";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox2.Location = new System.Drawing.Point(2, 0);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(348, 150);
-            this.richTextBox2.TabIndex = 0;
-
-            List<String> contributors =new List<String>();
-            contributors.Add("Jim RADFORD <jimradford@gmail.com>");
-            contributors.Add("Alejandro Sánchez");
-            contributors.Add("Sylvain MOUQUET <sylvain.mouquet@gmail.com>");
-            this.richTextBox2.Text = string.Join("\n", contributors.ToArray());
-            // 
             // AboutBox1
             // 
             this.AcceptButton = this.okButton;
@@ -314,10 +310,10 @@ namespace SuperPuTTY
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
