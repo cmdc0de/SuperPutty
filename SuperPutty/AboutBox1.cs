@@ -42,7 +42,7 @@ namespace SuperPuTTY
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.linkLabelCompany.Text = AssemblyCompany;
+            this.architecture.Text = String.Format("{0}", Environment.Is64BitProcess ? "64-bit" : "32-bit");
             this.linkLabelCompany2.Text = "https://github.com/revo22/SuperPuTTY";
             //this.textBoxDescription.Text = AssemblyDescription;
 

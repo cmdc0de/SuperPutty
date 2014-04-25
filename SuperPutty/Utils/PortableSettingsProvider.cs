@@ -219,7 +219,9 @@ namespace SuperPuTTY.Utils
             // Check to see if the node exists, if so then set its new value
             if (settingNode != null)
             {
-                settingNode.InnerText = propVal.SerializedValue.ToString();
+                if (propVal.SerializedValue != null) { 
+                    settingNode.InnerText = propVal.SerializedValue.ToString();
+                }
             }
             else
             {

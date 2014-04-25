@@ -31,10 +31,10 @@ namespace SuperPuTTY
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox1));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.architecture = new System.Windows.Forms.Label();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
-            this.labelCopyright = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -45,8 +45,8 @@ namespace SuperPuTTY
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.linkLabelCompany = new System.Windows.Forms.LinkLabel();
             this.linkLabelCompany2 = new System.Windows.Forms.LinkLabel();
+            this.labelCopyright = new System.Windows.Forms.Label();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -61,13 +61,13 @@ namespace SuperPuTTY
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67F));
+            this.tableLayoutPanel.Controls.Add(this.architecture, 1, 3);
             this.tableLayoutPanel.Controls.Add(this.logoPictureBox, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.labelVersion, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.okButton, 1, 6);
             this.tableLayoutPanel.Controls.Add(this.tabControl1, 1, 5);
-            this.tableLayoutPanel.Controls.Add(this.linkLabelCompany, 1, 3);
             this.tableLayoutPanel.Controls.Add(this.linkLabelCompany2, 1, 4);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
@@ -82,6 +82,19 @@ namespace SuperPuTTY
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.Size = new System.Drawing.Size(543, 328);
             this.tableLayoutPanel.TabIndex = 0;
+            // 
+            // architecture
+            // 
+            this.architecture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.architecture.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.architecture.Location = new System.Drawing.Point(185, 69);
+            this.architecture.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.architecture.MaximumSize = new System.Drawing.Size(0, 17);
+            this.architecture.Name = "architecture";
+            this.architecture.Size = new System.Drawing.Size(355, 17);
+            this.architecture.TabIndex = 28;
+            this.architecture.Text = "Architecture";
+            this.architecture.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // logoPictureBox
             // 
@@ -120,19 +133,6 @@ namespace SuperPuTTY
             this.labelVersion.TabIndex = 0;
             this.labelVersion.Text = "Version";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelCopyright
-            // 
-            this.labelCopyright.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCopyright.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCopyright.Location = new System.Drawing.Point(185, 46);
-            this.labelCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.labelCopyright.MaximumSize = new System.Drawing.Size(0, 17);
-            this.labelCopyright.Name = "labelCopyright";
-            this.labelCopyright.Size = new System.Drawing.Size(355, 17);
-            this.labelCopyright.TabIndex = 21;
-            this.labelCopyright.Text = "Copyright";
-            this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // okButton
             // 
@@ -260,20 +260,6 @@ namespace SuperPuTTY
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox1_LinkClicked);
             // 
-            // linkLabelCompany
-            // 
-            this.linkLabelCompany.AutoSize = true;
-            this.linkLabelCompany.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabelCompany.Location = new System.Drawing.Point(185, 69);
-            this.linkLabelCompany.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.linkLabelCompany.Name = "linkLabelCompany";
-            this.linkLabelCompany.Size = new System.Drawing.Size(355, 23);
-            this.linkLabelCompany.TabIndex = 26;
-            this.linkLabelCompany.TabStop = true;
-            this.linkLabelCompany.Text = "linkLabelCompany";
-            this.linkLabelCompany.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.linkLabelCompany.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCompany2_LinkClicked);
-            // 
             // linkLabelCompany2
             // 
             this.linkLabelCompany2.AutoSize = true;
@@ -287,6 +273,19 @@ namespace SuperPuTTY
             this.linkLabelCompany2.Text = "linkLabelCompany2";
             this.linkLabelCompany2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabelCompany2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCompany2_LinkClicked);
+            // 
+            // labelCopyright
+            // 
+            this.labelCopyright.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCopyright.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCopyright.Location = new System.Drawing.Point(185, 46);
+            this.labelCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.labelCopyright.MaximumSize = new System.Drawing.Size(0, 17);
+            this.labelCopyright.Name = "labelCopyright";
+            this.labelCopyright.Size = new System.Drawing.Size(355, 17);
+            this.labelCopyright.TabIndex = 21;
+            this.labelCopyright.Text = "Copyright";
+            this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // AboutBox1
             // 
@@ -324,7 +323,6 @@ namespace SuperPuTTY
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label labelProductName;
         private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -333,9 +331,10 @@ namespace SuperPuTTY
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.LinkLabel linkLabelCompany;
         private System.Windows.Forms.LinkLabel linkLabelCompany2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.Label architecture;
+        private System.Windows.Forms.Label labelCopyright;
     }
 }

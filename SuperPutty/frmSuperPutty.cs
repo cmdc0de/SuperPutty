@@ -1624,7 +1624,11 @@ namespace SuperPuTTY
                         if (!procs.TryGetValue(p.ProcessName, out procList))
                         {
                             procList = new List<Process>();
-                            procs.Add(p.ProcessName, procList);
+                            bool is64bits = false;
+                            NativeMethods.IsWow64Process(p.Handle, out is64bits);
+                            string architecture = is64bits ? "64-bit" : "32-bit";
+                            Log.Debug("process [" + p.ProcessName + "] [" + architecture + "]");
+                            procs.Add(p.ProcessName + "[" + architecture + "]", procList);
                         }
                         procList.Add(p);
                     }
