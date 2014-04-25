@@ -614,11 +614,12 @@ namespace SuperPuTTY
             }
         }
 
-        public static void OpenDatabase(string dblocation)
+        public static void OpenDatabase(string dblocation, string password)
         {
             // open a popup with password
-            DatabaseManager.Instance.Open(dblocation, "password");
+            DatabaseManager.Instance.Open(dblocation, password);
         }
+
         public static void OpenSession(SessionDataStartInfo ssi)
         {
             if (MainForm.InvokeRequired)

@@ -389,16 +389,8 @@ namespace SuperPuTTY
 
         private void openDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter = "Database Files (*.db)|*.db|All files|*.*";
-           // openDialog.FileName = "Sessions.XML";
-            openDialog.CheckFileExists = true;
-            openDialog.InitialDirectory = DatabaseManager.getFolderPath();
-            if (openDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                SuperPuTTY.OpenDatabase(openDialog.FileName);
-                //SuperPuTTY.ImportSessionsFromFile(openDialog.FileName);
-            }
+            OpenDatabaseForm form = new OpenDatabaseForm();
+            form.ShowDialog();
         }
 
         

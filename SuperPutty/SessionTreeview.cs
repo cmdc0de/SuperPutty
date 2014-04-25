@@ -74,6 +74,8 @@ namespace SuperPuTTY
             SuperPuTTY.Settings.SettingsSaving += new SettingsSavingEventHandler(Settings_SettingsSaving);
 
             m_DockPanel.ContextMenuStrip = this.contextMenuStripFolder;
+
+            this.Enabled = false;
         }
 
         void ExpandInitialTree() 

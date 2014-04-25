@@ -152,6 +152,12 @@
       <DependentUpon>QuickSelectorData.xsd</DependentUpon>
     </Compile>
     <Compile Include="Manager\ProfilManager.cs" />
+    <Compile Include="OpenDatabaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpenDatabaseForm.Designer.cs">
+      <DependentUpon>OpenDatabaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Scp\BrowserCommon.cs" />
     <Compile Include="Scp\BrowserViewModel.cs" />
     <Compile Include="Scp\BrowserPresenter.cs" />
@@ -336,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DatabaseForm.resx">
       <DependentUpon>DatabaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenDatabaseForm.resx">
+      <DependentUpon>OpenDatabaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RemoteFileListPanel.resx">
       <DependentUpon>RemoteFileListPanel.cs</DependentUpon>

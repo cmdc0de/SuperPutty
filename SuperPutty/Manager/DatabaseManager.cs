@@ -79,7 +79,7 @@ namespace SuperPuTTY.Manager
 
 
 
-        public SQLiteConnection Open(string dblocation, string password)
+        public SQLiteConnection Open(string dblocation, string password) 
         {
             try
             {
