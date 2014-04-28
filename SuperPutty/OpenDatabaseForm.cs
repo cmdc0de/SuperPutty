@@ -16,6 +16,9 @@ namespace SuperPuTTY
         public OpenDatabaseForm()
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterParent;
+            MaximizeBox = false;
+            MinimizeBox = false;
         }
 
         private void selectFileButton_Click(object sender, EventArgs e)
@@ -27,19 +30,27 @@ namespace SuperPuTTY
             openDialog.InitialDirectory = DatabaseManager.getFolderPath();
             if (openDialog.ShowDialog(this) == DialogResult.OK)
             {
-                string password = passwordBox.Text;
-
-                try { 
-                    SuperPuTTY.OpenDatabase(openDialog.FileName, password);
-                } catch (Exception ex)
-                {
-                    MessageBox.Show("Connexion failed !");
-                    passwordBox.Text = "";
-                    this.DialogResult = DialogResult.None;
-                }
-                this.DialogResult = DialogResult.OK;
-                return;
+                selectFileBox.Text = openDialog.FileName;
             }
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            string password = passwordBox.Text;
+
+            try
+            {
+                SuperPuTTY.OpenDatabase(selectFileBox.Text, password);
+                MessageBox.Show("Connexion successfull !");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connexion failed !");
+                passwordBox.Text = "";
+                this.DialogResult = DialogResult.None;
+            }
+            this.DialogResult = DialogResult.OK;
+            return;
         }
     }
 }

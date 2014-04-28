@@ -518,6 +518,23 @@ namespace SuperPuTTY
             treeview.CreateTreeview();
         }
 
+        public void ActivateDatabase()
+        {
+            databaseToolStripMenuItem.Enabled = true;
+            databaseToolStripMenuItem.Visible = true;
+            sessionsToolStripMenuItem.Enabled = true;
+            importSettingsToolStripMenuItem.Enabled = true;
+            openSessionToolStripMenuItem.Enabled = true;
+            switchSessionToolStripMenuItem.Enabled = true;
+
+            SessionTreeview treeview = (SessionTreeview) sessions.Instance;
+            treeview.Enabled = true;
+            treeview.checkActivation();
+
+
+
+        }
+
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             this.Close();

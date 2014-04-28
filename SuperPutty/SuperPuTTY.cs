@@ -75,7 +75,6 @@ namespace SuperPuTTY
                 // load data
                 LoadLayouts();
                 LoadSettingsFolderName();
-                //OpenLayerAuthentification();
                 LoadSessions();
 
                 // determine starting layout, if any.  CLI has priority
@@ -117,33 +116,6 @@ namespace SuperPuTTY
             SingleInstanceHelper.RegisterRemotingService();
 
             Log.Info("Initialized");
-        }
-
-        public static void OpenLayerAuthentification()
-        {
-           /* AuthentificationForm form = new AuthentificationForm();
-            DialogResult result = form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                // try to connect to the selected profil with login and password
-                if (string.IsNullOrEmpty(form.login)){
-                    // failed
-                }
-                bool connexionsuccess = true;
-                if (connexionsuccess)
-                {
-                    // close the form
-                    form.Close();
-                    
-                    // load sessions
-                    //EncryptedDatabase.LoadSessions("");
-                }
-            }
-            else
-            {
-                // show layer create new profil
-
-            }*/
         }
 
         public static SessionFolderData GetRootFolderData()
@@ -422,12 +394,6 @@ namespace SuperPuTTY
             }
         }
 
-        /*public static void SaveSessions()
-        {
-            Log.InfoFormat("Saving all sessions");
-            rootFolder.SaveToFile(SessionsFileName);
-        }*/
-
         public static SessionData RemoveSession(string sessionName)
         {
             SessionData session = GetSessionByName(sessionName);
@@ -618,6 +584,20 @@ namespace SuperPuTTY
         {
             // open a popup with password
             DatabaseManager.Instance.Open(dblocation, password);
+
+            // activate the session treeview
+            MainForm.ActivateDatabase();
+
+            // loading all sessions
+            List<SessionData> sess = DatabaseManager.Instance.getSessions();
+            foreach (SessionData s in sess)
+            {
+                rootFolder.AddSession(s);
+            }
+            
+
+            // activate menu item for sessions
+            // show menu item database
         }
 
         public static void OpenSession(SessionDataStartInfo ssi)

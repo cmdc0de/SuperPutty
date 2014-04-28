@@ -62,21 +62,65 @@ namespace SuperPuTTY
         public SessionTreeview(DockPanel dockPanel)
         {
             m_DockPanel = dockPanel;
-            InitializeComponent();
-            //this.treeView1.TreeViewNodeSorter = this;
-            this.treeView1.ImageList = SuperPuTTY.Images;
-            this.ApplySettings();
-
-            // populate sessions in the treeview from the registry
-            this.CreateTreeview();
-
-            //SuperPuTTY.Sessions.ListChanged += new ListChangedEventHandler(Sessions_ListChanged);
-            SuperPuTTY.Settings.SettingsSaving += new SettingsSavingEventHandler(Settings_SettingsSaving);
-
-            m_DockPanel.ContextMenuStrip = this.contextMenuStripFolder;
 
             this.Enabled = false;
+
+          //  this.m_DockPanel.Paint += (a, b) => DrawWarningMessage(a, b);
+            checkActivation();
         }
+
+        public void checkActivation()
+        {
+
+            if (this.Enabled)
+            {
+                InitializeComponent();
+
+                //this.treeView1.TreeViewNodeSorter = this;
+                this.treeView1.ImageList = SuperPuTTY.Images;
+                this.ApplySettings();
+
+                // populate sessions in the treeview from the registry
+                this.CreateTreeview();
+
+                //SuperPuTTY.Sessions.ListChanged += new ListChangedEventHandler(Sessions_ListChanged);
+                SuperPuTTY.Settings.SettingsSaving += new SettingsSavingEventHandler(Settings_SettingsSaving);
+
+                m_DockPanel.ContextMenuStrip = this.contextMenuStripFolder;
+            }
+            else
+            {
+                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+                this.ClientSize = new System.Drawing.Size(430, 503);
+                this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.Margin = new System.Windows.Forms.Padding(5);
+                this.Name = "SessionTreeview";
+                this.ShowIcon = false;
+                this.TabText = "Sessions";
+                this.Text = "PuTTY Sessions";
+
+                this.ResumeLayout(false);
+            }
+        }
+        /*
+        protected void DrawWarningMessage(object sender, PaintEventArgs e)
+        {
+            //this.BackColor = Color.White;
+            System.Drawing.Graphics formGraphics = this.CreateGraphics();
+            string drawString = "Open a database!";
+            System.Drawing.Font drawFont = new System.Drawing.Font(
+                "Arial", 11);
+            System.Drawing.SolidBrush drawBrush = new
+                System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            float x = 20;
+            float y = 20;
+            formGraphics.DrawString(drawString, drawFont, drawBrush, y, x);
+            drawFont.Dispose();
+            drawBrush.Dispose();
+            formGraphics.Dispose();
+
+        }*/
 
         void ExpandInitialTree() 
         {

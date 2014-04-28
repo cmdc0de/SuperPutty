@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.selectFileBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.passwordBox = new System.Windows.Forms.TextBox();
             this.selectFileButton = new System.Windows.Forms.Button();
+            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.selectFileBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,41 +55,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Open a database";
             // 
-            // selectFileBox
+            // selectFileButton
             // 
-            this.selectFileBox.Location = new System.Drawing.Point(93, 25);
-            this.selectFileBox.Name = "selectFileBox";
-            this.selectFileBox.ReadOnly = true;
-            this.selectFileBox.Size = new System.Drawing.Size(119, 20);
-            this.selectFileBox.TabIndex = 0;
+            this.selectFileButton.Location = new System.Drawing.Point(218, 23);
+            this.selectFileButton.Name = "selectFileButton";
+            this.selectFileButton.Size = new System.Drawing.Size(69, 23);
+            this.selectFileButton.TabIndex = 6;
+            this.selectFileButton.Text = "select a file";
+            this.selectFileButton.UseVisualStyleBackColor = true;
+            this.selectFileButton.Click += new System.EventHandler(this.selectFileButton_Click);
             // 
-            // label1
+            // passwordBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Database";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Password";
-            // 
-            // buttonOK
-            // 
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(131, 103);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 3;
-            this.buttonOK.Text = "Open";
-            this.buttonOK.UseVisualStyleBackColor = true;
+            this.passwordBox.Location = new System.Drawing.Point(93, 60);
+            this.passwordBox.Name = "passwordBox";
+            this.passwordBox.PasswordChar = '*';
+            this.passwordBox.Size = new System.Drawing.Size(194, 20);
+            this.passwordBox.TabIndex = 5;
             // 
             // buttonCancel
             // 
@@ -101,31 +83,51 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // passwordBox
+            // buttonOK
             // 
-            this.passwordBox.Location = new System.Drawing.Point(93, 60);
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.PasswordChar = '*';
-            this.passwordBox.Size = new System.Drawing.Size(194, 20);
-            this.passwordBox.TabIndex = 5;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(131, 103);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 3;
+            this.buttonOK.Text = "Open";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // selectFileButton
+            // label2
             // 
-            this.selectFileButton.Location = new System.Drawing.Point(218, 23);
-            this.selectFileButton.Name = "selectFileButton";
-            this.selectFileButton.Size = new System.Drawing.Size(69, 23);
-            this.selectFileButton.TabIndex = 6;
-            this.selectFileButton.Text = "select a file";
-            this.selectFileButton.UseVisualStyleBackColor = true;
-            this.selectFileButton.Click += new System.EventHandler(this.selectFileButton_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 62);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Password";
             // 
-            // OpenDatabase
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Database";
+            // 
+            // selectFileBox
+            // 
+            this.selectFileBox.Enabled = false;
+            this.selectFileBox.Location = new System.Drawing.Point(93, 25);
+            this.selectFileBox.Name = "selectFileBox";
+            this.selectFileBox.ReadOnly = true;
+            this.selectFileBox.Size = new System.Drawing.Size(119, 20);
+            this.selectFileBox.TabIndex = 0;
+            // 
+            // OpenDatabaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(317, 156);
             this.Controls.Add(this.groupBox1);
-            this.Name = "OpenDatabase";
+            this.Name = "OpenDatabaseForm";
             this.Text = "Database";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

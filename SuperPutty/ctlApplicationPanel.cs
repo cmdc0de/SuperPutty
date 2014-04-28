@@ -326,7 +326,13 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
                     //m_Process.Exited += new EventHandler(p_Exited);
                     m_Process.StartInfo.FileName = ApplicationName;
                     m_Process.StartInfo.Arguments = ApplicationParameters;
+                    
+                    m_Process.EnableRaisingEvents = true;
+                    m_Process.ErrorDataReceived += m_Process_ErrorDataReceived;
+                    m_Process.StartInfo.UseShellExecute = false;
+                    m_Process.StartInfo.RedirectStandardOutput = true;
 
+                    m_Process.StartInfo.CreateNoWindow = true;
                     if (!string.IsNullOrEmpty(this.ApplicationWorkingDirectory) &&
                         Directory.Exists(this.ApplicationWorkingDirectory))
                     {
@@ -335,10 +341,25 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 
                     m_Process.Exited += delegate(object sender, EventArgs ev)
                     {
+                        Log.Debug("Close the tab " + this.m_Process.SessionId);
                         m_CloseCallback(true);
                     };
 
+
+
+                    m_Process.OutputDataReceived += new DataReceivedEventHandler(
+                        (s, k) =>
+                        {
+                            Console.WriteLine(k.Data);
+                        }
+                    );
+                    m_Process.ErrorDataReceived += new DataReceivedEventHandler((s, x) => { Console.WriteLine(x.Data); });
+                    m_Process.StartInfo.ErrorDialog = false;
+
+                    Log.Debug("Open a tab : " + m_Process.SessionId);
                     m_Process.Start();
+                    m_Process.BeginOutputReadLine();
+
 
                     // Wait for application to start and become idle
                     m_Process.WaitForInputIdle();
@@ -427,6 +448,11 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
             }
                   
             base.OnVisibleChanged(e);
+        }
+
+        void m_Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Log.Error("error here" + e.ToString());
         }
 
         
