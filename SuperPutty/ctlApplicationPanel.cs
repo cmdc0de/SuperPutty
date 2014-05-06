@@ -324,14 +324,13 @@ DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
                     m_Process = new Process();
                     m_Process.EnableRaisingEvents = true;
                     //m_Process.Exited += new EventHandler(p_Exited);
-                    m_Process.StartInfo.FileName = ApplicationName;
+                    m_Process.StartInfo.FileName = ApplicationName.Replace("putty", "plink");
                     m_Process.StartInfo.Arguments = ApplicationParameters;
                     
-                    m_Process.EnableRaisingEvents = true;
                     m_Process.ErrorDataReceived += m_Process_ErrorDataReceived;
                     m_Process.StartInfo.UseShellExecute = false;
                     m_Process.StartInfo.RedirectStandardOutput = true;
-
+                   
                     m_Process.StartInfo.CreateNoWindow = true;
                     if (!string.IsNullOrEmpty(this.ApplicationWorkingDirectory) &&
                         Directory.Exists(this.ApplicationWorkingDirectory))

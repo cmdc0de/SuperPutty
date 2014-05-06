@@ -443,30 +443,38 @@ namespace SuperPuTTY
    
         public static void OpenPuttySession(string sessionName)
         {
-            OpenPuttySession(GetSessionByName(sessionName));
+            OpenPuttySession(GetSessionByName(sessionName), false);
         }
 
         public static void OpenPuttySession(SessionData session)
+        {
+            OpenPuttySession(session, false);
+        }
+
+        public static void OpenPuttySession(SessionData session, Boolean withDuplicatedSession)
         {
             Log.InfoFormat("Opening putty session, id={0}", session == null ? "" : session.SessionName);
             if (session != null)
             {
                 bool isFound = false;
-	            foreach (DockContent dContent in MainForm.DockPanel.Contents)
-	            {
-                    if (dContent is ctlPuttyPanel)
-                    {
-                        ctlPuttyPanel tab = (ctlPuttyPanel)dContent;
-
-                        if (tab.Session == session)
+                if (!withDuplicatedSession)
+                { 
+	                foreach (DockContent dContent in MainForm.DockPanel.Contents)
+	                {
+                        if (dContent is ctlPuttyPanel)
                         {
-                            tab.Activate();
-                            isFound = true;
-                        }
-                        SuperPuTTY.ReportStatus("dContent: {0}", tab.Session);
+                            ctlPuttyPanel tab = (ctlPuttyPanel)dContent;
 
-                    }
-	            }
+                            if (tab.Session == session)
+                            {
+                                tab.Activate();
+                                isFound = true;
+                            }
+                            SuperPuTTY.ReportStatus("dContent: {0}", tab.Session);
+
+                        }
+	                }
+                }
 
                 if (!isFound)
                 {

@@ -370,7 +370,7 @@ namespace SuperPuTTY
  
         private void duplicateSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SuperPuTTY.OpenPuttySession(this.m_Session);
+            SuperPuTTY.OpenPuttySession(this.m_Session, true);
         }
 
         private void renameTabToolStripMenuItem_Click(object sender, EventArgs e)
