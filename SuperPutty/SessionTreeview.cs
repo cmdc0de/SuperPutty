@@ -184,7 +184,7 @@ namespace SuperPuTTY
             this.nodeRoot.ContextMenuStrip = this.contextMenuStripFolder;
 
             SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
-
+            
             this.nodeRoot.Tag = rootFolderData;
             CreateNodes(rootFolderData, this.nodeRoot);
             CreateNodesSession(rootFolderData.SessionDataChildren, this.nodeRoot);
@@ -371,6 +371,7 @@ namespace SuperPuTTY
                     //this.treeView1.SelectedNode = node;
                 }
 
+                DatabaseManager.Instance.Save();
                 CreateTreeview();
                 this.treeView1.SelectedNode = getTreeNode(nodeRoot, session);
             }
@@ -403,6 +404,8 @@ namespace SuperPuTTY
             {
                 SessionFolderData parent = SuperPuTTY.GetRootFolderData().GetParent(SuperPuTTY.GetRootFolderData(), session);
                 SuperPuTTY.GetRootFolderData().RemoveSession(session);
+
+                DatabaseManager.Instance.Save();
                 CreateTreeview();
                 treeView1.SelectedNode = getTreeNode(nodeRoot, parent);
                 treeView1.SelectedNode.Expand();
@@ -490,6 +493,7 @@ namespace SuperPuTTY
                    //SessionFolderData folderData = SuperPuTTY.GetRootFolderData().AddChildFolderData(dialog.ItemName);
                     //this.treeView1.SelectedNode = AddFolderNode(node, folderData);
 
+                    DatabaseManager.Instance.Save();
                     CreateTreeview();
                     this.treeView1.SelectedNode = getTreeNode(nodeRoot, newData);
                 }
@@ -514,6 +518,7 @@ namespace SuperPuTTY
                     {
                         rootFolderData.MoveUp(rootFolderData, (SessionFolderData)node.Tag);
 
+                        DatabaseManager.Instance.Save();
                         CreateTreeview();
                         this.treeView1.SelectedNode = getTreeNode(this.treeView1.Nodes[0], (SessionFolderData)node.Tag);
                     }
@@ -536,7 +541,8 @@ namespace SuperPuTTY
 
                     SessionFolderData rootFolderData = SuperPuTTY.GetRootFolderData();
                     rootFolderData.MoveDown(index);//, (SessionFolderData)node.Tag);
-                    
+
+                    DatabaseManager.Instance.Save();
                     CreateTreeview();
                     this.treeView1.SelectedNode = getTreeNode(this.treeView1.Nodes[0], (SessionFolderData)node.Tag);
                 }
@@ -569,6 +575,7 @@ namespace SuperPuTTY
                 {
 
                     SuperPuTTY.GetRootFolderData().RenameSessionFolderName((SessionFolderData) node.Tag, dialog.ItemName);
+                    DatabaseManager.Instance.Save();
                     CreateTreeview();
                     this.treeView1.SelectedNode = getTreeNode(this.treeView1.Nodes[0], (SessionFolderData)node.Tag);
                 }
@@ -591,6 +598,7 @@ namespace SuperPuTTY
                         MessageBoxButtons.YesNo))
                     {
                         SuperPuTTY.RemoveFolder(sFolderData);
+                        DatabaseManager.Instance.Save();
                         CreateTreeview();
                     }
                 }
@@ -927,6 +935,7 @@ namespace SuperPuTTY
                     SuperPuTTY.GetRootFolderData().MoveTo(newParent, nodeToMove);
                 }
 
+                DatabaseManager.Instance.Save();
                 CreateTreeview();
 
                 TreeNode selectedNodeParent = getTreeNode(nodeRoot, newParent);
@@ -1011,6 +1020,7 @@ namespace SuperPuTTY
         private void sessionFilterSelectionValue_Changed(object sender, EventArgs e) {
             //changed
             //int indexSelection = sessionFilter.SelectedIndex;
+
             CreateTreeview();
         }
         #region Icon

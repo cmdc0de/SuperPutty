@@ -486,6 +486,9 @@
     <Content Include="_Lib\System.Data.SQLite-32bit.dll" />
     <Content Include="_Lib\System.Data.SQLite.dll" />
     <Content Include="_Lib\WeifenLuo.WinFormsUI.Docking.dll" />
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\find.png" />
     <Content Include="_Lib\log4net.dll" />
     <Content Include="Resources\accept-gray.png" />

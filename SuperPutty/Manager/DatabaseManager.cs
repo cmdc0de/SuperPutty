@@ -107,10 +107,20 @@ namespace SuperPuTTY.Manager
             }
 
             isOpened = true;
+            LoadSessions();
 
             return _conn;
         }
 
+        public void Close()
+        {
+            try { 
+                _conn.Close();
+            } catch(Exception ex) {
+                Logger.Log(ex);
+            }
+            isOpened = false;
+        }
 
         public static string getFolderPath()
         {
@@ -127,6 +137,7 @@ namespace SuperPuTTY.Manager
 
             return dt;
         }
+
 
         private void CreateOrUpdateTables()
         {
@@ -149,14 +160,26 @@ namespace SuperPuTTY.Manager
             }
         }
 
+        public void Save()
+        {
+            ExecuteNonQuery("DELETE FROM folder");
+            ExecuteNonQuery("DELETE FROM session");
+
+            int position = 0;
+            foreach (SessionData sd in SuperPuTTY.GetRootFolderData().GetSessionsList(SuperPuTTY.GetRootFolderData()))
+            {
+                InsertSession(SuperPuTTY.GetRootFolderData(), position, sd);
+                position++;
+            }
+        }
         public void InsertFolder(SessionFolderData sessionFolderData)
         {
             string sql = "INSERT INTO folder (parent_id, position, is_expand, label) VALUES ";
             sql += "(@parent_id, @position, @is_expand, @label)";
 
             SQLiteCommand cmd = new SQLiteCommand(sql, _conn);
-            cmd.Parameters.AddWithValue("@parent_id", -1);
-            cmd.Parameters.AddWithValue("@position", -1);
+            cmd.Parameters.AddWithValue("@parent_id", sessionFolderData.ParentFolderId);
+            cmd.Parameters.AddWithValue("@position", sessionFolderData.Position);
             cmd.Parameters.AddWithValue("@is_expand", sessionFolderData.IsExpand);
             cmd.Parameters.AddWithValue("@label", sessionFolderData.Name);
             
@@ -171,14 +194,14 @@ namespace SuperPuTTY.Manager
             }
             cmd.Dispose();
         }
-        public void InsertSession(SessionData sessionData)
+        public void InsertSession(SessionFolderData sessionFolderData, int position, SessionData sessionData)
         {
             string sql = "INSERT INTO session (parent_folder_id, position, label, image_key, host, port, proto, putty_session, username) VALUES ";
             sql += "(@parent_folder_id, @position, @label, @image_key, @host, @port, @proto, @putty_session, @username)";
 
             SQLiteCommand cmd = new SQLiteCommand(sql, _conn);
-            cmd.Parameters.AddWithValue("@parent_folder_id", -1);
-            cmd.Parameters.AddWithValue("@position", -1);
+            cmd.Parameters.AddWithValue("@parent_folder_id", sessionFolderData.ParentFolderId);
+            cmd.Parameters.AddWithValue("@position", position);
             cmd.Parameters.AddWithValue("@label", sessionData.SessionName);
             cmd.Parameters.AddWithValue("@image_key", sessionData.ImageKey);
             cmd.Parameters.AddWithValue("@host", sessionData.Host);
@@ -199,6 +222,15 @@ namespace SuperPuTTY.Manager
             cmd.Dispose();
         }
 
+        private void LoadSessions()
+        {
+            List<SessionData> result = getSessions();
+            foreach(SessionData sd in result) {
+                SuperPuTTY.GetRootFolderData().AddSession(sd);
+            }
+            
+        }
+
         public List<SessionData> getSessions()
         {
             List<SessionData> result = new List<SessionData>();
@@ -210,12 +242,12 @@ namespace SuperPuTTY.Manager
             {
                 while (sqReader.Read())
                 {
-                    Console.WriteLine(sqReader.GetInt32(0) + ", " + sqReader.GetString(1));
+                    //Console.WriteLine(sqReader.GetInt32(0) + ", " + sqReader.GetString(1));
                     SessionData sessionData = new SessionData();
                     sessionData.SessionName = sqReader["label"].ToString();
                     sessionData.ImageKey = sqReader["image_key"].ToString();
                     sessionData.Host = sqReader["host"].ToString();
-                    sessionData.Port = (int) sqReader["port"];
+                    sessionData.Port = Convert.ToInt16(sqReader["port"].ToString());
                     sessionData.Proto = (ConnectionProtocol) Enum.Parse(typeof(ConnectionProtocol), (string) sqReader["proto"].ToString());
                     sessionData.PuttySession = sqReader["putty_session"].ToString();
                     sessionData.Username = sqReader["username"].ToString();

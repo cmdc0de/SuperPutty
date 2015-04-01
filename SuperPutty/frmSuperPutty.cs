@@ -393,6 +393,11 @@ namespace SuperPuTTY
             form.ShowDialog();
         }
 
+        private void closeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DatabaseManager.Instance.Close();
+        }
+
         
         private void fromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
